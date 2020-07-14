@@ -1,0 +1,30 @@
+{% extends "Base_dashboard.html" %}
+
+{% block conteudo %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+                {% for message in messages %}
+                    <li><b>{{ message }}</b></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+<h3>Login</h3>
+
+<form action="{{url_for('usuario.login')}}" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <div>
+        <span>Usuario:</span>
+        <input type="text" id="login" name="login" placeholder="Seu login" required style="margin: 5px;" maxlength="255">
+    </div>
+    <div>
+        <span>Senha:</span>
+        <input type="password" id="senha" name="senha" placeholder="***********" required style="margin: 5px;" maxlength="255">
+    </div>
+
+    <button type="submit">Logar</button>
+  </form>
+{% endblock %}

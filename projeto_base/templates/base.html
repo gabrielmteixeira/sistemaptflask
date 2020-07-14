@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<h3> Menu </h3>
+
+<ul>
+    <li> <a href="{{url_for('principal.index')}}">Página principal</a> </li>
+    {% if current_user.urole != usuario_urole_roles.USER %}
+    <li> <a href="{{url_for('usuario.cadastrar_usuario')}}">Cadastrar usuário</a> </li>
+    {% endif %}
+    <li> <a href="{{url_for('usuario.editar_usuario')}}">Editar usuário</a> </li>
+    {% if current_user.urole == usuario_urole_roles.ADMIN %}
+    	<li> <a href="{{url_for('usuario.listar_usuarios')}}">Listar usuários</a> </li>
+    {% endif %}
+    {% if not current_user.is_authenticated %}
+    <li> <a href="{{url_for('usuario.login')}}">Login</a> </li>
+    {% else %}
+    <li> <a href="{{url_for('usuario.logout')}}">Logout</a> </li>
+    {% endif %}
+    {% if current_user.urole == usuario_urole_roles.ADMIN %}
+    <li> <a href="{{url_for('principal.dashboard')}}">Dashboard</a> </li>
+    {% endif %}
+</ul>
+
+{% block conteudo %}
+
+{% endblock %}
+
+</html>

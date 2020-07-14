@@ -1,0 +1,18 @@
+Padrões:
+
+- usar o csrf_token em todo formulário. 
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+- Quando pegar dados do banco de dados, o nome da variável que recebe deve ser do formato "entidade_<nome_tabela>_<opcional>"
+
+- Sempre que criar uma coluna do tipo string, informar a seguinte collation: 'latin1_general_ci'(para banco de dados MySql)
+
+- Se for mexer na parte de outra pessoa, fazer um commit só com essas mudanças, não misturar commit da sua tarefa com commit de outra tarefa
+
+- Não dê commit em nada quebrado, rode o programa antes de dar commit.
+
+- Teste se o que você fez está funcionando/funcionou antes de dar commit.
+
+- Padrão de commit será: 
+  Summary = nome da tarefa feita/alterada/iniciada
+  Description = Um resumo do que foi feito
