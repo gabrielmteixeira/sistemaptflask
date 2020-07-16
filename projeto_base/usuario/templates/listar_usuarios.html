@@ -25,11 +25,11 @@
 			<td style="text-align: center">{{usuario.login}}</td>
 			<td style="text-align: center">{{usuario.email}}</td>
 			<td style="text-align: center">{{usuario.urole}}</td>
-			<td><button  type="submit" name="button"><a href="{{url_for('usuario.admin_editar_usuario', id_user = usuario.id)}}">Editar Usuário</a></button></td>
+			<td><button  type="submit" name="button"><a href="{{url_for('admin.admin_editar_usuario', id_user = usuario.id)}}">Editar Usuário</a></button></td>
 			<td>
           {% if usuario.active == True %}
 
-        <form action="{{url_for('usuario.admin_desativar_usuario')}}" method="POST">
+        <form action="{{url_for('admin.admin_desativar_usuario')}}" method="POST">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <div>
               <input type="hidden" id="id" name="id" value="{{usuario.id}}">
@@ -37,7 +37,7 @@
           <button type="submit" onclick="return confirm('Você deseja desativar este usuário?');">Desativar Usuario</button>
         </form>
         {% else %}
-        <form action="{{url_for('usuario.admin_ativar_usuario')}}" method="POST">
+        <form action="{{url_for('admin.admin_ativar_usuario')}}" method="POST">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <div>
               <input type="hidden" id="id" name="id" value="{{usuario.id}}">
@@ -45,7 +45,7 @@
           <button type="submit" onclick="return confirm('Você deseja ativar este usuário?');">Ativar Usuario</button>
         </form>
         {% endif %}
-			<td><form action="{{url_for('usuario.admin_excluir_usuario_lista')}}" method="POST">
+			<td><form action="{{url_for('admin.admin_excluir_usuario_lista')}}" method="POST">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <div>
               <input type="hidden" id="id" name="id" value="{{usuario.id}}">

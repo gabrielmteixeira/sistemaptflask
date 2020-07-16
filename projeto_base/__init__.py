@@ -83,6 +83,8 @@ from projeto_base.usuario.models import Usuario
 
 from projeto_base.principal.views import principal
 from projeto_base.usuario.views import usuario
+from projeto_base.usuario.admin_views import admin
 
 app.register_blueprint(principal)
 app.register_blueprint(usuario, url_prefix='/usuario')
+app.register_blueprint(admin, url_prefix='/admin')
