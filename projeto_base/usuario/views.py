@@ -7,7 +7,7 @@ usuario = Blueprint('usuario', __name__, template_folder='templates')
 login_manager = LoginManager()
 login_manager.login_view = "principal.index"
 
-@usuario.route('/editar_usuario/', methods=['POST', 'GET'])
+@usuario.route('/editar_usuario/', methods=['POST', 'GET']) 
 @login_required()
 def editar_usuario():
 
