@@ -15,8 +15,8 @@ app.config['SECRET_KEY'] = 'mysecretkey'
 ############################################################
 ################## BANCO DE DADOS ##########################
 ############################################################
-
-app.config['SQLALCHEMY_DATABASE_URI'] =  "mysql+pymysql://projeto_base:pierre@lindo1@projeto_base.mysql.dbaas.com.br/projeto_base"
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] =  'sqlite:///' + os.path.join(basedir, 'data.sqlite')
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
                                             "pool_recycle": 10
                                           }
