@@ -1,4 +1,5 @@
-from flask import render_template, Blueprint, request, redirect, url_for, flash
+import os
+from flask import render_template, Blueprint, request, redirect, url_for, flash, current_app
 from projeto_base.usuario.models import Usuario, usuario_urole_roles
 from projeto_base import db, login_required
 from flask_login import LoginManager, current_user, login_user, logout_user
@@ -109,6 +110,11 @@ def cadastrar_usuario():
                 senha = form["senha"]
                 email = form["email"]
                 confirmacao = form["confirmacao"]
+                foto_trainee = request.files["foto_trainee"]
+
+                filename = foto_trainee.filename
+                filepath = os.path.join(current_app.root_path, 'static', 'fotos_trainees', filename)
+                foto_trainee.save(filepath)
 
                 emailRepetido = Usuario.query.filter_by(email= email).first()
                 loginRepetido = Usuario.query.filter_by(login= login).first()
@@ -119,7 +125,7 @@ def cadastrar_usuario():
                     flash("Este email já está em uso.")
                 elif not(emailRepetido or loginRepetido):
 
-                    entidade_usuario = Usuario(login,senha,email)
+                    entidade_usuario = Usuario(login,senha,email,foto_trainee=filename)
 
                     db.session.add(entidade_usuario)
                     db.session.commit()
@@ -134,6 +140,11 @@ def cadastrar_usuario():
             senha = form["senha"]
             email = form["email"]
             confirmacao = form["confirmacao"]
+            foto_trainee = request.files["foto_trainee"]
+
+            filename = foto_trainee.filename
+            filepath = os.path.join(current_app.root_path, 'static', 'fotos_trainees', filename)
+            foto_trainee.save(filepath)
 
             emailRepetido = Usuario.query.filter_by(email= email).first()
             loginRepetido = Usuario.query.filter_by(login= login).first()
@@ -144,7 +155,7 @@ def cadastrar_usuario():
                 flash("Este email já está em uso.")
             elif not(emailRepetido or loginRepetido):
 
-                entidade_usuario = Usuario(login,senha,email)
+                entidade_usuario = Usuario(login,senha,email,foto_trainee=filename)
 
                 db.session.add(entidade_usuario)
                 db.session.commit()

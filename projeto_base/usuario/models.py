@@ -25,6 +25,7 @@ class Usuario(db.Model, UserMixin):
     urole = db.Column(db.String(50, collation = 'latin1_general_ci'), server_default="user", nullable=False)
     email = db.Column(db.String(80, collation = 'latin1_general_ci'), unique=True, nullable=False)
     active = db.Column(db.Boolean, server_default= expression.true())
+    foto_trainee = db.Column(db.String(120, collation= 'latin1_general_ci'))
 
     def __init__(self, login, senha, email):
         self.login = login

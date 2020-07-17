@@ -3,7 +3,7 @@
 
 
 
-<html lang="en">
+<html lang="pt-br">
 
 <head>
 
@@ -252,6 +252,7 @@
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {% if current_user.is_authenticated %}
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ current_user.login }}</span>
+                <img src="url_for('static', filename='fotos_trainees/{}' .format(current_user.foto_trainee))" alt="">
                 {% else %}
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Faça Login</span>
                 {% endif %}
