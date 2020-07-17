@@ -5,6 +5,8 @@ from flask_login import UserMixin
 from flask import session
 from enum import Enum
 
+import projeto_base.ej.models
+
 usuario_urole_roles = {
                 'USER': 'user',
                 'ADMIN': 'admin'
@@ -20,12 +22,14 @@ class Usuario(db.Model, UserMixin):
 
     __tablename__ = 'usuario'
     id = db.Column(db.Integer, primary_key=True)
-    login = db.Column(db.String(255, collation = 'latin1_general_ci'), unique=True)
-    senha = db.Column(db.String(255, collation = 'latin1_general_ci'),nullable = False)
-    urole = db.Column(db.String(50, collation = 'latin1_general_ci'), server_default="user", nullable=False)
-    email = db.Column(db.String(80, collation = 'latin1_general_ci'), unique=True, nullable=False)
+    login = db.Column(db.String(255), unique=True)
+    senha = db.Column(db.String(255),nullable = False)
+    urole = db.Column(db.String(50), server_default="user", nullable=False)
+    email = db.Column(db.String(80), unique=True, nullable=False)
     active = db.Column(db.Boolean, server_default= expression.true())
     foto_trainee = db.Column(db.String(120, collation= 'latin1_general_ci'))
+    ej_id = db.Column(db.Integer, db.ForeignKey('ej.id'))
+    ej = db.relationship('Ej')
 
     def __init__(self, login, senha, email):
         self.login = login
