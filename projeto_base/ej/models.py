@@ -7,6 +7,10 @@ class Ej(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), unique=True, nullable=False)
     imagem = db.Column(db.String, nullable=False)
+    projetos_meta = db.Column(db.Integer)
+    faturamento_meta = db.Column(db.Integer)
+    projetos_atual = db.Column(db.Integer)
+    faturamento_atual = db.Column(db.Integer)
     usuarios = db.relationship('Usuario', backref='ej', lazy=True)
 
     def __init__(self, nome):
