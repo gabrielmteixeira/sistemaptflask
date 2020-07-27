@@ -13,7 +13,10 @@
 <h3>Cadastro</h3>
 <form action="{{url_for('usuario.cadastrar_usuario')}}" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
+    <div>
+        <span>Nome:</span>
+        <input class="form-control" type="text" id="nome" name="nome" placeholder="Nome Completo" required style="margin: 5px;" maxlength="255">
+    </div>
     <div>
         <span>Nome:</span>
         <input class="form-control" type="text" id="login" name="login" placeholder="Seu login" required style="margin: 5px;" maxlength="255">

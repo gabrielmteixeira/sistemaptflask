@@ -106,6 +106,7 @@ def cadastrar_usuario():
             if request.method == 'POST':
                 form = request.form
 
+                nome = form["nome"]
                 login = form["login"]
                 senha = form["senha"]
                 email = form["email"]
@@ -125,10 +126,11 @@ def cadastrar_usuario():
                     flash("Este email já está em uso.")
                 elif not(emailRepetido or loginRepetido):
 
-                    entidade_usuario = Usuario(login=login,
-                                           senha=senha,
-                                           email=email,
-                                           foto_trainee=filename)
+                    entidade_usuario = Usuario(nome=nome,
+                                               login=login,
+                                               senha=senha,
+                                               email=email,
+                                               foto_trainee=filename)
 
                     db.session.add(entidade_usuario)
                     db.session.commit()
@@ -139,6 +141,7 @@ def cadastrar_usuario():
         if request.method == 'POST':
             form = request.form
 
+            nome = form["nome"]
             login = form["login"]
             senha = form["senha"]
             email = form["email"]
@@ -158,7 +161,8 @@ def cadastrar_usuario():
                 flash("Este email já está em uso.")
             elif not(emailRepetido or loginRepetido):
 
-                entidade_usuario = Usuario(login=login,
+                entidade_usuario = Usuario(nome=nome,
+                                           login=login,
                                            senha=senha,
                                            email=email,
                                            foto_trainee=filename)

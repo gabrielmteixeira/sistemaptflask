@@ -22,16 +22,18 @@ class Usuario(db.Model, UserMixin):
 
     __tablename__ = 'usuario'
     id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.Integer, unique=False, nullable=False)
     login = db.Column(db.String(255), unique=True)
     senha = db.Column(db.String(255),nullable = False)
     urole = db.Column(db.String(50), server_default="user", nullable=False)
     email = db.Column(db.String(80), unique=True, nullable=False)
     active = db.Column(db.Boolean, server_default= expression.true())
-    foto_trainee = db.Column(db.String(120, collation= 'latin1_general_ci'))
+    foto_trainee = db.Column(db.String(120))
     ej_id = db.Column(db.Integer, db.ForeignKey('ej.id'))
     ej = db.relationship('Ej')
 
-    def __init__(self, login, senha, email, foto_trainee):
+    def __init__(self, nome, login, senha, email, foto_trainee):
+        self.nome = nome
         self.login = login
         self.senha = self.bcrypt.generate_password_hash(senha).decode('utf-8')
         self.email = email
