@@ -31,10 +31,11 @@ class Usuario(db.Model, UserMixin):
     ej_id = db.Column(db.Integer, db.ForeignKey('ej.id'))
     ej = db.relationship('Ej')
 
-    def __init__(self, login, senha, email):
+    def __init__(self, login, senha, email, foto_trainee):
         self.login = login
         self.senha = self.bcrypt.generate_password_hash(senha).decode('utf-8')
         self.email = email
+        self.foto_trainee = foto_trainee
 
     def checa_senha(self, senha):
         return self.bcrypt.check_password_hash(self.senha,senha)

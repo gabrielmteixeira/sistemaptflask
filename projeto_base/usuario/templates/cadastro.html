@@ -11,7 +11,7 @@
         {% endif %}
     {% endwith %}
 <h3>Cadastro</h3>
-<form action="{{url_for('usuario.cadastrar_usuario')}}" method="POST">
+<form action="{{url_for('usuario.cadastrar_usuario')}}" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
     <div>
@@ -21,6 +21,9 @@
     <div>
         <span>E-mail:</span>
         <input class="form-control" type="email" id="email" name="email" placeholder="Seu email" required style="margin: 5px;" maxlength="80">
+    </div>
+    <div>
+        <input class="form-control" type="file" id="foto_trainee" name="foto_trainee" placeholder="Sua foto" required style="margin: 5px;" maxlength="80">
     </div>
     <div>
         <span>Senha:</span>

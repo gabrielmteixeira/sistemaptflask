@@ -125,7 +125,10 @@ def cadastrar_usuario():
                     flash("Este email já está em uso.")
                 elif not(emailRepetido or loginRepetido):
 
-                    entidade_usuario = Usuario(login,senha,email,foto_trainee=filename)
+                    entidade_usuario = Usuario(login=login,
+                                           senha=senha,
+                                           email=email,
+                                           foto_trainee=filename)
 
                     db.session.add(entidade_usuario)
                     db.session.commit()
@@ -155,7 +158,10 @@ def cadastrar_usuario():
                 flash("Este email já está em uso.")
             elif not(emailRepetido or loginRepetido):
 
-                entidade_usuario = Usuario(login,senha,email,foto_trainee=filename)
+                entidade_usuario = Usuario(login=login,
+                                           senha=senha,
+                                           email=email,
+                                           foto_trainee=filename)
 
                 db.session.add(entidade_usuario)
                 db.session.commit()
