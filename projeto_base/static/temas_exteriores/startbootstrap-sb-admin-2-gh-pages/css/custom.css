@@ -2,3 +2,10 @@
     width: 180px;
     margin-bottom: 10px;
 }
+a.btn-icon-lista{
+    cursor: pointer;
+    color: blue;
+}
+#cor{
+    color: blue;
+}

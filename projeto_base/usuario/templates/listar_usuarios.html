@@ -11,21 +11,28 @@
 {% endif %}
 {% endwith %}
 <h2>Lista de Usuários</h2>
-<div style="display: inline; padding : 0px 0em 0 360px">
-  <button class="btn btn-primary" type="submit" name="button"><a style="color: inherit; text-decoration: none;" href="{{url_for('usuario.cadastrar_usuario')}}" >Cadastrar Usuário</a></button>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800"></h1>
+  <a href="{{url_for('usuario.cadastrar_usuario')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Cadastrar Usuário</a>
 </div>
-<table>
+
+  
+
+<table class="table">
 	<thead>
-		<th>Nome</th>
-		<th>Email</th>
-		<th>Função</th>
+		<th scope="col">Nome</th>
+		<th scope="col">Email</th>
+    <th scope="col">Função</th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+    <th scope="col"></th>
 	</thead>
 	{% for usuario in lista %}
 		<tr>
-			<td style="text-align: center">{{usuario.login}}</td>
-			<td style="text-align: center">{{usuario.email}}</td>
-			<td style="text-align: center">{{usuario.urole}}</td>
-			<td><button class="btn btn-primary"  type="submit" name="button"><a style='color: white' href="{{url_for('admin.admin_editar_usuario', id_user = usuario.id)}}">Editar Usuário</a></button></td>
+			<td>{{usuario.login}}</td>
+			<td>{{usuario.email}}</td>
+			<td>{{usuario.urole}}</td>
+			<td><a  href="{{url_for('admin.admin_editar_usuario', id_user = usuario.id)}}"><i id="cor" class="far fa-edit"></i></a></td>
 			<td>
           {% if usuario.active == True %}
 
@@ -34,7 +41,7 @@
           <div>
               <input type="hidden" id="id" name="id" value="{{usuario.id}}">
           </div>
-          <button class="btn btn-primary" type="submit" onclick="return confirm('Você deseja desativar este usuário?');">Desativar Usuario</button>
+          <a class="btn-icon-lista" onclick="return confirm('Você deseja desativar este usuário?');"><i id="cor" class="fas fa-user-slash"></i></a>
         </form>
         {% else %}
         <form action="{{url_for('admin.admin_ativar_usuario')}}" method="POST">
@@ -42,7 +49,7 @@
           <div>
               <input type="hidden" id="id" name="id" value="{{usuario.id}}">
           </div>
-          <button class="btn btn-primary" type="submit" onclick="return confirm('Você deseja ativar este usuário?');">Ativar Usuario</button>
+          <a class="btn-icon-lista" onclick="return confirm('Você deseja ativar este usuário?');"><i id="cor" class="fas fa-user"></i></a>
         </form>
         {% endif %}
 			<td><form action="{{url_for('admin.admin_excluir_usuario_lista')}}" method="POST">
@@ -50,7 +57,7 @@
           <div>
               <input type="hidden" id="id" name="id" value="{{usuario.id}}">
           </div>
-          <button class="btn btn-primary" type="submit" onclick="return confirm('Você deseja excluir este usuário?');">Excluir Usuario</button>
+          <a class="btn-icon-lista" onclick="return confirm('Você deseja excluir este usuário?');"><i id="cor" class="far fa-trash-alt"></i></a>
         </form>
 				</td>
 </tr>
