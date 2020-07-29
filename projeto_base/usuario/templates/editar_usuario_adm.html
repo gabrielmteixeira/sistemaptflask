@@ -14,45 +14,47 @@
 
 <h3>Edição de usuário</h3>
 <h4>{{entidade_usuario.login}}</h4>
-<form action="{{url_for('admin.admin_editar_usuario', id_user = entidade_usuario.id)}}" method="POST">
+<form class="registerForm" action="{{url_for('admin.admin_editar_usuario', id_user = entidade_usuario.id)}}" method="POST">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
     <div>
         <span>Login:</span>
-        <input type="text" id="login" name="login" value="{{entidade_usuario.login}}" placeholder="Novo login" required style="margin: 5px;" maxlength="255">
+        <input class="form-control" type="text" id="login" name="login" value="{{entidade_usuario.login}}" placeholder="Novo login" required maxlength="255">
     </div>
     <div>
         <span>Email:</span>
-        <input type="email" id="email" name="email" value="{{entidade_usuario.email}}" placeholder="Novo email" required style="margin: 5px;" maxlength="80">
+        <input class="form-control" type="email" id="email" name="email" value="{{entidade_usuario.email}}" placeholder="Novo email" required maxlength="80">
     </div>
 
     
     <div>
         <span>Ativar ou desativar usuário:</span>
-        <input type="text" id="ativo" name="ativo" value="" placeholder="ativo/desativado" required style="margin: 5px;">
+        <input class="form-control" type="text" id="ativo" name="ativo" value="" placeholder="ativo/desativado" required>
     </div>
 
     <div>
         <span>Função:</span>
-        <input type="password" id="funcao" name="funcao" placeholder="admin/user" required style="margin: 5px;">
+        <input class="form-control" type="password" id="funcao" name="funcao" placeholder="admin/user" required>
     </div>
 
     <div>
         <span>Nova senha:</span>
-        <input type="password" id="senha" name="senha" value="" required style="margin: 5px;">
+        <input class="form-control" type="password" id="senha" name="senha" value="" required>
     </div>
 
     <div>
         <span>Confirmar nova senha:</span>
-        <input type="password" id="confirmar_senha" name="confirmar_senha" required value=""  style="margin: 5px;">
+        <input class="form-control" type="password" id="confirmar_senha" name="confirmar_senha" required value="">
     </div>
 
-    <button type="submit">Atualizar dados</button>
+    <button class="btn btn-primary" type="submit">Atualizar dados</button>
     
-    <button type="button">
-        <a href="{{url_for('admin.excluir_usuario_by_adm', id_user = entidade_usuario.id)}}" style="color: inherit; text-decoration: none;" onclick="return confirm('Voce tem certeza que deseja excluir este usuario?')">Excluir Usuario</a>
-    </button>
+    <a href="{{url_for('admin.excluir_usuario_by_adm', id_user = entidade_usuario.id)}}" style="color: inherit; text-decoration: none;" onclick="return confirm('Voce tem certeza que deseja excluir este usuario?')">
+        <button class="btn btn-primary" type="button">
+        Excluir Usuario
+        </button>
+    </a>
 
-    <button type="button"><a href="{{url_for('principal.index')}}" style="color: inherit; text-decoration: none;">Cancelar</a></button>
+    <button class="btn btn-primary" type="button"><a href="{{url_for('principal.index')}}" style="color: inherit; text-decoration: none;">Cancelar</a></button>
 </form>
 {% endblock %}

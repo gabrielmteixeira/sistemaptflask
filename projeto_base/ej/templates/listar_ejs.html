@@ -1,0 +1,29 @@
+{% extends "Base_dashboard.html" %}
+
+{% block conteudo %}
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+                {% for message in messages %}
+                    <li><b>{{ message }}</b></li>
+                {% endfor %}       
+            </ul>
+        {% endif %}
+    {% endwith %}
+<h1> Empresas Júniores </h1>
+
+<div class="row" style="margin-left: 0px; margin-top: 10px;">
+
+{% for ej in lista %}
+<div class="card" style="width: 18rem; margin-right: 10px; margin-bottom: 8px;">
+    <img class="card-img-top" src="{{url_for('static', filename='fotos_trainees/' + ej.imagem)}}" alt="Card image cap">
+    <div class="card-body" style="display: flex; justify-content: center;">
+        <a style="align-self: center;" class="btn btn-primary" href="">{{ej.nome}}</a>
+    </div>
+</div>
+{% endfor %}
+
+</div>
+
+
+{% endblock %}

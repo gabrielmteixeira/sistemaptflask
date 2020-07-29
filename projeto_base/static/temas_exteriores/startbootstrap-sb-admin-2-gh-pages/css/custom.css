@@ -18,3 +18,13 @@ a.btn-icon-lista{
     width: 300px;
     height: 300px;
 }
+
+.taskList .card {
+    margin-bottom: 10px;
+    width: auto;
+    display: inline-block;
+}
+
+.taskList {
+    margin-bottom: 50px;
+}

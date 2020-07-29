@@ -49,10 +49,10 @@
     <a href="{{url_for('usuario.editar_senha_usuario')}}" style="color: inherit; text-decoration: none;"><button class="btn btn-primary" type="button">Editar senha</button></a>
     {%if permissao_usuario == usuario_urole_roles.USER%}
     <a href="{{url_for('usuario.excluir_usuario')}}" style="color: inherit; text-decoration: none;" onclick="return confirm('Voce tem certeza que deseja excluir esta conta?')">
-    <button type="button">
+    <button class="btn btn-primary" type="button">
         Excluir Conta
     </button></a>
     {%endif%}
-    <a href="{{url_for('principal.index')}}" style="color: inherit; text-decoration: none;"><button class="btn btn-primary" type="button">Cancelar</button></a>
+    <a href="{{url_for('usuario.perfil')}}" style="color: inherit; text-decoration: none;"><button class="btn btn-primary" type="button">Cancelar</button></a>
 </form>
 {% endblock %}

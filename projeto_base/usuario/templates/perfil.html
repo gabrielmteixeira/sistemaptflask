@@ -12,8 +12,8 @@
 
 {% block conteudo %}
 <div style="display: flex; justify-content: center; align-items: center; height: 79vh;">
-    <div class="card" style="width: 60rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='fotos_trainees/' + entidade_usuario.foto_trainee)}}" alt="Card image cap">
+    <div class="card" style="width: 28rem;">
+        <img class="card-img-top" src="{{url_for('static', filename='fotos_trainees/' + entidade_usuario.foto_trainee)}}" style="max-height: 50vh" alt="Card image cap">
         <div class="card-body">
         <h3 class="card-title" style="text-align: right;">{{entidade_usuario.nome}}</h5>
         <h5 class="card-text"  style="text-align: right;">Membro da empresa {{entidade_usuario.ej}}</p>

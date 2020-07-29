@@ -1,0 +1,36 @@
+{% extends "Base_dashboard.html" %}
+
+{% block conteudo %}
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+                {% for message in messages %}
+                    <li><b>{{ message }}</b></li>
+                {% endfor %}       
+            </ul>
+        {% endif %}
+    {% endwith %}
+<h3>Cadastro</h3>
+<form action="{{url_for('ej.cadastrar_ej')}}" method="POST" enctype="multipart/form-data" class="registerForm">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div>
+        <span>Nome:</span>
+        <input class="form-control" type="text" id="nome" name="nome" placeholder="Nome Completo" required maxlength="255">
+    </div>
+    <span>Foto de perfil</span><br>
+    <div class="custom-file">
+        <span>Foto de perfil</span><br>
+        <input class="custom-file-input" type="file" id="foto_ej" name="foto_ej" placeholder="Sua foto" required maxlength="80">
+        <label class="custom-file-label" for="validatedCustomFile">Escolher arquivo...</label>
+    </div>
+    <div>
+        <span>Meta de Projetos</span>
+        <input class="form-control" type="number" id="metaProj" name="metaProj" placeholder="3" required maxlength="255">
+    </div>
+    <div>
+        <span>Meta de Faturamento</span>
+        <input class="form-control" type="number" id="metaFat" name="metaFat" placeholder="2500" required maxlength="80">
+    </div>
+    <button class="btn btn-primary" type="submit">Cadastrar</button>
+</form>
+{% endblock %}
