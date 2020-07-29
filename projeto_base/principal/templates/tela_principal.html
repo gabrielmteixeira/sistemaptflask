@@ -1,24 +1,7 @@
 {% extends "Base_dashboard.html" %}
 
 {% block conteudo %}
-<ul>
-    <a class="btn-primary btn btn-menu" href="{{url_for('principal.index')}}">Página principal</a><br>
-    {% if current_user.urole != usuario_urole_roles.USER %}
-    <a class="btn-primary btn btn-menu" href="{{url_for('usuario.cadastrar_usuario')}}">Cadastrar usuário</a><br>
-    {% endif %}
-    <a class="btn-primary btn btn-menu" href="{{url_for('usuario.editar_usuario')}}">Editar usuário</a><br>
-    {% if current_user.urole == usuario_urole_roles.ADMIN %}
-    	<a class="btn-primary btn btn-menu" href="{{url_for('usuario.listar_usuarios')}}">Listar usuários</a><br>
-    {% endif %}
-    {% if not current_user.is_authenticated %}
-    <a class="btn-primary btn btn-menu" href="{{url_for('usuario.login')}}">Login</a><br>
-    {% else %}
-    <a class="btn-primary btn btn-menu" href="{{url_for('usuario.logout')}}">Logout</a><br>
-    {% endif %}
-    {% if current_user.urole == usuario_urole_roles.ADMIN %}
-    <a class="btn-primary btn btn-menu" href="{{url_for('principal.dashboard')}}">Dashboard</a><br>
-    {% endif %}
-</ul>
+
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul class=flashes>
@@ -28,4 +11,34 @@
             </ul>
         {% endif %}
     {% endwith %}
+
+    <h1 style="margin-bottom: 40px;"> Programa Trainee 2020.2 </h1>
+    <h3> Missões pendentes </h3>
+    <div class="taskList">
+        <div class="card">
+            <div class="card-body">
+                <i class="fas fa-tasks"></i> This is some text within a card body.
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+                <i class="fas fa-tasks"></i> This is some text within a card body.
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+                <i class="fas fa-tasks"></i> This is some text within a card body.
+            </div>
+          </div>
+    </div>
+    <h3> EJ em Destaque </h3>
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{url_for('static', filename='fotos_trainees/' + 'lofigirl.webp')}}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Flasco Júnior</h5>
+          <p class="card-text">A Flasco Júnior é uma empresa que trabalha com soluções em software.</p>
+          <a href="" class="btn btn-primary">Ver Perfil</a>
+        </div>
+    </div>
+
 {% endblock %}
