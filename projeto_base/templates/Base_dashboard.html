@@ -62,7 +62,7 @@
       <!-- Nav Item Menu -->
 
       <li class="nav-item">
-        <a class="nav-link " href="{{url_for('usuario.editar_usuario')}}">
+        <a class="nav-link " href="{{url_for('usuario.perfil')}}">
           <i class="fas fa-fw fa-cog"></i>
           <span>Minha conta</span>
         </a>
@@ -79,12 +79,14 @@
       {% endif %}
 
       <!-- Nav Item - Menu -->
+      {% if not current_user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link " href="{{url_for('usuario.cadastrar_usuario')}}">
           <i class="fas fa-fw fa-cog"></i>
           <span>Cadastrar usuário</span>
         </a>
       </li>
+      {% endif %}
       
 
 

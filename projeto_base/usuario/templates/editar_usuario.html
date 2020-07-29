@@ -13,35 +13,46 @@
 {% endwith %}
 
 <h3>Edição de usuário</h3>
-<form action="{{url_for('usuario.editar_usuario')}}" method="POST">
+<form class="registerForm" action="{{url_for('usuario.editar_usuario')}}" enctype="multipart/form-data" method="POST">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
     <input type="hidden" id="loginAtual" name="loginAtual" value="{{login_usuario}}">
     <input type="hidden" id="emailAtual" name="emailAtual" value="{{email_usuario}}">
 
     <div>
-        <span>Login:</span>
-        <input type="text" id="login" name="login" value="{{login_usuario}}" placeholder="Seu login" required style="margin: 5px;" maxlength="255">
+        <span>Nome:</span>
+        <input  class="form-control" type="text" id="nome" name="nome" value="{{entidade_usuario.nome}}" placeholder="Seu login" required maxlength="255">
+    </div>
+    <span>Foto de perfil</span><br>
+    <div class="custom-file">
+        <span>Foto de perfil</span><br>
+        <input class="custom-file-input" type="file" id="foto_trainee" name="foto_trainee" placeholder="Sua foto" maxlength="80">
+        <label class="custom-file-label" for="validatedCustomFile">Escolher arquivo...</label>
+    </div>
+    <div>
+        <span>Username:</span>
+        <input  class="form-control" type="text" id="login" name="login" value="{{login_usuario}}" placeholder="Seu login" required maxlength="255">
     </div>
     <div>
         <span>Email:</span>
-        <input type="email" id="email" name="email" value="{{email_usuario}}" placeholder="Seu email" required style="margin: 5px;" maxlength="80">
+        <input class="form-control" type="email" id="email" name="email" value="{{email_usuario}}" placeholder="Seu email" required maxlength="80">
     </div>
 
     {%if permissao_usuario == usuario_urole_roles.ADMIN%}
     <div>
         <span>Ativo/Inativo:</span>
-        <input type="text" id="ativo" name="ativo" value="ativo" placeholder="ativo" style="margin: 5px;">
+        <input class="form-control" type="text" id="ativo" name="ativo" value="ativo" placeholder="ativo">
     </div>
     {%endif%}
 
-    <button type="submit">Confirmar</button>
-    <button type="button"><a href="{{url_for('usuario.editar_senha_usuario')}}" style="color: inherit; text-decoration: none;">Editar senha</a></button>
+    <button class="btn btn-primary" type="submit">Confirmar</button>
+    <a href="{{url_for('usuario.editar_senha_usuario')}}" style="color: inherit; text-decoration: none;"><button class="btn btn-primary" type="button">Editar senha</button></a>
     {%if permissao_usuario == usuario_urole_roles.USER%}
+    <a href="{{url_for('usuario.excluir_usuario')}}" style="color: inherit; text-decoration: none;" onclick="return confirm('Voce tem certeza que deseja excluir esta conta?')">
     <button type="button">
-        <a href="{{url_for('usuario.excluir_usuario')}}" style="color: inherit; text-decoration: none;" onclick="return confirm('Voce tem certeza que deseja excluir esta conta?')">Excluir Conta</a>
-    </button>
+        Excluir Conta
+    </button></a>
     {%endif%}
-    <button type="button"><a href="{{url_for('principal.index')}}" style="color: inherit; text-decoration: none;">Cancelar</a></button>
+    <a href="{{url_for('principal.index')}}" style="color: inherit; text-decoration: none;"><button class="btn btn-primary" type="button">Cancelar</button></a>
 </form>
 {% endblock %}

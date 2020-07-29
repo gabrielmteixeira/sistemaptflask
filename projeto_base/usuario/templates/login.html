@@ -13,18 +13,18 @@
 
 <h3>Login</h3>
 
-<form action="{{url_for('usuario.login')}}" method="POST">
+<form class="registerForm" action="{{url_for('usuario.login')}}" method="POST">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
     <div>
-        <span>Usuario:</span>
-        <input type="text" id="login" name="login" placeholder="Seu login" required style="margin: 5px;" maxlength="255">
+        <span>Usuário:</span>
+        <input  class="form-control" type="text" id="login" name="login" placeholder="Seu login" required maxlength="255">
     </div>
     <div>
         <span>Senha:</span>
-        <input type="password" id="senha" name="senha" placeholder="***********" required style="margin: 5px;" maxlength="255">
+        <input  class="form-control" type="password" id="senha" name="senha" placeholder="***********" required maxlength="255">
     </div>
 
-    <button type="submit">Logar</button>
+    <button class="btn btn-primary" type="submit">Logar</button>
   </form>
 {% endblock %}

@@ -8,6 +8,18 @@ usuario = Blueprint('usuario', __name__, template_folder='templates')
 login_manager = LoginManager()
 login_manager.login_view = "principal.index"
 
+@usuario.route('/perfil')
+@login_required()
+def perfil():
+    def renderizaTemplate(entidade_usuario):
+        return render_template('perfil.html',
+                               entidade_usuario = entidade_usuario)
+    
+    entidade_usuario = Usuario.query.filter_by(id = current_user.get_id()).first()
+
+    print(entidade_usuario)
+    return renderizaTemplate(entidade_usuario)
+
 @usuario.route('/editar_usuario/', methods=['POST', 'GET']) 
 @login_required()
 def editar_usuario():
@@ -16,7 +28,8 @@ def editar_usuario():
         return render_template('editar_usuario.html',
                                login_usuario = entidade_usuario.login,
                                email_usuario = entidade_usuario.email,
-                               permissao_usuario = permissao_usuario)
+                               permissao_usuario = permissao_usuario,
+                               entidade_usuario = entidade_usuario)
 
     def validaDadosForm(login, email, loginAtual, emailAtual):
         emailRepetido = Usuario.query.filter_by(email= email).first()
@@ -48,12 +61,31 @@ def editar_usuario():
 
             entidade_usuario.login = form["login"]
             entidade_usuario.email = form["email"]
+            entidade_usuario.nome = form["nome"]
+            print(request.files["foto_trainee"])
+            foto_trainee = request.files["foto_trainee"]
+            
+
+            if foto_trainee:
+                filename = foto_trainee.filename
+                filepath = os.path.join(current_app.root_path, 'static', 'fotos_trainees', filename)
+                foto_trainee.save(filepath)
+                entidade_usuario.foto_trainee = foto_trainee.filename
 
             db.session.commit()
         elif entidade_usuario_permissao == usuario_urole_roles['ADMIN']:
 
             entidade_usuario.login = form["login"]
             entidade_usuario.email = form["email"]
+            entidade_usuario.nome = form["nome"]
+            print(request.files["foto_trainee"])
+            foto_trainee = request.files["foto_trainee"]
+
+            if foto_trainee:
+                filename = foto_trainee.filename
+                filepath = os.path.join(current_app.root_path, 'static', 'fotos_trainees', filename)
+                foto_trainee.save(filepath)
+                entidade_usuario.foto_trainee = foto_trainee.filename
 
             status = form["ativo"]
 
@@ -64,8 +96,7 @@ def editar_usuario():
 
             db.session.commit()
 
-        flash("Usuário alterado com sucesso!")
-        return redirect(url_for('principal.index'))
+        return redirect(url_for('usuario.perfil'))
 
     return renderizaTemplate(entidade_usuario, entidade_usuario_permissao)
 
