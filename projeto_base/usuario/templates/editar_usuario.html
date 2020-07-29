@@ -44,7 +44,7 @@
         <input class="form-control" type="text" id="ativo" name="ativo" value="ativo" placeholder="ativo">
     </div>
     {%endif%}
-
+    <br>
     <button class="btn btn-primary" type="submit">Confirmar</button>
     <a href="{{url_for('usuario.editar_senha_usuario')}}" style="color: inherit; text-decoration: none;"><button class="btn btn-primary" type="button">Editar senha</button></a>
     {%if permissao_usuario == usuario_urole_roles.USER%}

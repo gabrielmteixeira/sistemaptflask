@@ -4,11 +4,14 @@
 
     {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <ul class=flashes>
+            
                 {% for message in messages %}
-                    <li><b>{{ message }}</b></li>
+                    <b><div class="alert alert-primary" role="alert">
+                        <button data-dismiss="alert" type="button" class="close" aria-label="Close">x</button>
+                        {{message}}
+                      </div></b>
                 {% endfor %}       
-            </ul>
+            
         {% endif %}
     {% endwith %}
 
@@ -31,6 +34,7 @@
             </div>
           </div>
     </div>
+    <br>
     <h3> EJ em Destaque </h3>
     <div class="card" style="width: 18rem;">
         <img class="card-img-top" src="{{url_for('static', filename='fotos_trainees/' + 'lofigirl.webp')}}" alt="Card image cap">
