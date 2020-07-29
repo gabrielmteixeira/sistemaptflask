@@ -9,3 +9,7 @@ a.btn-icon-lista{
 #cor{
     color: blue;
 }
+
+.registerForm input {
+    margin-bottom: 10px;
+}

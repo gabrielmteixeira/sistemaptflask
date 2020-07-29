@@ -1,24 +1,7 @@
 {% extends "Base_dashboard.html" %}
 
 {% block conteudo %}
-<ul>
-    <a class="btn-primary btn btn-menu" href="{{url_for('principal.index')}}">Página principal</a><br>
-    {% if current_user.urole != usuario_urole_roles.USER %}
-    <a class="btn-primary btn btn-menu" href="{{url_for('usuario.cadastrar_usuario')}}">Cadastrar usuário</a><br>
-    {% endif %}
-    <a class="btn-primary btn btn-menu" href="{{url_for('usuario.editar_usuario')}}">Editar usuário</a><br>
-    {% if current_user.urole == usuario_urole_roles.ADMIN %}
-    	<a class="btn-primary btn btn-menu" href="{{url_for('usuario.listar_usuarios')}}">Listar usuários</a><br>
-    {% endif %}
-    {% if not current_user.is_authenticated %}
-    <a class="btn-primary btn btn-menu" href="{{url_for('usuario.login')}}">Login</a><br>
-    {% else %}
-    <a class="btn-primary btn btn-menu" href="{{url_for('usuario.logout')}}">Logout</a><br>
-    {% endif %}
-    {% if current_user.urole == usuario_urole_roles.ADMIN %}
-    <a class="btn-primary btn btn-menu" href="{{url_for('principal.dashboard')}}">Dashboard</a><br>
-    {% endif %}
-</ul>
+
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul class=flashes>

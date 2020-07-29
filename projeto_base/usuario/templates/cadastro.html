@@ -11,32 +11,35 @@
         {% endif %}
     {% endwith %}
 <h3>Cadastro</h3>
-<form action="{{url_for('usuario.cadastrar_usuario')}}" method="POST" enctype="multipart/form-data">
+<form action="{{url_for('usuario.cadastrar_usuario')}}" method="POST" enctype="multipart/form-data" class="registerForm">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <div>
         <span>Nome:</span>
-        <input class="form-control" type="text" id="nome" name="nome" placeholder="Nome Completo" required style="margin: 5px;" maxlength="255">
+        <input class="form-control" type="text" id="nome" name="nome" placeholder="Nome Completo" required maxlength="255">
     </div>
     <div>
         <span>Username:</span>
-        <input class="form-control" type="text" id="login" name="login" placeholder="Seu login" required style="margin: 5px;" maxlength="255">
+        <input class="form-control" type="text" id="login" name="login" placeholder="Seu login" required maxlength="255">
     </div>
     <div>
         <span>E-mail:</span>
-        <input class="form-control" type="email" id="email" name="email" placeholder="Seu email" required style="margin: 5px;" maxlength="80">
+        <input class="form-control" type="email" id="email" name="email" placeholder="Seu email" required maxlength="80">
     </div>
-    <div>
-        <input  type="file" id="foto_trainee" name="foto_trainee" placeholder="Sua foto" required style="margin: 5px;" maxlength="80">
+    <span>Foto de perfil</span><br>
+    <div class="custom-file">
+        <span>Foto de perfil</span><br>
+        <input class="custom-file-input" type="file" id="foto_trainee" name="foto_trainee" placeholder="Sua foto" required maxlength="80">
+        <label class="custom-file-label" for="validatedCustomFile">Escolher arquivo...</label>
     </div>
     <div>
         <span>Senha:</span>
-        <input class="form-control" type="password" id="senha" name="senha" placeholder="***********" required style="margin: 5px;" maxlength="255">
+        <input class="form-control" type="password" id="senha" name="senha" placeholder="***********" required maxlength="255">
     </div>
     <div>
         <span>Confirme sua senha:</span>
-        <input class="form-control" type="password" id="confirmacao" name="confirmacao" placeholder="***********" required style="margin: 5px;" maxlength="255">
+        <input class="form-control" type="password" id="confirmacao" name="confirmacao" placeholder="***********" required maxlength="255">
     </div>
     
-    <button type="submit">Cadastrar</button>
+    <button class="btn btn-primary" type="submit">Cadastrar</button>
 </form>
 {% endblock %}
