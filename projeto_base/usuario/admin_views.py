@@ -108,3 +108,4 @@ def excluir_usuario_by_adm(id_user):
     flash('Usuario excluido com sucesso')
 
     return redirect(url_for('principal.index'))
+
