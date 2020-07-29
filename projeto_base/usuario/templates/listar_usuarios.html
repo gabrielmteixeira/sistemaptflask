@@ -32,7 +32,7 @@
 			<td>{{usuario.login}}</td>
 			<td>{{usuario.email}}</td>
 			<td>{{usuario.urole}}</td>
-			<td><a  href="{{url_for('admin.admin_editar_usuario', id_user = usuario.id)}}"><i id="cor" class="far fa-edit"></i></a></td>
+			<td><a  href="{{url_for('admin.admin_editar_usuario', id_user = usuario.id)}}"><button class="btn"><i id="cor" class="far fa-edit"></i></button></a></td>
 			<td>
           {% if usuario.active == True %}
 
@@ -41,7 +41,7 @@
           <div>
               <input type="hidden" id="id" name="id" value="{{usuario.id}}">
           </div>
-          <a class="btn-icon-lista" onclick="return confirm('Você deseja desativar este usuário?');"><i id="cor" class="fas fa-user-slash"></i></a>
+          <a class="btn-icon-lista" onclick="return confirm('Você deseja desativar este usuário?');"><button class="btn"><i id="cor" class="fas fa-user-slash"></i></button></a>
         </form>
         {% else %}
         <form action="{{url_for('admin.admin_ativar_usuario')}}" method="POST">
@@ -49,7 +49,7 @@
           <div>
               <input type="hidden" id="id" name="id" value="{{usuario.id}}">
           </div>
-          <a class="btn-icon-lista" onclick="return confirm('Você deseja ativar este usuário?');"><i id="cor" class="fas fa-user"></i></a>
+          <a class="btn-icon-lista" onclick="return confirm('Você deseja ativar este usuário?');"><button class="btn"><i id="cor" class="fas fa-user"></i></button></a>
         </form>
         {% endif %}
 			<td><form action="{{url_for('admin.admin_excluir_usuario_lista')}}" method="POST">
@@ -57,7 +57,7 @@
           <div>
               <input type="hidden" id="id" name="id" value="{{usuario.id}}">
           </div>
-          <a class="btn-icon-lista" onclick="return confirm('Você deseja excluir este usuário?');"><i id="cor" class="far fa-trash-alt"></i></a>
+          <a class="btn-icon-lista" onclick="return confirm('Você deseja excluir este usuário?');"><button class="btn"><i id="cor" class="far fa-trash-alt"></i></button></a>
         </form>
 				</td>
 </tr>

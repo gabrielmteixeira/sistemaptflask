@@ -14,7 +14,7 @@
 
 <h3>Edição de usuário</h3>
 <h4>{{entidade_usuario.login}}</h4>
-<form action="{{url_for('usuario.admin_editar_usuario', id_user = entidade_usuario.id)}}" method="POST">
+<form action="{{url_for('admin.admin_editar_usuario', id_user = entidade_usuario.id)}}" method="POST">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
     <div>
@@ -50,7 +50,7 @@
     <button type="submit">Atualizar dados</button>
     
     <button type="button">
-        <a href="{{url_for('usuario.excluir_usuario_by_adm', id_user = entidade_usuario.id)}}" style="color: inherit; text-decoration: none;" onclick="return confirm('Voce tem certeza que deseja excluir este usuario?')">Excluir Usuario</a>
+        <a href="{{url_for('admin.excluir_usuario_by_adm', id_user = entidade_usuario.id)}}" style="color: inherit; text-decoration: none;" onclick="return confirm('Voce tem certeza que deseja excluir este usuario?')">Excluir Usuario</a>
     </button>
 
     <button type="button"><a href="{{url_for('principal.index')}}" style="color: inherit; text-decoration: none;">Cancelar</a></button>
