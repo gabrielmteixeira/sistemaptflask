@@ -11,7 +11,6 @@ tarefa = Blueprint('tarefa', __name__, template_folder='templates')
 @tarefa.route('/cadastrar_tarefa', methods=['POST', 'GET'])
 @login_required(role=[usuario_urole_roles['ADMIN']])
 def cadastra_tarefa():
-
     if request.method == 'POST':
         form = request.form
 
@@ -28,7 +27,7 @@ def cadastra_tarefa():
 
         #tratando ehSolo
         ehSolo = False
-        if(ehSolo == 'sim'):
+        if(solo == 'sim'):
             ehSolo = True
 
         filename = icone.filename
@@ -46,3 +45,27 @@ def cadastra_tarefa():
         return redirect(url_for('principal.index'))
 
     return render_template('cadastro_tarefa.html')
+
+
+@tarefa.route('/listar_tarefas')
+@login_required(role=[usuario_urole_roles['ADMIN']])
+def lista_tarefas():
+    tarefas = Tarefa.query.all()
+    if not tarefas:
+        flash("Não há tarefas cadastradas no sistema.")
+        return redirect(url_for('principal.index'))
+    
+    return render_template('listar_tarefas.html', tarefas=tarefas)
+
+@tarefa.route('/deletar_tarefa/<id>')
+@login_required(role=[usuario_urole_roles['ADMIN']])
+def deleta_tarefa(id):
+    tarefa = Tarefa.query.filter_by(id=id).first_or_404()
+    
+    filepath = os.path.join(current_app.root_path, 'static', 'fotos_tarefa', tarefa.icone)
+    os.remove(filepath)
+
+    db.session.delete(tarefa)
+    db.session.commit()
+
+    return redirect(url_for('tarefa.lista_tarefas'))

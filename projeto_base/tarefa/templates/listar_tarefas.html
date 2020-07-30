@@ -1,0 +1,43 @@
+{% extends "Base_dashboard.html" %}
+
+{% block conteudo %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <ul class=flashes>
+        {% for message in messages %}
+            <li><b>{{ message }}</b></li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endwith %}
+<h2>Lista de Tarefas</h2>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800"></h1>
+  <a href="{{url_for('tarefa.cadastra_tarefa')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Cadastrar Tarefa</a>
+</div>
+
+  
+
+<table class="table">
+	<thead>
+		<th scope="col">Título</th>
+		<th scope="col">Prazo</th>
+    <th scope="col">É individual</th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+	</thead>
+	{% for tarefa in tarefas %}
+		<tr>
+			<td>{{tarefa.titulo}}</td>
+			<td>{{tarefa.prazo}}</td>
+      {% if tarefa.ehSolo == 0 %}
+        <td>False</td>
+      {% else %}
+        <td>True</td>
+      {% endif %}
+			<td><a href=""><button class="btn"><i id="cor" class="far fa-edit"></i></button></a></td>
+			<td><a href="{{url_for('tarefa.deleta_tarefa', id=tarefa.id)}}" class="btn-icon-lista" onclick="return confirm('Você deseja excluir esta tarefa?');"><button class="btn"><i id="cor" class="far fa-trash-alt"></i></button></a></td>
+    </tr>
+	{% endfor %}
+</table>
+{% endblock %}
