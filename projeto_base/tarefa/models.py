@@ -17,3 +17,14 @@ class Tarefa(db.Model):
     prazo = db.Column(db.String)
     ehSolo = db.Column(db.Boolean)
     trainees = db.relationship("Usuario", secondary=TarefaTrainee, back_populates="tarefas")
+
+    def __init__(self, titulo, descricao, icone, prazo, ehSolo):
+        self.titulo = titulo
+        self.descricao = descricao 
+        self.icone = icone 
+        self.prazo = prazo
+        self.ehSolo = ehSolo
+
+    def __repr__(self):
+        return f'Tarefa: {self.titulo}' 
+

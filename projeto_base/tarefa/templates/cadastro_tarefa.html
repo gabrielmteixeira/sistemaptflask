@@ -1,0 +1,40 @@
+{% extends "Base_dashboard.html" %}
+
+{% block conteudo %}
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+                {% for message in messages %}
+                    <li><b>{{ message }}</b></li>
+                {% endfor %}       
+            </ul>
+        {% endif %}
+    {% endwith %}
+<h3>Cadastro de tarefa</h3>
+<form action="{{url_for('tarefa.cadastra_tarefa')}}" method="POST" enctype="multipart/form-data" class="registerForm">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div>
+        <span>Título da tarefa:</span>
+        <input class="form-control" type="text" id="titulo" name="titulo" placeholder="Título" required maxlength="255">
+    </div>
+    <div>
+        <span>Descrição</span>
+        <input class="form-control" type="text" id="descricao" name="descricao" placeholder="Descrição" required maxlength="255">
+    </div>
+    <div>
+        <span>Prazo</span>
+        <input class="form-control" type="date" id="data" name="data" required maxlength="80">
+    </div>
+    <span>Foto da tarefa</span><br>
+    <div class="custom-file">
+        <input class="custom-file-input" type="file" id="icone" name="icone" placeholder="Sua foto" required maxlength="80">
+        <label class="custom-file-label" for="validatedCustomFile">Escolher arquivo...</label>
+    </div>
+    <div>
+        <span>É individual</span>
+        <input class="form-control type="text" id="ehSolo" name="ehSolo" placeholder="sim/não" required>
+    </div>
+    <button class="btn btn-primary" type="submit">Cadastrar</button>
+</form>
+{% endblock %}
+
