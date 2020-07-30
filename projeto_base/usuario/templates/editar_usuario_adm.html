@@ -29,23 +29,15 @@
     
     <div>
         <span>Ativar ou desativar usuário:</span>
-        <input class="form-control" type="text" id="ativo" name="ativo" value="" placeholder="ativo/desativado" required>
+        <input class="form-control" type="text"  id="ativo" name="ativo" value="" placeholder="ativo/desativado" required>
     </div>
 
     <div>
         <span>Função:</span>
-        <input class="form-control" type="password" id="funcao" name="funcao" placeholder="admin/user" required>
+        <input class="form-control" value="{{entidade_usuario.urole}}" type="text" id="funcao" name="funcao" placeholder="admin/user" required>
     </div>
 
-    <div>
-        <span>Nova senha:</span>
-        <input class="form-control" type="password" id="senha" name="senha" value="" required>
-    </div>
-
-    <div>
-        <span>Confirmar nova senha:</span>
-        <input class="form-control" type="password" id="confirmar_senha" name="confirmar_senha" required value="">
-    </div>
+    <br>
 
     <button class="btn btn-primary" type="submit">Atualizar dados</button>
     

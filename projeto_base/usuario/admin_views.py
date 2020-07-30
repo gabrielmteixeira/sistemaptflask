@@ -72,8 +72,7 @@ def admin_editar_usuario(id_user):
 
         nome = form ["login"]
         email = form["email"]
-        senha = form["senha"]
-        confirmar_senha = form["confirmar_senha"]
+        
         ativo = None
         funcao = form["funcao"]
 
@@ -82,13 +81,10 @@ def admin_editar_usuario(id_user):
         elif(form["ativo"].lower() == "desativado"):
             ativo = False
 
-        if (senha != confirmar_senha):
-            flash('As senhas inseridas são diferentes')
-            return redirect(url_for('principal.index'))
+        
 
         entidade_usuario_atual.login = nome
         entidade_usuario_atual.email = email
-        entidade_usuario_atual.setSenha(senha)
         entidade_usuario_atual.active = ativo
         entidade_usuario_atual.urole = funcao
         db.session.commit()
