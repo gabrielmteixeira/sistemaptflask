@@ -86,8 +86,10 @@ from projeto_base.principal.views import principal
 from projeto_base.usuario.views import usuario
 from projeto_base.usuario.admin_views import admin
 from projeto_base.ej.views import ej
+from projeto_base.tarefa.views import tarefa
 
 app.register_blueprint(principal)
 app.register_blueprint(usuario, url_prefix='/usuario')
 app.register_blueprint(admin, url_prefix='/admin')
 app.register_blueprint(ej, url_prefix='/ej')
+app.register_blueprint(tarefa, url_prefix='/tarefa')
