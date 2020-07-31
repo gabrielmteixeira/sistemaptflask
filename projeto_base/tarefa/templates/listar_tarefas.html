@@ -35,7 +35,7 @@
       {% else %}
         <td>True</td>
       {% endif %}
-			<td><a href=""><button class="btn"><i id="cor" class="far fa-edit"></i></button></a></td>
+			<td><a href="{{url_for('tarefa.pagina_edicao_tarefa', id=tarefa.id)}}"><button class="btn"><i id="cor" class="far fa-edit"></i></button></a></td>
 			<td><a href="{{url_for('tarefa.deleta_tarefa', id=tarefa.id)}}" class="btn-icon-lista" onclick="return confirm('Você deseja excluir esta tarefa?');"><button class="btn"><i id="cor" class="far fa-trash-alt"></i></button></a></td>
     </tr>
 	{% endfor %}

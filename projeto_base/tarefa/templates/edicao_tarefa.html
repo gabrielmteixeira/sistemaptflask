@@ -11,29 +11,30 @@
         {% endif %}
     {% endwith %}
 <h3>Cadastro de tarefa</h3>
-<form method="POST" enctype="multipart/form-data" class="registerForm">
+<form action="{{url_for('tarefa.edita_tarefa')}}" method="POST" enctype="multipart/form-data" class="registerForm">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <div>
         <span>Título da tarefa:</span>
-        <input class="form-control" type="text" id="titulo" name="titulo" placeholder="Título" required maxlength="255">
+        <input class="form-control" type="text" id="titulo" name="titulo" value="{{titulo}}" required maxlength="255">
     </div>
     <div>
         <span>Descrição</span>
-        <input class="form-control" type="text" id="descricao" name="descricao" placeholder="Descrição" required maxlength="255">
+        <input class="form-control" type="text" id="descricao" name="descricao" value="{{descricao}}" required maxlength="255">
     </div>
     <div>
         <span>Prazo</span>
-        <input class="form-control" type="date" id="data" name="data" require>
+        <input class="form-control" type="date" id="data" name="data" required value="{{prazo}}">
     </div>
     <span>Foto da tarefa</span><br>
     <div class="custom-file">
-        <input class="custom-file-input" type="file" id="icone" name="icone" placeholder="Foto da Tarefa" required>
+        <input class="custom-file-input" type="file" id="icone" name="icone" placeholder="Sua foto" unrequired>
         <label class="custom-file-label" for="validatedCustomFile">Escolher arquivo...</label>
     </div>
     <div>
         <span>É individual</span>
-        <input class="form-control" type="text" id="ehSolo" name="ehSolo" placeholder="sim/não" required>
+        <input class="form-control" type="text" id="ehSolo" name="ehSolo" value="{{solo}}" required>
     </div>
+    <input type="hidden" name="id" id="id" value="{{id}}">
     <button class="btn btn-primary" type="submit">Cadastrar</button>
 </form>
 {% endblock %}
