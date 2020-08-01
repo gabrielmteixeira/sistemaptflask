@@ -78,7 +78,6 @@ def pagina_edicao_tarefa(id):
     #tratando ehSolo
     solo = define_solo_out(tarefa.ehSolo)
 
-    print(tarefa.id)
     return render_template('edicao_tarefa.html', titulo=tarefa.titulo, descricao=tarefa.descricao, prazo=prazo, solo=solo, id=tarefa.id)
 
 @tarefa.route('/editar_tarefa', methods=['POST'])
@@ -101,10 +100,10 @@ def edita_tarefa():
         filepath_novo = os.path.join(current_app.root_path, 'static', 'fotos_tarefa', filename)
         icone.save(filepath_novo)
         
-        tarefa.icone = filename
-        
         filepath_antigo = os.path.join(current_app.root_path, 'static', 'fotos_tarefa', tarefa.icone)
         os.remove(filepath_antigo)
+        
+        tarefa.icone = filename
 
     #tratando data 
     prazo = data_format_in(prazo)

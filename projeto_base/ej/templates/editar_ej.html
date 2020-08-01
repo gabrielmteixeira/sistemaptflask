@@ -1,0 +1,45 @@
+{% extends "Base_dashboard.html" %}
+
+{% block conteudo %}
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+                {% for message in messages %}
+                    <li><b>{{ message }}</b></li>
+                {% endfor %}       
+            </ul>
+        {% endif %}
+    {% endwith %}
+<h3>Cadastro</h3>
+<form action="{{url_for('ej.editar_ej')}}" method="POST" enctype="multipart/form-data" class="registerForm">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div>
+        <span>Nome:</span>
+        <input class="form-control" type="text" id="nome" name="nome" value="{{nome}}" required maxlength="255">
+    </div>
+    <span>Foto de perfil</span><br>
+    <div class="custom-file">
+        <span>Foto de perfil</span><br>
+        <input class="custom-file-input" type="file" id="foto_ej" name="foto_ej" placeholder="Foto da EJ" unrequired>
+        <label class="custom-file-label" for="validatedCustomFile">Escolher arquivo...</label>
+    </div>
+    <div>
+        <span>Meta de Projetos</span>
+        <input class="form-control" type="number" id="metaProj" name="metaProj" value={{metaProj}} required>
+    </div>
+    <div>
+        <span>Meta de Faturamento</span>
+        <input class="form-control" type="number" id="metaFat" name="metaFat" value="{{metaFat}}" required>
+    </div>
+    <div>
+        <span>Projetos atuais</span>
+        <input class="form-control" type="number" id="atualProj" name="atualProj" value={{atualProj}} required>
+    </div>
+    <div>
+        <span>Faturamento atual</span>
+        <input class="form-control" type="number" id="atualFat" name="atualFat" value="{{atualFat}}" required>
+    </div>
+    <input type="hidden" name="id" id="id" value="{{id}}">
+    <button class="btn btn-primary" type="submit">Cadastrar</button>
+</form>
+{% endblock %}
