@@ -153,8 +153,10 @@ def cadastrar_usuario():
 
                 if (confirmacao != senha ):
                     flash("Confirmação de senha e senha estão diferentes.")
+                    return redirect(url_for('usuario.cadastrar_usuario'))
                 elif (emailRepetido):
                     flash("Este email já está em uso.")
+                    return redirect(url_for('usuario.cadastrar_usuario'))
                 elif not(emailRepetido or loginRepetido):
 
                     entidade_usuario = Usuario(nome=nome,
@@ -167,7 +169,7 @@ def cadastrar_usuario():
                     db.session.commit()
                     flash("Usuário cadastrado!")
 
-                return redirect(url_for('principal.index'))
+                return redirect(url_for('usuario.login'))
     else:
         if request.method == 'POST':
             form = request.form
@@ -188,8 +190,10 @@ def cadastrar_usuario():
 
             if (confirmacao != senha ):
                 flash("Confirmação de senha e senha estão diferentes.")
+                return redirect(url_for('usuario.cadastrar_usuario'))
             elif (emailRepetido):
                 flash("Este email já está em uso.")
+                return redirect(url_for('usuario.cadastrar_usuario'))
             elif not(emailRepetido or loginRepetido):
 
                 entidade_usuario = Usuario(nome=nome,
