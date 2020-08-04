@@ -54,7 +54,7 @@ app.config['MAIL_PASSWORD'] = 'daniel2019'
 #Conferir se não tem que mudar nada antes de descomentar o trecho abaixo (apague este comentário depois de conferir)
 
 login_manager.init_app(app)
-login_manager.login_view = "principal.index"
+login_manager.login_view = "usuario.login"
 login_manager.login_message = "Não foi possível acessar esta página ou executar esta ação. Por favor confira se o login foi feito ou se você tem a devida permissão."
 
 def login_required(role=["ANY"]):
