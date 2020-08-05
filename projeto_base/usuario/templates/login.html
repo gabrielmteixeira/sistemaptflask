@@ -23,7 +23,15 @@
 <body class="bg-gradient-primary">
 
   <div class="container" style="height: 50vh; margin-top: 20vh;">
+    
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <div class="flashes " style="height: 40px;">
+  {% for message in messages %}
+  <p class="btn btn-block btn-warning"><b>{{ message }}</b></p>
+    {% endfor %}
 
+  </div>
+    <br> {% endif %} {% endwith %}
     <!-- Outer Row -->
     <div class="row justify-content-center">
 
@@ -37,14 +45,6 @@
               <div class="col-xl-12">
                 <div class="p-5">
                   <div class="text-center">
-                    {% with messages = get_flashed_messages() %} {% if messages %}
-                    <div class="flashes " style="height: 40px;">
-                  {% for message in messages %}
-                <p class="btn btn-block btn-warning"><b>{{ message }}</b></p>
-                    {% endfor %}
-
-                </div>
-                    <br> {% endif %} {% endwith %}
                     <h1 class="h4 text-gray-900 mb-4">Bem vindo!</h1>
                   </div>
                   <form action="{{url_for('usuario.login')}}" method="POST" class="user">
