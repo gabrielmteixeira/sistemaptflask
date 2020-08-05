@@ -7,6 +7,12 @@ from flask_login import LoginManager, current_user, login_user, logout_user
 
 ej = Blueprint('ej', __name__, template_folder='templates')
 
+@ej.route('/listar_ejs', methods = ['GET'])
+@login_required(role=[usuario_urole_roles['ADMIN']])
+def listar_ejs():
+    lista = Ej.query.all()
+    return render_template('listar_ejs.html', lista=lista)
+
 @ej.route('/perfil/<id>')
 def perfil_ej(id):
     def renderizaTemplate(entidade_ej):
@@ -53,11 +59,6 @@ def cadastrar_ej():
 
     return render_template('cadastro_ej.html')
 
-@ej.route('/listar_ejs', methods = ['GET'])
-@login_required(role=[usuario_urole_roles['ADMIN']])
-def listar_ejs():
-    lista = Ej.query.all()
-    return render_template('listar_ejs.html', lista=lista)
 
 
 @ej.route('/editar_ej/<id>', methods = ['GET', 'POST'])

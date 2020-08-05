@@ -18,7 +18,7 @@
 <div class="card" style="width: 18rem; margin-right: 10px; margin-bottom: 8px;">
     <img class="card-img-top" src="{{url_for('static', filename='fotos_ej/' + ej.imagem)}}" alt="Card image cap">
     <div class="card-body" style="display: flex; justify-content: center;">
-        <a style="align-self: center;" class="btn btn-primary" href="{{url_for('ej.perfil_ej', id = ej.id)}}">{{ej.nome}}</a>
+    <a style="align-self: center; text-decoration: none; color: inherit;" href="{{url_for('ej.perfil_ej', id = ej.id)}}"><h3 style="margin-bottom: 0px;">{{ej.nome}}</h3></a>
     </div>
 </div>
 {% endfor %}
