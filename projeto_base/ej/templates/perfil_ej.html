@@ -1,49 +1,6 @@
 {% extends "Base_dashboard.html" %}
 
 {% block conteudo %}
-<!-- 
-<div class="row" style="align-items: center; height: 79vh;">
-    <div class="col-sm-3">
-        <div class="card">
-            <img class="card-img-top" src="{{url_for('static', filename='fotos_ej/' + entidade_ej.imagem)}}" style="max-height: 50vh; object-fit: cover;" alt="Card image cap">
-            <div class="card-body">
-            <h3 class="card-title" style="text-align: left;">{{entidade_ej.nome}}</h3>
-            {% if current_user.urole == usuario_urole_roles['ADMIN'] %}
-            <a href="{{url_for('ej.editar_ej', id = entidade_ej.id)}}" class="btn btn-primary"  style="text-align: right;">Editar EJ</a>
-            {% endif %}
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-3">
-            <img class="card-img-top" src="{{url_for('static', filename='img/chart.jpg')}}" style="max-height: 50vh; object-fit: cover; border-radius: 10px;" alt="Card image cap">
-            <div class="card-body">
-            <h3 class="card-title" style="text-align: left;">Meta de Faturamento</h3>
-            <h5>{{entidade_ej.faturamento_atual}}/{{entidade_ej.faturamento_meta}}</h5>
-            </div>
-    </div>
-    <div class="col-sm-3">
-            <img class="card-img-top" src="{{url_for('static', filename='img/chart.jpg')}}" style="max-height: 50vh; object-fit: cover; border-radius: 10px;" alt="Card image cap">
-            <div class="card-body">
-            <h3 class="card-title" style="text-align: left;">Meta de Projetos</h3>
-            <h5>{{entidade_ej.projetos_atual}}/{{entidade_ej.projetos_meta}}</h5>
-            </div>
-    </div>
-    <div class="col-sm-3 row">
-        {% for membro in entidade_ej.usuarios %}
-            <div class="col-sm-4" style="margin-bottom: 10px; padding-left: 0px; padding-right: 5px;">
-                <div class="card">
-                    <img class="card-img-top" style="object-fit: cover; height: 12vh" src="{{url_for('static', filename='fotos_trainees/' + membro.foto_trainee)}}" alt="Card image cap"> 
-                    <div class="card-body" style="display: flex; justify-content: center; align-items: center; height: 4rem; padding: 20px 8px">
-                        <p class="card-text" style="font-size: smaller; text-align: center;">{{membro.nome.split(' ')[0] + ' '}}
-                        {% if membro.nome.split(' ')[1] %} {{membro.nome.split(' ')[1]}} {% endif %}
-                        {% if membro.nome.split(' ')[1] in ['de', 'da', 'dos', 'del'] %} {{' ' + membro.nome.split(' ')[2]}} {% endif %}</p>
-                    </div> 
-                </div>
-            </div>
-        {% endfor %}
-    </div> 
-</div>  -->
 
 <div class="card d-flex flex-row" style="width: 100%; display: flex; color: #112121; margin-bottom: 10px;">
         <img src="{{url_for('static', filename='fotos_ej/' + entidade_ej.imagem)}}" style="max-height: 50vh; object-fit: cover; width: 128px; border-radius: 4px 0px 0px 4px;" alt="Card image cap">
@@ -72,13 +29,15 @@
 </div>
 
 <h3>Membros</h3>
-<div class="d-flex">
+<div class="d-flex row">
 
 {% for membro in entidade_ej.usuarios %}
-<div class="card d-flex flex-row" style="display: flex; color: #112121; padding-right: 20px; width: 16%; {% if membro != entidade_ej.usuarios[-1] %} margin-right: 1%; {%endif%}">
-    <img src="{{url_for('static', filename='fotos_trainees/' + membro.foto_trainee)}}" style="max-height: 50vh; object-fit: cover; width: 128px; border-radius: 4px 0px 0px 4px;" alt="Card image cap">
-        <div style="padding-top: 15px;padding-left: 15px;">
-        <h5>{{membro.nome}}</h5>
+<div class="col-sm-3">
+    <div class="card d-flex flex-row" style="display: flex; color: #112121; padding-right: 20px; {% if membro != entidade_ej.usuarios[-1] %} margin-right: 1%; {%endif%} height: 128px; margin-bottom: 10px;">
+        <img src="{{url_for('static', filename='fotos_trainees/' + membro.foto_trainee)}}" style="max-height: 50vh; object-fit: cover; width: 128px; border-radius: 4px 0px 0px 4px;" alt="Card image cap">
+            <div style="padding-top: 15px;padding-left: 15px;">
+            <h5>{{membro.nome}}</h5>
+        </div>
     </div>
 </div>
 {% endfor %}
