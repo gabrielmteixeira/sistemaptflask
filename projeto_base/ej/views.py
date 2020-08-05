@@ -14,6 +14,7 @@ def listar_ejs():
     return render_template('listar_ejs.html', lista=lista)
 
 @ej.route('/perfil/<id>')
+@login_required()
 def perfil_ej(id):
     def renderizaTemplate(entidade_ej):
         return render_template('perfil_ej.html',
