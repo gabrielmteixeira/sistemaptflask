@@ -17,7 +17,6 @@ def perfil():
     
     entidade_usuario = Usuario.query.filter_by(id = current_user.get_id()).first()
 
-    print(entidade_usuario)
     return renderizaTemplate(entidade_usuario)
 
 @usuario.route('/editar_usuario/', methods=['POST', 'GET']) 

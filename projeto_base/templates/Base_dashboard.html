@@ -35,10 +35,9 @@
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <img src="{{url_for('static', filename='img/Fechamento_ID_Visual_iJunior_Prancheta_1_cpia_28.png')}}" alt="Logo iJunior" height="95%" width="95%">
+        <div class="sidebar-brand-icon">
+          <img src="{{url_for('static', filename='img/ijrlogo.png')}}" alt="Logo iJunior" height="80%" width="80%" style="margin-left: -15px; margin-bottom: -4px;">
         </div>
-        <div class="sidebar-brand-text mx-3">iJunior</div>
       </a>
 
       <!-- Divider -->
@@ -83,7 +82,7 @@
       <li class="nav-item">
         <a class="nav-link " href="{{url_for('usuario.cadastrar_usuario')}}">
           <i class="fas fa-fw fa-cog"></i>
-          <span>Cadastrar usuário</span>
+          <span>Cadastro</span>
         </a>
       </li>
       {% endif %}

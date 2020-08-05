@@ -7,6 +7,16 @@ from flask_login import LoginManager, current_user, login_user, logout_user
 
 ej = Blueprint('ej', __name__, template_folder='templates')
 
+@ej.route('/perfil/<id>')
+def perfil_ej(id):
+    def renderizaTemplate(entidade_ej):
+        return render_template('perfil_ej.html',
+                               entidade_ej = entidade_ej)
+    
+    entidade_ej = Ej.query.get_or_404(id)
+
+    return renderizaTemplate(entidade_ej)
+
 @ej.route('/cadastrar_ej', methods = ['POST', 'GET'])
 @login_required(role=[usuario_urole_roles['ADMIN']])
 def cadastrar_ej():
@@ -50,41 +60,40 @@ def listar_ejs():
     return render_template('listar_ejs.html', lista=lista)
 
 
-@ej.route('/editar_ej/<id>', methods = ['GET'])
+@ej.route('/editar_ej/<id>', methods = ['GET', 'POST'])
 @login_required(role=[usuario_urole_roles['ADMIN']])
-def pagina_editar_ej(id):
+def editar_ej(id):
     ej = Ej.query.filter_by(id=id).first_or_404()
 
-    return render_template('editar_ej.html', id=ej.id, nome=ej.nome, metaProj=ej.projetos_meta, metaFat=ej.faturamento_meta, 
+    if request.method == 'POST':
+        form = request.form
+
+        _id = id
+        ej = Ej.query.filter_by(id=_id).first_or_404()
+
+        ej.nome = form['nome']             
+        ej.projetos_meta = form['metaProj']             
+        ej.faturamento_meta = form['metaFat']             
+        ej.projetos_atual = form['atualProj']             
+        ej.faturamento_atual = form['atualFat']
+
+        foto = request.files['foto_ej']
+        if foto.content_type != 'application/octet-stream':
+            filename = foto.filename
+            print("++++++++++++++++" + filename)
+            filepath_novo = os.path.join(current_app.root_path, 'static', 'fotos_ej', filename)
+            foto.save(filepath_novo)
+            
+            filepath_antigo = os.path.join(current_app.root_path, 'static', 'fotos_ej', )
+            os.remove(filepath_antigo)        
+            
+            ej.imagem = filename
+
+        db.session.commit()
+
+        return redirect(url_for('ej.perfil_ej', id=id))
+
+    return render_template('editar_ej.html', id=id, nome=ej.nome, metaProj=ej.projetos_meta, metaFat=ej.faturamento_meta, 
                                                             atualProj=ej.projetos_atual, atualFat=ej.faturamento_atual)
 
 
-@ej.route('/editar_ej', methods = ['POST'])
-@login_required(role=[usuario_urole_roles['ADMIN']])
-def editar_ej():
-    form = request.form
-
-    _id = form['id']
-    ej = Ej.query.filter_by(id=_id).first_or_404()
-
-    ej.nome = form['nome']             
-    ej.projetos_meta = form['metaProj']             
-    ej.faturamento_meta = form['metaFat']             
-    ej.projetos_atual = form['atualProj']             
-    ej.faturamento_atual = form['atualFat']
-
-    foto = request.files['foto_ej']
-    if foto.content_type != 'application/octet-stream':
-        filename = foto.filename
-        print("++++++++++++++++" + filename)
-        filepath_novo = os.path.join(current_app.root_path, 'static', 'fotos_ej', filename)
-        foto.save(filepath_novo)
-        
-        filepath_antigo = os.path.join(current_app.root_path, 'static', 'fotos_ej', )
-        os.remove(filepath_antigo)        
-        
-        ej.imagem = filename
-
-    db.session.commit()
-
-    return redirect(url_for('ej.listar_ejs'))
