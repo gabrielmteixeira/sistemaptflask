@@ -98,7 +98,7 @@
       </li>
       {% else %}
       <li class="nav-item">
-      <a class="nav-link" style="padding-bottom: 0;" href="{{url_for('usuario.logout')}}">
+      <a class="nav-link" style="padding-bottom: 0;" href="#" data-toggle="modal" data-target="#logoutModal">
         <i class="fas fa-fw fa-cog"></i>
         <span>Logout</span>
       </a><br>
@@ -269,33 +269,37 @@
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {% if current_user.is_authenticated %}
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ current_user.login }}</span>
-                <img src="url_for('static', filename='fotos_trainees/{}' .format(current_user.foto_trainee))" alt="">
+              {% if current_user.is_authenticated %}
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img src="url_for('static', filename='fotos_trainees/{{current_user.foto_trainee}}'" alt="">
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ current_user.login }}</span>
+                </a>
                 {% else %}
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Faça Login</span>
+                <a class="nav-link dropdown-toggle" href="{{ url_for('usuario.login')}}" id="userDropdown" role="button">
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">Faça login!</span>
+                </a>
                 {% endif %}
-              </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{ url_for('usuario.perfil')}}">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
+                  Meu perfil
+                </a>
+                <a class="dropdown-item" href="{{ url_for('ej.perfil_ej', id=current_user.ej_id)}}">
+                  <i class="fas fa-users fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Minha EJ
                 </a>
                 <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
+                  <i class="fas fa-check-square fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Minhas tarefas
                 </a>
                 <div class="dropdown-divider"></div>
+                {% if current_user.is_authenticated %}
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
+                {% endif %}
               </div>
             </li>
 
