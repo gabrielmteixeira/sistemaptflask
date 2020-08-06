@@ -34,7 +34,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url_for('principal.index')}}">
         <div class="sidebar-brand-icon">
           <img src="{{url_for('static', filename='img/ijrlogo.png')}}" alt="Logo iJunior" height="80%" width="80%" style="margin-left: -15px; margin-bottom: -4px;">
         </div>
@@ -46,8 +46,9 @@
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
         <a class="nav-link" href="{{url_for('principal.index')}}">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <i class="fas fa-home"></i>
           <span>Página Principal</span></a>
+        </a>
       </li>
 
       <!-- Divider -->
@@ -58,20 +59,12 @@
         Funções
       </div>
 
-      <!-- Nav Item Menu -->
-      
-      <li class="nav-item">
-        <a class="nav-link " href="{{url_for('usuario.perfil')}}">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Minha conta</span>
-        </a>
-      </li>
      
       <!-- Nav Item Menu -->
       {% if current_user.urole == usuario_urole_roles['ADMIN'] %}
       <li class="nav-item">
         <a class="nav-link " href="{{url_for('usuario.listar_usuarios')}}">
-          <i class="fas fa-fw fa-cog"></i>
+          <i class="fas fa-list"></i>
           <span>Listar usuários</span>
         </a>
       </li>
@@ -81,7 +74,7 @@
       {% if not current_user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link " href="{{url_for('usuario.cadastrar_usuario')}}">
-          <i class="fas fa-fw fa-cog"></i>
+          <i class="fas fa-file-signature"></i>
           <span>Cadastro</span>
         </a>
       </li>
@@ -92,14 +85,14 @@
       {% if not current_user.is_authenticated %}
       <li class="nav-item">
       <a class="nav-link" style="padding-bottom: 0;" href="{{url_for('usuario.login')}}">
-        <i class="fas fa-fw fa-cog"></i>
+        <i class="fas fa-sign-in-alt"></i>
         <span>Login</span>
       </a><br>
       </li>
       {% else %}
       <li class="nav-item">
       <a class="nav-link" style="padding-bottom: 0;" href="#" data-toggle="modal" data-target="#logoutModal">
-        <i class="fas fa-fw fa-cog"></i>
+        <i class="fas fa-door-open"></i>
         <span>Logout</span>
       </a><br>
       </li>
