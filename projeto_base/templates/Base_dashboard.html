@@ -59,14 +59,14 @@
       </div>
 
       <!-- Nav Item Menu -->
-
+      
       <li class="nav-item">
         <a class="nav-link " href="{{url_for('usuario.perfil')}}">
           <i class="fas fa-fw fa-cog"></i>
           <span>Minha conta</span>
         </a>
       </li>
-
+     
       <!-- Nav Item Menu -->
       {% if current_user.urole == usuario_urole_roles['ADMIN'] %}
       <li class="nav-item">

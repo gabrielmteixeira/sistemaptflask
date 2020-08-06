@@ -21,7 +21,14 @@
 </head>
 
 <body class="bg-gradient-primary">
+  {% with messages = get_flashed_messages() %} {% if messages %}
+  <div class="flashes " style="height: 40px;">
+{% for message in messages %}
+<p class="btn btn-block btn-warning"><b>{{ message }}</b></p>
+  {% endfor %}
 
+</div>
+  <br> {% endif %} {% endwith %}
   <div class="container" style="height: 50vh; margin-top: 20vh;">
     
     
@@ -38,14 +45,7 @@
               
               <div class="col-xl-12">
                 <div class="p-5">
-                  {% with messages = get_flashed_messages() %} {% if messages %}
-                <div class="flashes " style="height: 40px;">
-              {% for message in messages %}
-              <p class="btn btn-block btn-warning"><b>{{ message }}</b></p>
-                {% endfor %}
-
-              </div>
-                <br> {% endif %} {% endwith %}
+                  
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Bem vindo!</h1>
                   </div>
