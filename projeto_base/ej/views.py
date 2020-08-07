@@ -16,13 +16,16 @@ def listar_ejs():
 @ej.route('/perfil/<id>')
 @login_required()
 def perfil_ej(id):
-    def renderizaTemplate(entidade_ej):
-        return render_template('perfil_ej.html',
-                               entidade_ej = entidade_ej)
+    # def renderizaTemplate(entidade_ej):
+    #     return render_template('perfil_ej.html',
+    #                            entidade_ej = entidade_ej)
     
     entidade_ej = Ej.query.get_or_404(id)
 
-    return renderizaTemplate(entidade_ej)
+    porcentagem_faturamento = (entidade_ej.faturamento_atual / entidade_ej.faturamento_meta) * 100
+    porcentagem_projetos = (entidade_ej.projetos_atual / entidade_ej.projetos_meta) * 100
+
+    return render_template('perfil_ej.html', entidade_ej = entidade_ej,  perc_fat=porcentagem_faturamento, perc_proj=porcentagem_projetos)
 
 @ej.route('/cadastrar_ej', methods = ['POST', 'GET'])
 @login_required(role=[usuario_urole_roles['ADMIN']])
