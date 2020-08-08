@@ -9,18 +9,18 @@
             <h3>Empresa Júnior</h3>
         </div>
 </div>
-<div class="d-flex" style="margin-bottom: 30px;">
+<div class="d-flex" style="margin-bottom: 30px; height: 30em;">
     <div class="col-sm-6" style="padding: 0px; padding-right: 10px;">
-        <div class="card d-flex flex-row" style="display: flex; color: #112121; padding: 10px; padding-top: 20px; justify-content: center;">
+        <div class="card d-flex flex-row" style="display: flex; color: #112121; padding: 10px; padding-top: 20px; justify-content: center;  height: 100%;">
             <div>
-                <canvas id="projetos" width="400" height="400"></canvas>
+                <canvas id="projetos" style="height: 70%; width: 100%; margin-top: auto;"></canvas>
             </div>
         </div>
     </div>
     <div class="col-sm-6" style="padding: 0px; padding-left: 10px;">
-        <div class="card d-flex flex-row" style="display: flex; color: #112121; padding: 10px; padding-top: 20px; justify-content: center;">
+        <div class="card d-flex flex-row" style="display: flex; color: #112121; padding: 10px; padding-top: 20px; justify-content: center; height: 100%;">
             <div>
-                <canvas id="faturamento" width="400" height="400"></canvas>
+                <canvas id="faturamento"style="height: 70%; width: 100%; margin-top: auto;"></canvas>
             </div>
         </div>
     </div>
@@ -121,8 +121,7 @@
                     data: [{{entidade_ej.projetos_atual}}],
                     backgroundColor: '#b39be899',
                     borderColor:'#b39be8',
-                    borderWidth: 2,
-                    barThickness: 100
+                    borderWidth: 2
                 }]
         },
         options: {
@@ -132,8 +131,11 @@
                         beginAtZero: true,
                         maxTicksLimit: 7,
                         stepSize: 1,
-                        max: 3
+                        max: {{entidade_ej.projetos_meta + 1}}
                     }
+                }],
+                xAxes: [{
+                    barPercentage: 0.4
                 }]
             },
             "horizontalLine": [{
@@ -167,8 +169,7 @@
                     data: [{{entidade_ej.faturamento_atual}}],
                     backgroundColor: '#9BD9E899',
                     borderColor:'#9BD9E8',
-                    borderWidth: 2,
-                    barThickness: 100
+                    borderWidth: 2
                 }]
         },
         options: {
@@ -177,9 +178,12 @@
                     ticks: {
                         beginAtZero: true,
                         maxTicksLimit: 7,
-                        stepSize: 400,
-                        max: 1600
+                        stepSize: {{fat_grid_step}},
+                        max: {{entidade_ej.faturamento_meta + fat_grid_step}}
                     }
+                }],
+                xAxes: [{
+                    barPercentage: 0.4
                 }]
             },
             "horizontalLine": [{

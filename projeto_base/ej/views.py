@@ -1,6 +1,7 @@
 import os
 from flask import render_template, Blueprint, request, redirect, url_for, flash, current_app
 from projeto_base.ej.models import Ej
+from projeto_base.ej.utils import calcula_chart_grid
 from projeto_base.usuario.models import Usuario, usuario_urole_roles
 from projeto_base import db, login_required
 from flask_login import LoginManager, current_user, login_user, logout_user
@@ -16,16 +17,13 @@ def listar_ejs():
 @ej.route('/perfil/<id>')
 @login_required()
 def perfil_ej(id):
-    # def renderizaTemplate(entidade_ej):
-    #     return render_template('perfil_ej.html',
-    #                            entidade_ej = entidade_ej)
-    
     entidade_ej = Ej.query.get_or_404(id)
 
     porcentagem_faturamento = (entidade_ej.faturamento_atual / entidade_ej.faturamento_meta) * 100
     porcentagem_projetos = (entidade_ej.projetos_atual / entidade_ej.projetos_meta) * 100
 
-    return render_template('perfil_ej.html', entidade_ej = entidade_ej,  perc_fat=porcentagem_faturamento, perc_proj=porcentagem_projetos)
+    return render_template('perfil_ej.html', entidade_ej = entidade_ej, perc_fat=porcentagem_faturamento, perc_proj=porcentagem_projetos, 
+                                                                        fat_grid_step=calcula_chart_grid(entidade_ej.faturamento_meta))
 
 @ej.route('/cadastrar_ej', methods = ['POST', 'GET'])
 @login_required(role=[usuario_urole_roles['ADMIN']])
