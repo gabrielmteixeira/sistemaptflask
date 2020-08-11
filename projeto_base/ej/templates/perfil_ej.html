@@ -9,20 +9,18 @@
             <h3>Empresa Júnior</h3>
         </div>
 </div>
-<div class="d-flex" style="margin-bottom: 30px;">
+<div class="d-flex" style="margin-bottom: 30px; height: 30em;">
     <div class="col-sm-6" style="padding: 0px; padding-right: 10px;">
-        <div class="card d-flex flex-row" style="display: flex; color: #112121; padding: 10px; padding-top: 20px;">
+        <div class="card d-flex flex-row" style="display: flex; color: #112121; padding: 10px; padding-top: 20px; justify-content: center;  height: 100%;">
             <div>
-                <h2>Meta de Faturamento</h2>
-                <h5>{{entidade_ej.faturamento_atual}}/{{entidade_ej.faturamento_meta}}</h5>
+                <canvas id="projetos" style="height: 70%; width: 100%; margin-top: auto;"></canvas>
             </div>
         </div>
     </div>
     <div class="col-sm-6" style="padding: 0px; padding-left: 10px;">
-        <div class="card d-flex flex-row" style="display: flex; color: #112121; padding: 10px; padding-top: 20px;">
+        <div class="card d-flex flex-row" style="display: flex; color: #112121; padding: 10px; padding-top: 20px; justify-content: center; height: 100%;">
             <div>
-                <h2>Meta de Projetos</h2>
-                <h5>{{entidade_ej.projetos_atual}}/{{entidade_ej.projetos_meta}}</h5>
+                <canvas id="faturamento"style="height: 70%; width: 100%; margin-top: auto;"></canvas>
             </div>
         </div>
     </div>
@@ -45,4 +43,157 @@
 
 
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+    var horizonalLinePlugin = {
+        afterDraw: function(chartInstance) {
+            var yScale = chartInstance.scales["y-axis-0"];
+            var canvas = chartInstance.chart;
+            var ctx = canvas.ctx;
+            var index;
+            var line;
+            var style;
+
+            if (chartInstance.options.horizontalLine) {
+            for (index = 0; index < chartInstance.options.horizontalLine.length; index++) {
+                line = chartInstance.options.horizontalLine[index];
+
+                if (!line.style) {
+                    style = "black";
+                } else {
+                    style = line.style;
+                }
+
+                if (line.y) {
+                    yValue = yScale.getPixelForValue(line.y);
+                } else {
+                    yValue = 0;
+                }
+                
+                if (!line.x) {
+                    line.x = 0;
+                } 
+
+                ctx.lineWidth = 2;
+
+                if (yValue) {
+                    ctx.beginPath();
+                    ctx.moveTo(line.x, yValue);
+                    ctx.lineTo(canvas.width, yValue);
+                    ctx.strokeStyle = style;
+                    ctx.stroke();
+                }
+
+                if (line.text) {
+                    ctx.font = 'Georgia'
+                    ctx.fillStyle = style;
+                    ctx.fillText(line.text, line.x, yValue - 5);
+                }
+            }
+            return;
+            };
+        }
+    };
+    Chart.pluginService.register(horizonalLinePlugin);
+
+    const chartp = document.getElementById('projetos').getContext('2d');
+    const projetos = new Chart(chartp, {
+        type: 'bar',
+        data: {
+            labels: [`Projetos - ${'{{"%0.2f" % perc_proj}}'}%`],
+            datasets: [ 
+                {
+                    label: 'Meta',
+                    type: 'line',
+                    data: [10000],
+                    borderColor: 'black',
+                    backgroundColor: 'rgba(0, 0, 0, 0)',
+                    pointBackgroundColor: 'black',
+                    pointBorderColor: 'white',
+                    pointRadius: '0',
+                    pointBorderWidth: '1.8',
+                    pointHoverRadius: '0'
+                },  
+                {
+                    label: 'Atual',
+                    data: [{{entidade_ej.projetos_atual}}],
+                    backgroundColor: '#b39be899',
+                    borderColor:'#b39be8',
+                    borderWidth: 2
+                }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        maxTicksLimit: 7,
+                        stepSize: 1,
+                        max: {{entidade_ej.projetos_meta + 1}}
+                    }
+                }],
+                xAxes: [{
+                    barPercentage: 0.4
+                }]
+            },
+            "horizontalLine": [{
+                "x": 22,
+                "y": {{entidade_ej.projetos_meta}},
+                "style": "black"
+            }]
+        }
+    });
+    
+    const chartb = document.getElementById('faturamento').getContext('2d')
+    const faturamento = new Chart(chartb, {
+        type: 'bar',
+        data: {
+            labels: [`Faturamento - ${'{{"%0.2f" % perc_fat}}'}%`],
+            datasets: [ 
+                {
+                    label: 'Meta',
+                    type: 'line',
+                    data: [10000],
+                    borderColor: 'black',
+                    backgroundColor: 'rgba(0, 0, 0, 0)',
+                    pointBackgroundColor: 'black',
+                    pointBorderColor: 'white',
+                    pointRadius: '0',
+                    pointBorderWidth: '1.8',
+                    pointHoverRadius: '0'
+                },  
+                {
+                    label: 'Atual',
+                    data: [{{entidade_ej.faturamento_atual}}],
+                    backgroundColor: '#9BD9E899',
+                    borderColor:'#9BD9E8',
+                    borderWidth: 2
+                }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        maxTicksLimit: 7,
+                        stepSize: {{fat_grid_step}},
+                        max: {{entidade_ej.faturamento_meta + fat_grid_step}}
+                    }
+                }],
+                xAxes: [{
+                    barPercentage: 0.4
+                }]
+            },
+            "horizontalLine": [{
+                "x": 40,
+                "y": {{entidade_ej.faturamento_meta}},
+                "style": "black"
+            }]
+        }
+    })
+
+
+</script>
 {% endblock %}
