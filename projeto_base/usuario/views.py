@@ -165,10 +165,14 @@ def cadastrar_usuario():
                                                foto_trainee=filename)
 
                     db.session.add(entidade_usuario)
-                    db.session.commit()
+                    db.session.commit(entidade_usuario)
+                    
                     flash("Usuário cadastrado!")
+                    loginUsuario = Usuario.query.filter_by(email=email).first()
+                    login_user(loginUsuario)
+                    flash("Usuário logado com sucesso!")
 
-                return redirect(url_for('usuario.login'))
+                return redirect(url_for('principal.index'))
     else:
         if request.method == 'POST':
             form = request.form
@@ -203,12 +207,18 @@ def cadastrar_usuario():
 
                 db.session.add(entidade_usuario)
                 db.session.commit()
+                
                 flash("Usuário cadastrado!")
 
+                loginUsuario = Usuario.query.filter_by(email=email).first()
+                login_user(loginUsuario)
+                flash("Usuário logado com sucesso!")
             return redirect(url_for('principal.index'))
 
     return render_template('cadastro.html')
-
+"""@usuario.route('login_automático', methods=['GET', 'POST'])
+def login_automático():
+    login_user()"""
 @usuario.route('/login', methods = ['POST','GET'])
 def login():
     if request.method == 'POST':

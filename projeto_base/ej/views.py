@@ -47,11 +47,11 @@ def cadastrar_ej():
                 foto_ej.save(filepath)
 
                 entidade_ej = Ej(       nome=nome,
-                                        imagem=filename,
                                         projetos_meta = metaProj,
-                                        faturamento_meta = metaFat,
                                         projetos_atual = 0,
-                                        faturamento_atual = 0)
+                                        faturamento_atual = 0,
+                                        faturamento_meta = metaFat,
+                                        imagem=filename)
 
                 db.session.add(entidade_ej)
                 db.session.commit()
