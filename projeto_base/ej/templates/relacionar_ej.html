@@ -1,0 +1,36 @@
+{% extends 'Base_dashboard.html' %}
+
+{% block conteudo %}
+<div class="card shadow mb-4">
+<div class="card-body">
+<div class="table-responsive">
+<table class="table" id="dataTable" cellspacing="0">
+    <thead>
+        <tr>
+            <th scope="col">Trainee</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col">Relacionar</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for usuario in usuario %}
+        <tr>
+            
+            <td style="font-size: 14pt;">{{usuario.nome}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><button class="btn"><i id="cor" class="fas fa-handshake"></i></button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+</div>
+</div>
+{% endblock conteudo %}

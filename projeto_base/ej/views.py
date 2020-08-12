@@ -99,4 +99,10 @@ def editar_ej(id):
     return render_template('editar_ej.html', id=id, nome=ej.nome, metaProj=ej.projetos_meta, metaFat=ej.faturamento_meta, 
                                                             atualProj=ej.projetos_atual, atualFat=ej.faturamento_atual)
 
+@ej.route('relacionar_ej/<_id>', methods=['GET', 'POST'])
+@login_required(role=[usuario_urole_roles['ADMIN']])
+def relacionar_ej(_id):
 
+    ej = Ej.query.get_or_404(_id)
+    usuario = Usuario.query.all()
+    return render_template('relacionar_ej.html', ej=ej, usuario=usuario)
