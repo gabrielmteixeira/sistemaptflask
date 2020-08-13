@@ -28,3 +28,27 @@ a.btn-icon-lista{
 .taskList {
     margin-bottom: 50px;
 }
+
+.modal-btn {
+    border: none !important;
+    background: none !important;
+    cursor: pointer !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #858796 !important;
+    outline: none !important;
+    transition: 300ms !important;
+}
+
+.modal-btn:hover {
+    color: #656772 !important;
+}
+
+.modal-cover img {
+
+    width: 100% !important;
+    display: flex !important;
+    object-fit: cover !important;
+    height: 160px !important;
+
+}
