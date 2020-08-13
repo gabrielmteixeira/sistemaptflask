@@ -286,10 +286,12 @@
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Meu perfil
                 </a>
+                {% if current_user.ej_id %}
                 <a class="dropdown-item" href="{{ url_for('ej.perfil_ej', id=current_user.ej_id)}}">
                   <i class="fas fa-users fa-sm fa-fw mr-2 text-gray-400"></i>
                   Minha EJ
                 </a>
+                {% endif %}
                 <a class="dropdown-item" href="#">
                   <i class="fas fa-check-square fa-sm fa-fw mr-2 text-gray-400"></i>
                   Minhas tarefas

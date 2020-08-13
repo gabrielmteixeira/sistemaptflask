@@ -47,11 +47,11 @@ def cadastrar_ej():
                 foto_ej.save(filepath)
 
                 entidade_ej = Ej(       nome=nome,
-                                        imagem=filename,
                                         projetos_meta = metaProj,
-                                        faturamento_meta = metaFat,
                                         projetos_atual = 0,
-                                        faturamento_atual = 0)
+                                        faturamento_atual = 0,
+                                        faturamento_meta = metaFat,
+                                        imagem=filename)
 
                 db.session.add(entidade_ej)
                 db.session.commit()
@@ -99,4 +99,10 @@ def editar_ej(id):
     return render_template('editar_ej.html', id=id, nome=ej.nome, metaProj=ej.projetos_meta, metaFat=ej.faturamento_meta, 
                                                             atualProj=ej.projetos_atual, atualFat=ej.faturamento_atual)
 
+@ej.route('relacionar_ej/<_id>', methods=['GET', 'POST'])
+@login_required(role=[usuario_urole_roles['ADMIN']])
+def relacionar_ej(_id):
 
+    ej = Ej.query.get_or_404(_id)
+    usuario = Usuario.query.all()
+    return render_template('relacionar_ej.html', ej=ej, usuario=usuario)
