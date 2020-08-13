@@ -60,7 +60,7 @@
             <p style="font-size: large;">{{tarefa.descricao}}</p>
           </div>
           <div class="modal-footer">
-            <a href="{{url_for('tarefa.deleta_tarefa', id=tarefa.id)}}" class="btn-icon-lista" onclick="return confirm('Você deseja excluir esta tarefa?');"><button type="button" class="btn btn-secondary" data-dismiss="modal">Excluir</button></a>
+            <a href="{{url_for('tarefa.deleta_tarefa', id=tarefa.id)}}" class="btn-icon-lista" onclick="return confirm('Você deseja excluir esta tarefa?');"><button type="button" class="btn btn-secondary">Excluir</button></a>
             <a href="{{url_for('tarefa.pagina_edicao_tarefa', id=tarefa.id)}}"><button type="button" class="btn btn-primary" style="margin-left: 2%;">Editar</button></a>
           </div>
         </div>
