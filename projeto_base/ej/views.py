@@ -104,5 +104,17 @@ def editar_ej(id):
 def relacionar_ej(_id):
 
     ej = Ej.query.get_or_404(_id)
-    usuario = Usuario.query.all()
-    return render_template('relacionar_ej.html', ej=ej, usuario=usuario)
+    usuarios = Usuario.query.all()
+    if request.method == 'POST':
+        usuario_id = request.form['id']
+    
+        usuario = Usuario.query.get_or_404(usuario_id)
+        
+        ej_id = request.form['ej_id']
+        usuario.ej_id = ej_id
+        db.session.commit()
+
+        return redirect(url_for('ej.relacionar_ej', _id=ej.id))
+
+
+    return render_template('relacionar_ej.html', ej=ej, usuario=usuarios)

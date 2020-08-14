@@ -18,15 +18,19 @@
     </thead>
     <tbody>
         {% for usuario in usuario %}
+        {% if not usuario.ej_id %}
         <tr>
-            
+            <form action="" method="POST"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="id" value="{{usuario.id}}">
+            <input type="hidden" name="ej_id" value="{{ej.id}}">
             <td >{{usuario.nome}}</td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-            <td><button class="btn btn-primary btn-sm">Relacionar</button></td>
+            <td><button class="btn btn-primary btn-sm">Relacionar</button></td></form>
         </tr>
+        {% endif %}
         {% endfor %}
     </tbody>
 </table>
