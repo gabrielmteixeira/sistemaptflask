@@ -119,3 +119,13 @@ def edita_tarefa():
     db.session.commit()
 
     return redirect(url_for('tarefa.lista_tarefas'))
+
+@tarefa.route('/listar_tarefas_users')
+@login_required()
+def lista_tarefas_users():
+    tarefas = Tarefa.query.all()
+    if not tarefas:
+        flash("Não há tarefas cadastradas no sistema.")
+        return redirect(url_for('principal.index'))
+
+    return render_template('listar_tarefas_users.html', tarefas=tarefas)

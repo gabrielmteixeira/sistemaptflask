@@ -1,0 +1,64 @@
+{% extends "Base_dashboard.html" %}
+
+{% block conteudo %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <ul class=flashes>
+        {% for message in messages %}
+            <li><b>{{ message }}</b></li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endwith %}
+<h2>Lista de Tarefas</h2>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800"></h1>
+</div>
+
+
+<table class="table">
+	<thead>
+		<th scope="col">Título</th>
+		<th scope="col">Prazo</th>
+    <th scope="col">É individual</th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+	</thead>
+	{% for tarefa in tarefas %}
+		<tr>
+			<td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target= "#tarefa_{{tarefa.id}}">{{tarefa.titulo}}</button></td>
+			<td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">{{tarefa.prazo}}</button></td>
+      {% if tarefa.ehSolo == 0 %}
+        <td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">False</button></td>
+      {% else %}
+        <td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">True</button></td>
+      {% endif %}
+    </tr>
+    
+    <!-- Modal -->
+    
+    <div class="modal fade" id="tarefa_{{tarefa.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header" style="padding: 1% 1rem;">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-cover" style="padding: 0;">
+            <img src="{{url_for('static', filename='fotos_tarefa/' + tarefa.icone)}}" alt="Card cover">
+          </div>
+          <div class="modal-header" style="align-items: center;">
+            <h4 class="modal-title" id="exampleModalLongTitle">{{tarefa.titulo}}</h4>
+            <h6 style="margin: 0;">Prazo: {{tarefa.prazo}}</h6>
+          </div>
+          <div class="modal-body">
+            <p style="font-size: large;">{{tarefa.descricao}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+	{% endfor %}
+</table>
+{% endblock %}

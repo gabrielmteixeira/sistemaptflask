@@ -67,6 +67,16 @@
           <span>Minha conta</span>
         </a>
       </li>
+      {% endif %}
+
+            <!-- Nav Item Menu -->
+      {% if current_user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link " href="{{url_for('tarefa.lista_tarefas_users')}}">
+          <i class="fas fa-clipboard-list"></i>
+          <span>Listar tarefas</span>
+        </a>
+      </li>
       {% endif %}    
       <!-- Nav Item Menu -->
       {% if current_user.urole == usuario_urole_roles['ADMIN'] %}
@@ -74,6 +84,16 @@
         <a class="nav-link " href="{{url_for('usuario.listar_usuarios')}}">
           <i class="fas fa-list"></i>
           <span>Listar usuários</span>
+        </a>
+      </li>
+      {% endif %}
+
+      <!-- Nav Item Menu -->
+      {% if current_user.urole == usuario_urole_roles['ADMIN'] %}
+      <li class="nav-item">
+        <a class="nav-link " href="{{url_for('tarefa.lista_tarefas')}}">
+          <i class="fas fa-clipboard-list"></i>
+          <span>Listar tarefas</span>
         </a>
       </li>
       {% endif %}
