@@ -28,7 +28,7 @@
                         <p class="card-desc">Prazo final: {{tarefa.prazo}}</p>
                     </div>
                 </div>
-                <img src="{{url_for('static', filename='fotos_tarefa/' + tarefa.icone)}}">
+                <img src="{{url_for('static', filename='fotos_tarefa/' + tarefa.icone)}}" alt="Card cover">
                 <div class="card-body">
                     {% if tarefa.ehSolo == 0 %}
                       <p class="card-text">Tarefa individual</p>
