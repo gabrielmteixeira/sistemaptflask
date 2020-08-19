@@ -9,6 +9,7 @@ TarefaTrainee = db.Table("tarefaTrainee",
 class Tarefa(db.Model): 
 
 
+
     __tablename__ = 'tarefa'
     id = db.Column(db.Integer, primary_key=True)
     titulo = db.Column(db.String, unique=True, nullable=False)

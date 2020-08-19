@@ -31,9 +31,9 @@
 			<td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target= "#tarefa_{{tarefa.id}}">{{tarefa.titulo}}</button></td>
 			<td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">{{tarefa.prazo}}</button></td>
       {% if tarefa.ehSolo == 0 %}
-        <td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">False</button></td>
+        <td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">Não</button></td>
       {% else %}
-        <td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">True</button></td>
+        <td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">Sim</button></td>
       {% endif %}
 			<td><a href="{{url_for('tarefa.pagina_edicao_tarefa', id=tarefa.id)}}"><button class="btn"><i id="cor" class="far fa-edit"></i></button></a></td>
 			<td><a href="{{url_for('tarefa.deleta_tarefa', id=tarefa.id)}}" class="btn-icon-lista" onclick="return confirm('Você deseja excluir esta tarefa?');"><button class="btn"><i id="cor" class="far fa-trash-alt"></i></button></a></td>
@@ -51,6 +51,13 @@
           </div>
           <div class="modal-cover" style="padding: 0;">
             <img src="{{url_for('static', filename='fotos_tarefa/' + tarefa.icone)}}" alt="Card cover">
+          </div>
+          <div class="modal-eh-solo">
+            {% if tarefa.ehSolo == 0 %}
+              <p style="margin: 0;">Coletiva</p>
+            {% else %}
+              <p style="margin: 0;">Individual</p>              
+            {% endif %}
           </div>
           <div class="modal-header" style="align-items: center;">
             <h4 class="modal-title" id="exampleModalLongTitle">{{tarefa.titulo}}</h4>

@@ -52,3 +52,58 @@ a.btn-icon-lista{
     height: 200px !important;
 
 }
+
+.modal-eh-solo {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    padding: 0.5rem 1rem 0 !important;
+}
+
+.card-titulo {
+    position: relative;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-prazo {
+    position: relative;
+    height: 38px;
+    text-align: center;
+}
+
+.card-text {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.card img {
+    object-fit: cover;
+    max-width: 100%;
+    height: 8rem;
+}
+
+.card:hover {
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
+    transition: box-shadow 1s ease;
+    animation: hoverZoom 0.5s;
+    transform: scale(1.05);
+}
+
+.grid-tarefas {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+}
+
+@media (max-width: 500px) {
+    .grid-tarefas {
+        display: grid;
+        grid-template-columns: 1fr;
+    
+    }
+}
+
