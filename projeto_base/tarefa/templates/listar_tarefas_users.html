@@ -70,8 +70,9 @@
             <p style="font-size: large;">{{tarefa.descricao}}</p>
           </div>
           <div class="modal-footer" style="padding: 0.6rem 1rem;">
-            <form method="POST" enctype="multipart/form-data">
+            <form method="POST" action="" enctype="multipart/form-data">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <input type="hidden" name="id_tarefa" value ="{{tarefa.id}}">
               <button type="submit" class="btn btn-primary">Marcar como concluída</button>
             </form>
           </div>
