@@ -6,6 +6,9 @@ from projeto_base.usuario.models import Usuario, usuario_urole_roles
 from projeto_base import db, login_required
 from flask_login import LoginManager, current_user, login_user, logout_user
 from projeto_base.tarefa.utils import data_format_in, data_format_out, define_solo_in, define_solo_out
+from datetime import datetime
+import copy
+
 
 tarefa = Blueprint('tarefa', __name__, template_folder='templates')
 
@@ -124,8 +127,24 @@ def edita_tarefa():
 @login_required()
 def lista_tarefas_users():
     tarefas = Tarefa.query.all()
+    tarefaTreinee = TarefaTrainee.query.all()
+    listaDeAtraso = list()
     if not tarefas:
         flash("Não há tarefas cadastradas no sistema.")
         return redirect(url_for('principal.index'))
+    
+    for t in tarefaTreinee:
+        
+        d1 = datetime.today()
+        d2 = d2 = datetime.strptime(t.prazo, '%Y-%m-%d')
+        
+        delta = (d1 - d2)
+
+        if delta.days > 0:
+            if not t.feito:
+                situacao = 'Atrasada'
+        else:
+            situacao = 'Em dia'
+        listaDeAtraso.append(situacao)
 
     return render_template('listar_tarefas_users.html', tarefas=tarefas)
