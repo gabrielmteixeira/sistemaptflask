@@ -120,12 +120,21 @@ def edita_tarefa():
 
     return redirect(url_for('tarefa.lista_tarefas'))
 
-@tarefa.route('/listar_tarefas_users')
+@tarefa.route('/listar_tarefas_users', methods=['POST', 'GET'])
 @login_required()
 def lista_tarefas_users():
     tarefas = Tarefa.query.all()
     if not tarefas:
         flash("Não há tarefas cadastradas no sistema.")
         return redirect(url_for('principal.index'))
+
+    if request.method == 'POST':
+        id_tarefa = request.form['id_tarefa']
+        tarefa_entregue = Tarefa.query.get_or_404(id_tarefa)
+        current_user.tarefas.append(tarefa_entregue)
+
+        db.session.commit()
+
+        return redirect(url_for('tarefa.lista_tarefas_users'))
 
     return render_template('listar_tarefas_users.html', tarefas=tarefas)
