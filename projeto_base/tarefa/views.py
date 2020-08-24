@@ -144,10 +144,10 @@ def lista_tarefas_users():
         
         delta = (d1 - d2)
         
-            if delta.days > 0:
-                pass #  AQUI A TAREFA ESTÁ ATRASADA
-            else:
-                pass #  AQUI A TAREFA ESTÁ EM DIA
+        if delta.days > 0:
+            pass #  AQUI A TAREFA ESTÁ ATRASADA
+        else:
+            pass #  AQUI A TAREFA ESTÁ EM DIA
                    
     
 
