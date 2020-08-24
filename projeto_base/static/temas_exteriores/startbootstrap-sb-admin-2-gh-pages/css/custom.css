@@ -91,17 +91,35 @@ a.btn-icon-lista{
     height: 8rem;
 }
 
-#lista-tarefas .card:hover {
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+#lista-tarefas .hoverable:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.02);
     transition: all 200ms;
     animation: hoverZoom 0.5s;
-    transform: scale(1.02);
+    transform: scale(0.97);
 }
+
+#lista-tarefas .done {
+    transform: scale(0.97);
+}
+
+#lista-tarefas .done img {
+    filter: grayscale(80%);
+    transition: all 500ms;
+}
+
+#lista-tarefas .done:hover img {
+    filter: grayscale(20%);
+    transition: all 500ms;
+}
+
 
 .grid-tarefas {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+}
 
+.h2Tarefa {
+    padding-left: 10px;
 }
 
 @media (max-width: 500px) {
