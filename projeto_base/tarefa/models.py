@@ -6,6 +6,9 @@ TarefaTrainee = db.Table("tarefaTrainee",
                     db.Column('id_tarefa', db.Integer, db.ForeignKey('tarefa.id')),
                     db.Column('feita', db.Boolean))
 
+
+                    
+
 class Tarefa(db.Model): 
 
 

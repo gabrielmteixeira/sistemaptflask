@@ -122,38 +122,45 @@ def edita_tarefa():
     db.session.commit()
 
     return redirect(url_for('tarefa.lista_tarefas'))
-
 @tarefa.route('/listar_tarefas_users', methods=['POST', 'GET'])
 @login_required()
 def lista_tarefas_users():
     tarefas = Tarefa.query.all()
-    tarefaTreinee = TarefaTrainee.query.all()
-    listaDeAtraso = list()
+    
     if not tarefas:
         flash("Não há tarefas cadastradas no sistema.")
         return redirect(url_for('principal.index'))
     
-    for t in tarefaTreinee:
-        
-        d1 = datetime.today()
-        d2 = d2 = datetime.strptime(t.prazo, '%Y-%m-%d')
-        
-        delta = (d1 - d2)
-
-        if delta.days > 0:
-            if not t.feito:
-                situacao = 'Atrasada'
-        else:
-            situacao = 'Em dia'
-        listaDeAtraso.append(situacao)
-
+    tarefasFeitas = db.session.query(TarefaTrainee).all()
     if request.method == 'POST':
         id_tarefa = request.form['id_tarefa']
         tarefa_entregue = Tarefa.query.get_or_404(id_tarefa)
+        
         current_user.tarefas.append(tarefa_entregue)
-
         db.session.commit()
+        # TRATANDO O ATRASO DE TAREFA
+        d1 = datetime.today()
+        d2 = datetime.strptime(tarefa_entregue.prazo, '%d/%m/%Y')
+        
+        delta = (d1 - d2)
+        
+            if delta.days > 0:
+                pass #  AQUI A TAREFA ESTÁ ATRASADA
+            else:
+                pass #  AQUI A TAREFA ESTÁ EM DIA
+                   
+    
 
         return redirect(url_for('tarefa.lista_tarefas_users'))
+    
 
     return render_template('listar_tarefas_users.html', tarefas=tarefas)
+
+@tarefa.route('/visualizar_tarefa/<_id>')
+def visualizar_tarefa(_id):
+    tarefa = Tarefa.query.get_or_404(_id)
+    tarefaTrainee = db.session.query(TarefaTrainee).all()
+    usuario = Usuario.query.all()
+    
+
+    return render_template('visualizar_tarefa.html', usuario = usuario, tarefaTrainee = tarefaTrainee, tarefa=tarefa)

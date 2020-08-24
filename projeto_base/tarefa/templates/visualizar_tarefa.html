@@ -1,0 +1,50 @@
+{% extends 'Base_dashboard.html' %}
+
+
+{% block conteudo %}
+<h2>{{tarefa.titulo}}</h2>
+<br>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <p style="font-size: large;">{{tarefa.descricao}}</p>
+</div>
+
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th></th>
+                        <th></th>
+                        <th>Status</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in usuario %}
+                    {% for tarefatrainee in tarefaTrainee %}
+                    {% if user.id == tarefatrainee.id_trainee and tarefatrainee.id_tarefa == tarefa.id%}
+
+                    <tr>
+                        <td>{{user.nome}}</td>
+                        <td></td>
+                        <td></td>
+                        {% if tarefatrainee.feita == True %}
+                        <td>Atrasado</td>
+                        {% elif tarefatrainee.feita == False %}
+                        <td>Em Dia</td>
+                        
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock conteudo %}
