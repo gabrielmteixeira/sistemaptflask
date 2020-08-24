@@ -6,6 +6,9 @@ from projeto_base.usuario.models import Usuario, usuario_urole_roles
 from projeto_base import db, login_required
 from flask_login import LoginManager, current_user, login_user, logout_user
 from projeto_base.tarefa.utils import data_format_in, data_format_out, define_solo_in, define_solo_out
+from datetime import datetime
+import copy
+
 
 tarefa = Blueprint('tarefa', __name__, template_folder='templates')
 
@@ -119,22 +122,45 @@ def edita_tarefa():
     db.session.commit()
 
     return redirect(url_for('tarefa.lista_tarefas'))
-
 @tarefa.route('/listar_tarefas_users', methods=['POST', 'GET'])
 @login_required()
 def lista_tarefas_users():
     tarefas = Tarefa.query.all()
+    
     if not tarefas:
         flash("Não há tarefas cadastradas no sistema.")
         return redirect(url_for('principal.index'))
-
+    
+    tarefasFeitas = db.session.query(TarefaTrainee).all()
     if request.method == 'POST':
         id_tarefa = request.form['id_tarefa']
         tarefa_entregue = Tarefa.query.get_or_404(id_tarefa)
+        
         current_user.tarefas.append(tarefa_entregue)
-
         db.session.commit()
+        # TRATANDO O ATRASO DE TAREFA
+        d1 = datetime.today()
+        d2 = datetime.strptime(tarefa_entregue.prazo, '%d/%m/%Y')
+        
+        delta = (d1 - d2)
+        
+            if delta.days > 0:
+                pass #  AQUI A TAREFA ESTÁ ATRASADA
+            else:
+                pass #  AQUI A TAREFA ESTÁ EM DIA
+                   
+    
 
         return redirect(url_for('tarefa.lista_tarefas_users'))
+    
 
     return render_template('listar_tarefas_users.html', tarefas=tarefas)
+
+@tarefa.route('/visualizar_tarefa/<_id>')
+def visualizar_tarefa(_id):
+    tarefa = Tarefa.query.get_or_404(_id)
+    tarefaTrainee = db.session.query(TarefaTrainee).all()
+    usuario = Usuario.query.all()
+    
+
+    return render_template('visualizar_tarefa.html', usuario = usuario, tarefaTrainee = tarefaTrainee, tarefa=tarefa)

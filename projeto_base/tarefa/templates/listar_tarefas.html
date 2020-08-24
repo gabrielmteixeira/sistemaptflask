@@ -25,6 +25,7 @@
     <th scope="col">É individual</th>
     <th scope="col"></th>
     <th scope="col"></th>
+    <th scope="col"></th>
 	</thead>
 	{% for tarefa in tarefas %}
 		<tr>
@@ -35,6 +36,7 @@
       {% else %}
         <td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">Sim</button></td>
       {% endif %}
+      <td><a href="{{url_for('tarefa.visualizar_tarefa', _id=tarefa.id)}}">Ver Detalhes</a></td>
 			<td><a href="{{url_for('tarefa.pagina_edicao_tarefa', id=tarefa.id)}}"><button class="btn"><i id="cor" class="far fa-edit"></i></button></a></td>
 			<td><a href="{{url_for('tarefa.deleta_tarefa', id=tarefa.id)}}" class="btn-icon-lista" onclick="return confirm('Você deseja excluir esta tarefa?');"><button class="btn"><i id="cor" class="far fa-trash-alt"></i></button></a></td>
     </tr>
