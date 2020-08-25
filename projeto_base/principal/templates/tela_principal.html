@@ -14,22 +14,25 @@
             
         {% endif %}
     {% endwith %}
+    {% if current_user.is_authenticated %}
     {% if not current_user.urole == usuario_urole_roles.ADMIN %}
 
     <h1 style="margin-bottom: 40px;"> Programa Trainee 2020.2 </h1>
     <h3> Missões pendentes </h3>
     <div class="taskList">
       {% for tarefa in tarefas %}
-      {% if tarefa not in current_user.tarefas %}  
+      {% if tarefa not in current_user.get_tarefas() %}  
         <div class="card">
             <div class="card-body">
                 <i class="fas fa-tasks"></i> {{tarefa.titulo}}
             </div>
         </div>
+      
       {% endif %}
       {% endfor %}
       
     </div>
+    {% endif %}
     {% endif %}
     <br>
     <h3> EJ em Destaque </h3>
