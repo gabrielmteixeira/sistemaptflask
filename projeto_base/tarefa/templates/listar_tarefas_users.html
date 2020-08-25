@@ -17,7 +17,7 @@
 
   <div class="grid-tarefas" id="lista-tarefas">
     {% for tarefa in tarefas %}
-    {% if tarefa not in current_user.tarefas %}
+    {% if tarefa not in current_user.get_tarefas() %}
       <div class="smaller-padding">
         <button type="button" class="modal-btn" style="width: 100%" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">
             <div class="card hoverable" style="height: 100%; margin: 4%">  
@@ -48,7 +48,7 @@
   <h4 class="h2Tarefa" style="margin-top: 20px">Tarefas Concluídas</h4>
   <div class="grid-tarefas" id="lista-tarefas">
   {% for tarefa in tarefas %}
-    {% if tarefa in current_user.tarefas %}
+    {% if tarefa in current_user.get_tarefas() %}
       <div class="smaller-padding">
         <button type="button" class="modal-btn" style="width: 100%" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">
             <div class="card done" style="height: 100%; margin: 4%">  

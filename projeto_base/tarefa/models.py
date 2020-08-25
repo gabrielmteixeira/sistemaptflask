@@ -1,13 +1,20 @@
 from projeto_base import db
 import projeto_base.usuario.models
 
-TarefaTrainee = db.Table("tarefaTrainee",
-                    db.Column('id_trainee', db.Integer, db.ForeignKey('usuario.id')),
-                    db.Column('id_tarefa', db.Integer, db.ForeignKey('tarefa.id')),
-                    db.Column('feita', db.Boolean))
+class TarefaTrainee(db.Model):
+    __tablename__ = 'tarefaTrainee'
+    id_trainee = db.Column(db.Integer, db.ForeignKey('usuario.id'), primary_key=True)
+    id_tarefa = db.Column(db.Integer, db.ForeignKey('tarefa.id'), primary_key=True)
+    atrasada = db.Column(db.Boolean)
+    trainee = db.relationship("Usuario", back_populates="tarefas")
+    tarefa = db.relationship("Tarefa", back_populates="trainees")
+    
+    def __init__(self, tarefa, trainee):
+        self.tarefa = tarefa
+        self.trainee = trainee
 
-
-                    
+    def __repr__(self):
+        return f'TarefaTrainee: {self.id_tarefa}/{self.id_trainee}' 
 
 class Tarefa(db.Model): 
 
@@ -18,7 +25,7 @@ class Tarefa(db.Model):
     icone = db.Column(db.String)
     prazo = db.Column(db.String)
     ehSolo = db.Column(db.Boolean)
-    trainees = db.relationship("Usuario", secondary=TarefaTrainee, back_populates="tarefas")
+    trainees = db.relationship("TarefaTrainee", back_populates="tarefa")
 
     def __init__(self, titulo, descricao, icone, prazo, ehSolo):
         self.titulo = titulo
@@ -29,4 +36,11 @@ class Tarefa(db.Model):
 
     def __repr__(self):
         return f'Tarefa: {self.titulo}' 
+    
+    def get_trainees(self):
+        trainees_list = []
+        for assoc in self.trainees:
+            trainees_list.append(assoc.trainee)
+        return trainees_list
+
 

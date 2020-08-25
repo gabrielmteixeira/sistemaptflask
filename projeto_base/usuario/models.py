@@ -6,7 +6,7 @@ from flask import session
 from enum import Enum
 
 import projeto_base.ej.models
-from projeto_base.tarefa.models import TarefaTrainee
+import projeto_base.tarefa.models
 
 usuario_urole_roles = {
                 'USER': 'user',
@@ -32,7 +32,7 @@ class Usuario(db.Model, UserMixin):
     foto_trainee = db.Column(db.String(120))
     ej_id = db.Column(db.Integer, db.ForeignKey('ej.id'))
     ej = db.relationship('Ej')
-    tarefas = db.relationship("Tarefa", secondary=TarefaTrainee, back_populates="trainees")
+    tarefas = db.relationship("TarefaTrainee", back_populates="trainee")
 
     def __init__(self, nome, login, senha, email, foto_trainee):
         self.nome = nome
@@ -46,6 +46,12 @@ class Usuario(db.Model, UserMixin):
 
     def setSenha(self, senha):
         self.senha = self.bcrypt.generate_password_hash(senha).decode('utf-8')
+
+    def get_tarefas(self):
+        tarefas_list = []
+        for assoc in self.tarefas:
+            tarefas_list.append(assoc.tarefa)
+        return tarefas_list
 
     def __repr__(self):
         return f"Login:{self.login}, Senha:{self.senha}"

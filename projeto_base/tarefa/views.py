@@ -47,7 +47,7 @@ def cadastra_tarefa():
     return render_template('cadastro_tarefa.html')
 
 
-@tarefa.route('/listar_tarefas')
+@tarefa.route('/listar_tarefas_admin')
 @login_required(role=[usuario_urole_roles['ADMIN']])
 def lista_tarefas():
     tarefas = Tarefa.query.all()
@@ -122,7 +122,7 @@ def edita_tarefa():
     db.session.commit()
 
     return redirect(url_for('tarefa.lista_tarefas'))
-@tarefa.route('/listar_tarefas_users', methods=['POST', 'GET'])
+@tarefa.route('/listar_tarefas', methods=['POST', 'GET'])
 @login_required()
 def lista_tarefas_users():
     tarefas = Tarefa.query.all()
@@ -131,13 +131,13 @@ def lista_tarefas_users():
         flash("Não há tarefas cadastradas no sistema.")
         return redirect(url_for('principal.index'))
     
-    tarefasFeitas = db.session.query(TarefaTrainee).all()
+    # tarefasFeitas = db.session.query(TarefaTrainee).all()
     if request.method == 'POST':
         id_tarefa = request.form['id_tarefa']
         tarefa_entregue = Tarefa.query.get_or_404(id_tarefa)
         
-        current_user.tarefas.append(tarefa_entregue)
-        db.session.commit()
+        trainee = Usuario.query.get_or_404(current_user.id)
+        tarefa_trainee = TarefaTrainee(tarefa_entregue, trainee)
         # TRATANDO O ATRASO DE TAREFA
         d1 = datetime.today()
         d2 = datetime.strptime(tarefa_entregue.prazo, '%d/%m/%Y')
@@ -145,11 +145,13 @@ def lista_tarefas_users():
         delta = (d1 - d2)
         
         if delta.days > 0:
-            pass #  AQUI A TAREFA ESTÁ ATRASADA
+            tarefa_trainee.atrasada = True
         else:
-            pass #  AQUI A TAREFA ESTÁ EM DIA
+            tarefa_trainee.atrasada = False
                    
     
+        db.session.add(tarefa_trainee)
+        db.session.commit()
 
         return redirect(url_for('tarefa.lista_tarefas_users'))
     
