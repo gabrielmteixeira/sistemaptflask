@@ -2,16 +2,45 @@
 
 
 {% block conteudo %}
-<h2>{{tarefa.titulo}}</h2>
-<br>
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <p style="font-size: large;">{{tarefa.descricao}}</p>
+
+<div id="tarefaFullCard">
+        <h2>{{tarefa.titulo}}</h2>
+        <img src="{{url_for('static', filename='fotos_tarefa/' + tarefa.icone)}}" alt="Foto da Tarefa">
+        <span class="desc">{{tarefa.descricao}}</span>
+        
+        {% if tarefa.trainees %}
+        <h5>Finalizado por:</h5>
+        {% else %}
+        <h5 style="margin-bottom: -8px;">Nenhum Trainee concluiu essa tarefa ainda.</h5>
+        {% endif %}
+        <div class="traineeGrid">
+            
+            {% for user in tarefa.trainees %}
+            <div class="traineeCard">
+                <img class="traineePic" src="{{url_for('static', filename='fotos_trainees/' + user.foto_trainee)}}" alt="Card image cap">
+                <span>
+                    <h5 class="card-title">{{user.nome}}</h5>
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+
+
 </div>
 
 
-<div class="card shadow mb-4">
+
+<!-- <h2>{{tarefa.titulo}}</h2>
+<br>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <p style="font-size: large;">{{tarefa.descricao}}</p>
+</div> #}
+
+
+<!-- <div class="card shadow mb-4">
     <div class="card-body">
-        <div class="table-responsive">
+          <div class="table-responsive">
+
             <table class="table">
                 <thead>
                     <tr>
@@ -35,6 +64,7 @@
                         <td>Atrasado</td>
                         {% elif tarefatrainee.feita == False %}
                         <td>Em Dia</td>
+                        {% endif %}
                         
                     </tr>
                     {% endif %}
@@ -42,9 +72,9 @@
                     {% endfor %}
                 </tbody>
             </table>
-        </div>
+        </div> 
     </div>
-</div>
+</div> -->
 
 
 {% endblock conteudo %}

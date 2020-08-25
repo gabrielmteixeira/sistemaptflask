@@ -91,24 +91,148 @@ a.btn-icon-lista{
     height: 8rem;
 }
 
-#lista-tarefas .card:hover {
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+#lista-tarefas .hoverable:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.02);
     transition: all 200ms;
     animation: hoverZoom 0.5s;
-    transform: scale(1.02);
+    transform: scale(0.97);
 }
+
+#lista-tarefas .done {
+    transform: scale(0.97);
+}
+
+#lista-tarefas .done img {
+    filter: grayscale(80%);
+    transition: all 500ms;
+}
+
+#lista-tarefas .done:hover img {
+    filter: grayscale(20%);
+    transition: all 500ms;
+}
+
 
 .grid-tarefas {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-
 }
+
+.h2Tarefa {
+    padding-left: 10px;
+}
+
+#tarefaFullCard {
+    display: flex;
+    flex-direction: column;
+
+    width: 70%;
+    max-width: 1100px;
+
+    border-radius: 8px;
+    background-color: white;
+
+    margin: 0 auto;
+
+    padding-bottom: 32px;
+}
+
+#tarefaFullCard h2 {
+    margin-top: 24px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+#tarefaFullCard h5 {
+    width: 94%;
+    margin: 0  auto;
+    margin-bottom: 16px;
+}
+
+#tarefaFullCard img {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 300px;
+}
+
+#tarefaFullCard span.desc {
+    margin: 24px;
+    text-align: center;
+}
+
+#tarefaFullCard .traineeGrid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+
+    width: 94%;
+    margin: 0 auto;
+}
+
+#tarefaFullCard .traineeCard {
+    background-color: #4E73DF;
+    border-radius: 8px;
+}
+
+#tarefaFullCard .traineeCard span {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+
+    padding-top: 8px;
+}
+
+#tarefaFullCard .traineeCard span h5 {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+}
+
+#tarefaFullCard .traineeCard img {
+    border-radius: 8px 8px 0 0;
+    height: 148px;
+}
+
+#listUsers {
+    margin-bottom: 0;
+}
+
+#listUsers thead th {
+    border-top: none;
+}
+
+#listUsers tr td {
+    display: flexbox;
+    align-items: center;
+    line-height: 38px;
+}
+
+#listUsers tr td a button i {
+    color: #4268D6;
+}
+
+#listUsers thead th:first-child {
+    padding-left: 20px;
+}
+
+#listUsers tr td:first-child {
+    padding-left: 20px;
+}
+
 
 @media (max-width: 500px) {
     .grid-tarefas {
         display: grid;
         grid-template-columns: 1fr;
     
+    }
+}
+
+@media (max-width: 1280px) {
+    #tarefaFullCard .traineeCard img {
+        border-radius: 8px 8px 0 0;
+        height: 96px;
     }
 }
 
