@@ -161,8 +161,8 @@ def lista_tarefas_users():
 @tarefa.route('/visualizar_tarefa/<_id>')
 def visualizar_tarefa(_id):
     tarefa = Tarefa.query.get_or_404(_id)
-    tarefaTrainee = db.session.query(TarefaTrainee).all()
+    tarefa_trainee = TarefaTrainee.query.filter_by(id_tarefa=_id)
     usuario = Usuario.query.all()
     
 
-    return render_template('visualizar_tarefa.html', usuario = usuario, tarefaTrainee = tarefaTrainee, tarefa=tarefa)
+    return render_template('visualizar_tarefa.html', usuario = usuario, tarefa_trainee = tarefa_trainee, tarefa=tarefa)

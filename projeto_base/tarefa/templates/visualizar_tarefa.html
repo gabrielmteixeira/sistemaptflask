@@ -15,13 +15,25 @@
         {% endif %}
         <div class="traineeGrid">
             
-            {% for user in tarefa.trainees %}
+            {% for user in tarefa.get_trainees() %}
+            {% for tarefas in tarefa_trainee %}
+            {% if user.id == tarefas.id_trainee and tarefas.id_tarefa == tarefa.id %}
             <div class="traineeCard">
                 <img class="traineePic" src="{{url_for('static', filename='fotos_trainees/' + user.foto_trainee)}}" alt="Card image cap">
                 <span>
                     <h5 class="card-title">{{user.nome}}</h5>
                 </span>
+                <span>
+                {% if tarefas.atrasada == True %}
+                <h5 style="padding: 2px;" class="card-title btn btn-danger">Atrasado</h5>
+                {% else %}
+                <h5 style="padding: 2px;" class="card-title btn btn-success">Em dia</h5>
+                {% endif %}
+                
+                </span>
             </div>
+            {% endif %}
+            {% endfor %}
             {% endfor %}
         </div>
 
