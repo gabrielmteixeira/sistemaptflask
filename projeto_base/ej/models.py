@@ -14,8 +14,9 @@ class Ej(db.Model):
     faturamento_atual = db.Column(db.Integer)
     usuarios = db.relationship('Usuario', lazy=True)
 
-    def __init__(self, nome, projetos_meta, projetos_atual, faturamento_atual, faturamento_meta, imagem):
+    def __init__(self, nome, cnpj, projetos_meta, projetos_atual, faturamento_atual, faturamento_meta, imagem):
         self.nome = nome
+        self.cnpj = cnpj
         self.projetos_meta = projetos_meta
         self.projetos_atual = projetos_atual
         self.faturamento_atual = faturamento_atual

@@ -37,6 +37,7 @@ def cadastrar_ej():
                 form = request.form
 
                 nome = form["nome"]
+                cnpj = form["cnpj"]
                 metaProj = form["metaProj"]
                 metaFat = form["metaFat"]
                 foto_ej = request.files["foto_ej"]
@@ -47,6 +48,7 @@ def cadastrar_ej():
                 foto_ej.save(filepath)
 
                 entidade_ej = Ej(       nome=nome,
+                                        cnpj = cnpj,
                                         projetos_meta = metaProj,
                                         projetos_atual = 0,
                                         faturamento_atual = 0,
