@@ -76,7 +76,8 @@ def editar_ej(id):
         _id = id
         ej = Ej.query.filter_by(id=_id).first_or_404()
 
-        ej.nome = form['nome']             
+        ej.nome = form['nome']
+        ej.cnpj = form['cnpj']             
         ej.projetos_meta = form['metaProj']             
         ej.faturamento_meta = form['metaFat']             
         ej.projetos_atual = form['atualProj']             
@@ -98,7 +99,7 @@ def editar_ej(id):
 
         return redirect(url_for('ej.perfil_ej', id=id))
 
-    return render_template('editar_ej.html', id=id, nome=ej.nome, metaProj=ej.projetos_meta, metaFat=ej.faturamento_meta, 
+    return render_template('editar_ej.html', id=id, nome=ej.nome, cnpj=ej.cnpj , metaProj=ej.projetos_meta, metaFat=ej.faturamento_meta, 
                                                             atualProj=ej.projetos_atual, atualFat=ej.faturamento_atual)
 
 @ej.route('relacionar_ej/<_id>', methods=['GET', 'POST'])
