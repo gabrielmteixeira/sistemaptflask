@@ -1,5 +1,6 @@
 import os
 import re
+import time
 from flask import render_template, Blueprint, request, redirect, url_for, flash, current_app
 from projeto_base.tarefa.models import Tarefa, TarefaTrainee
 from projeto_base.usuario.models import Usuario, usuario_urole_roles
@@ -30,7 +31,12 @@ def cadastra_tarefa():
         #tratando ehSolo
         ehSolo = define_solo_in(solo)
 
-        filename = icone.filename
+        original_filename = icone.filename
+        filename = str(original_filename).split(".")
+        filename[0] = str(time.time())
+        filename.insert(1, ".")
+        filename = "".join(filename)
+
         print("++++++++++++++++" + filename)
         filepath = os.path.join(current_app.root_path, 'static', 'fotos_tarefa', filename)
         icone.save(filepath)
@@ -98,7 +104,11 @@ def edita_tarefa():
 
     icone = request.files['icone']
     if icone.content_type != 'application/octet-stream':
-        filename = icone.filename
+        original_filename = icone.filename
+        filename = str(original_filename).split(".")
+        filename[0] = str(time.time())
+        filename.insert(1, ".")
+        filename = "".join(filename)
         print("++++++++++++++++" + filename)
         filepath_novo = os.path.join(current_app.root_path, 'static', 'fotos_tarefa', filename)
         icone.save(filepath_novo)

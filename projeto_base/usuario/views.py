@@ -1,4 +1,5 @@
 import os
+import time
 from flask import render_template, Blueprint, request, redirect, url_for, flash, current_app
 from projeto_base.usuario.models import Usuario, usuario_urole_roles
 from projeto_base import db, login_required
@@ -67,6 +68,10 @@ def editar_usuario():
 
             if foto_trainee:
                 filename = foto_trainee.filename
+                original_filename = str(original_filename).split(".")
+                filename[0] = str(time.time())
+                filename.insert(1, ".")
+                filename = "".join(filename)
                 filepath = os.path.join(current_app.root_path, 'static', 'fotos_trainees', filename)
                 foto_trainee.save(filepath)
                 entidade_usuario.foto_trainee = foto_trainee.filename
@@ -81,7 +86,11 @@ def editar_usuario():
             foto_trainee = request.files["foto_trainee"]
 
             if foto_trainee:
-                filename = foto_trainee.filename
+                original_filename = foto_trainee.filename
+                filename = str(original_filename).split(".")
+                filename[0] = str(time.time())
+                filename.insert(1, ".")
+                filename = "".join(filename)
                 filepath = os.path.join(current_app.root_path, 'static', 'fotos_trainees', filename)
                 foto_trainee.save(filepath)
                 entidade_usuario.foto_trainee = foto_trainee.filename
@@ -143,7 +152,11 @@ def cadastrar_usuario():
                 confirmacao = form["confirmacao"]
                 foto_trainee = request.files["foto_trainee"]
 
-                filename = foto_trainee.filename
+                original_filename = foto_trainee.filename
+                filename = str(original_filename).split(".")
+                filename[0] = str(time.time())
+                filename.insert(1, ".")
+                filename = "".join(filename)
                 filepath = os.path.join(current_app.root_path, 'static', 'fotos_trainees', filename)
                 foto_trainee.save(filepath)
 
@@ -184,7 +197,11 @@ def cadastrar_usuario():
             confirmacao = form["confirmacao"]
             foto_trainee = request.files["foto_trainee"]
 
-            filename = foto_trainee.filename
+            original_filename = foto_trainee.filename
+            filename = str(original_filename).split(".")
+            filename[0] = str(time.time())
+            filename.insert(1, ".")
+            filename = "".join(filename)
             filepath = os.path.join(current_app.root_path, 'static', 'fotos_trainees', filename)
             foto_trainee.save(filepath)
 

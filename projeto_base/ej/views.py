@@ -1,4 +1,5 @@
 import os
+import time
 from flask import render_template, Blueprint, request, redirect, url_for, flash, current_app
 from projeto_base.ej.models import Ej
 from projeto_base.ej.utils import calcula_chart_grid
@@ -42,7 +43,11 @@ def cadastrar_ej():
                 metaFat = form["metaFat"]
                 foto_ej = request.files["foto_ej"]
 
-                filename = foto_ej.filename
+                original_filename = foto_ej.filename
+                filename = str(original_filename).split(".")
+                filename[0] = str(time.time())
+                filename.insert(1, ".")
+                filename = "".join(filename)
                 print("++++++++++++++++" + filename)
                 filepath = os.path.join(current_app.root_path, 'static', 'fotos_ej', filename)
                 foto_ej.save(filepath)
@@ -85,7 +90,11 @@ def editar_ej(id):
 
         foto = request.files['foto_ej']
         if foto.content_type != 'application/octet-stream':
-            filename = foto.filename
+            original_filename = foto.filename
+            filename = str(original_filename).split(".")
+            filename[0] = str(time.time())
+            filename.insert(1, ".")
+            filename = "".join(filename)
             print("++++++++++++++++" + filename)
             filepath_novo = os.path.join(current_app.root_path, 'static', 'fotos_ej', filename)
             foto.save(filepath_novo)
