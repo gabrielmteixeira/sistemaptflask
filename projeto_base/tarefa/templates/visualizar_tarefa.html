@@ -18,7 +18,7 @@
             {% for user in tarefa.get_trainees() %}
             {% for tarefas in tarefa_trainee %}
             {% if user.id == tarefas.id_trainee and tarefas.id_tarefa == tarefa.id %}
-            <div class="traineeCard">
+            <div class="traineeCard" id="{{user.id}}">
                 <img class="traineePic" src="{{url_for('static', filename='fotos_trainees/' + user.foto_trainee)}}" alt="Card image cap">
                 <span>
                     <h5 class="card-title">{{user.nome}}</h5>
@@ -40,53 +40,29 @@
 
 </div>
 
-
-
-<!-- <h2>{{tarefa.titulo}}</h2>
-<br>
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <p style="font-size: large;">{{tarefa.descricao}}</p>
-</div> #}
-
-
-<!-- <div class="card shadow mb-4">
-    <div class="card-body">
-          <div class="table-responsive">
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th></th>
-                        <th></th>
-                        <th>Status</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for user in usuario %}
-                    {% for tarefatrainee in tarefaTrainee %}
-                    {% if user.id == tarefatrainee.id_trainee and tarefatrainee.id_tarefa == tarefa.id%}
-
-                    <tr>
-                        <td>{{user.nome}}</td>
-                        <td></td>
-                        <td></td>
-                        {% if tarefatrainee.feita == True %}
-                        <td>Atrasado</td>
-                        {% elif tarefatrainee.feita == False %}
-                        <td>Em Dia</td>
-                        {% endif %}
-                        
-                    </tr>
-                    {% endif %}
-                    {% endfor %}
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div> 
+<div id="undoModal">
+    <div class="modalbox">
+        <h1>Marcar tarefa como não feita?</h1>
+        <div id="modalBtn">
+            <a href="/tarefa/desfazer_tarefa/{{tarefa.id}}/"><button class="btn btn-primary">Sim</button></a>
+            <button class="btn btn-primary">Não</button>
+        </div>
     </div>
-</div> -->
+</div>
 
 
 {% endblock conteudo %}
+
+{% block scripts %}
+<script>
+    function undo(e) {
+        $("#undoModal").css({visibility: 'visible'})
+
+        original = $("#modalBtn a").attr("href")
+        $("#modalBtn a").attr("href", original + $(this).attr("id"))
+    }
+
+    $(".traineeCard").on("click", undo)
+    $("#modalBtn button").on("click", () => $("#undoModal").css({visibility: 'hidden'}))
+</script>
+{% endblock scripts %} 

@@ -172,6 +172,24 @@ a.btn-icon-lista{
 #tarefaFullCard .traineeCard {
     background-color: #4E73DF;
     border-radius: 8px;
+
+    cursor: pointer;
+
+    transition: all 400ms;
+}
+
+#tarefaFullCard .traineeCard:hover {
+    transition: all 400ms;
+    transform: scale(0.97);
+}
+
+#tarefaFullCard .traineeCard:hover img {
+    transition: all 600ms;
+    filter: grayscale(80%);
+}
+
+#tarefaFullCard .traineeCard img {
+    transition: all 400ms;
 }
 
 #tarefaFullCard .traineeCard span {
@@ -183,7 +201,14 @@ a.btn-icon-lista{
 }
 
 #tarefaFullCard .traineeCard span h5 {
-    margin-bottom: 8px;
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+}
+
+#tarefaFullCard .traineeCard span:first-of-type h5  {
+    margin-bottom: 0px;
     font-size: 14px;
     color: white;
     text-align: center;
@@ -218,6 +243,53 @@ a.btn-icon-lista{
 
 #listUsers tr td:first-child {
     padding-left: 20px;
+}
+
+#undoModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    
+    height: 100vh;
+    width: 100vw;
+    z-index: 30000;
+    
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+    
+    visibility: hidden;
+    
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modalbox {
+    background-color: white;
+    padding: 20px 40px;
+    border-radius: 8px;
+}
+
+.modalbox h1 {
+    color: #252525;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#modalBtn {
+    text-align: center;
+}
+
+#modalBtn button {
+    font-size: 24px;
+}
+
+#modalBtn button:first-of-type {
+    margin-right: 6px;
+}
+
+#modalBtn button:last-of-type {
+    margin-left: 6px;
 }
 
 

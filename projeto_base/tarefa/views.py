@@ -67,11 +67,17 @@ def lista_tarefas():
 @login_required(role=[usuario_urole_roles['ADMIN']])
 def deleta_tarefa(id):
     tarefa = Tarefa.query.filter_by(id=id).first_or_404()
+    related = TarefaTrainee.query.filter_by(id_tarefa=id).all()
     
     filepath = os.path.join(current_app.root_path, 'static', 'fotos_tarefa', tarefa.icone)
-    os.remove(filepath)
+    try:
+        os.remove(filepath)
+    except:
+        pass
 
     db.session.delete(tarefa)
+    for i in related:
+        db.session.delete(i)
     db.session.commit()
 
     return redirect(url_for('tarefa.lista_tarefas'))
@@ -114,7 +120,10 @@ def edita_tarefa():
         icone.save(filepath_novo)
         
         filepath_antigo = os.path.join(current_app.root_path, 'static', 'fotos_tarefa', tarefa.icone)
-        os.remove(filepath_antigo)
+        try:
+            os.remove(filepath_antigo)
+        except:
+            print("File not found!")
         
         tarefa.icone = filename
 
@@ -176,3 +185,13 @@ def visualizar_tarefa(_id):
     
 
     return render_template('visualizar_tarefa.html', usuario = usuario, tarefa_trainee = tarefa_trainee, tarefa=tarefa)
+
+@tarefa.route('/desfazer_tarefa/<id>/<traineeId>')
+@login_required(role=[usuario_urole_roles['ADMIN']])
+def desfazer_tarefa(id, traineeId):
+    instancia = TarefaTrainee.query.filter_by(id_tarefa=id, id_trainee = traineeId).first_or_404()
+
+    db.session.delete(instancia)
+    db.session.commit()
+
+    return redirect(url_for('tarefa.visualizar_tarefa', _id = id))
