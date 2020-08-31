@@ -45,7 +45,7 @@
     {% endif %}
     {% endfor %}
   </div>
-  <h4 class="h2Tarefa" style="margin-top: 20px">Tarefas Concluídas</h4>
+  {% if current_user.get_tarefas() %}<h4 class="h2Tarefa" style="margin-top: 20px">Tarefas Concluídas</h4>{% endif %}
   <div class="grid-tarefas" id="lista-tarefas">
   {% for tarefa in tarefas %}
     {% if tarefa in current_user.get_tarefas() %}
@@ -104,6 +104,7 @@
           <div class="modal-body">
             <p style="font-size: large;">{{tarefa.descricao}}</p>
           </div>
+          {% if tarefa not in current_user.get_tarefas() %}
           <div class="modal-footer" style="padding: 0.6rem 1rem;">
             <form method="POST" action="" enctype="multipart/form-data">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -111,6 +112,7 @@
               <button type="submit" class="btn btn-primary">Marcar como concluída</button>
             </form>
           </div>
+          {% endif %}
         </div>
       </div>
     </div>
