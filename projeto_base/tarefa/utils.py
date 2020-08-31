@@ -1,3 +1,5 @@
+from datetime import datetime
+
 def data_format_in(data):
     data_format = data.split('-')
     data_format.reverse()
@@ -27,3 +29,14 @@ def define_solo_out(ehSolo):
         solo = 'sim'
 
     return solo
+
+def confere_prazo_tarefa(tarefaTrainee):
+    d1 = datetime.today()
+    d2 = datetime.strptime(tarefaTrainee.tarefa.prazo, '%d/%m/%Y')
+    
+    delta = (d1 - d2)
+    
+    if delta.days > 0:
+        tarefaTrainee.atrasada = True
+    else:
+        tarefaTrainee.atrasada = False

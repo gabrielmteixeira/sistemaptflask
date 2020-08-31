@@ -33,7 +33,7 @@
                 </div>
                 <img src="{{url_for('static', filename='fotos_tarefa/' + tarefa.icone)}}" alt="Card cover">
                 <div class="card-body">
-                    {% if tarefa.ehSolo == 0 %}
+                    {% if tarefa.ehSolo == 1 %}
                       <p class="card-text">Tarefa individual</p>
                     {% else %}
                       <p class="card-text">Tarefa coletiva</p>

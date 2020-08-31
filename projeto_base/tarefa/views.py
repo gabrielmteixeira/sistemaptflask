@@ -4,10 +4,10 @@ import time
 from flask import render_template, Blueprint, request, redirect, url_for, flash, current_app
 from projeto_base.tarefa.models import Tarefa, TarefaTrainee
 from projeto_base.usuario.models import Usuario, usuario_urole_roles
+from projeto_base.ej.models import Ej
 from projeto_base import db, login_required
 from flask_login import LoginManager, current_user, login_user, logout_user
-from projeto_base.tarefa.utils import data_format_in, data_format_out, define_solo_in, define_solo_out
-from datetime import datetime
+from projeto_base.tarefa.utils import data_format_in, data_format_out, define_solo_in, define_solo_out, confere_prazo_tarefa
 import copy
 
 
@@ -150,26 +150,25 @@ def lista_tarefas_users():
         flash("Não há tarefas cadastradas no sistema.")
         return redirect(url_for('principal.index'))
     
-    # tarefasFeitas = db.session.query(TarefaTrainee).all()
     if request.method == 'POST':
         id_tarefa = request.form['id_tarefa']
         tarefa_entregue = Tarefa.query.get_or_404(id_tarefa)
-        
         trainee = Usuario.query.get_or_404(current_user.id)
-        tarefa_trainee = TarefaTrainee(tarefa_entregue, trainee)
-        # TRATANDO O ATRASO DE TAREFA
-        d1 = datetime.today()
-        d2 = datetime.strptime(tarefa_entregue.prazo, '%d/%m/%Y')
         
-        delta = (d1 - d2)
-        
-        if delta.days > 0:
-            tarefa_trainee.atrasada = True
-        else:
-            tarefa_trainee.atrasada = False
-                   
-    
-        db.session.add(tarefa_trainee)
+        if(tarefa_entregue.ehSolo):
+            tarefa_trainee = TarefaTrainee(tarefa_entregue, trainee)
+            confere_prazo_tarefa(tarefa_trainee)
+            db.session.add(tarefa_trainee)
+        elif(not trainee.ej_id):
+            flash("É preciso estar em uma EJ para entregar tarefas coletivas!")
+        elif(not tarefa_entregue.ehSolo and trainee.ej_id):
+            ej = Ej.query.filter_by(id=trainee.ej_id).first_or_404()
+            
+            for membro in ej.usuarios:
+                tarefa_ej = TarefaTrainee(tarefa_entregue, membro)
+                confere_prazo_tarefa(tarefa_ej)
+                db.session.add(tarefa_ej)        
+            
         db.session.commit()
 
         return redirect(url_for('tarefa.lista_tarefas_users'))
