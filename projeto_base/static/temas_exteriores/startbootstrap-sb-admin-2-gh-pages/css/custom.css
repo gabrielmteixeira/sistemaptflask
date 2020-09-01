@@ -170,7 +170,7 @@ a.btn-icon-lista{
 }
 
 #tarefaFullCard .traineeCard {
-    background-color: #4E73DF;
+    background-color: #4e73df;
     border-radius: 8px;
 
     cursor: pointer;
@@ -292,6 +292,55 @@ a.btn-icon-lista{
     margin-left: 6px;
 }
 
+.grid-ejs {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.grid-ejs a:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.ejCard {
+    width: 100%;
+    border-radius: 8px;
+    background-color: #4e73df;
+    transition: all 400ms;
+}
+
+.ejCard:hover {
+    transform: scale(0.98);
+}
+
+.ejCard img {
+    object-fit: cover;
+    object-position: center center;
+    width: 100%;
+    height: 20vw;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.ejCard #addEj {
+    width: 100%;
+    height: 20vw;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background-color: #4e73df;
+}
+
+.ejCard h1 {
+    color: white;
+    padding: 8px 0px;
+    text-align: center;
+    font-size: 170%;
+}
+
+.card-body a:hover {
+    text-decoration: none;
+}
 
 @media (max-width: 500px) {
     .grid-tarefas {
