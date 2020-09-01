@@ -13,7 +13,7 @@
 <h1> Empresas Juniores </h1><br>
 
 <div class="grid-ejs">
-    {% if not current_user.ej %}
+    {% if not current_user.ej or current_user.urole == usuario_urole_roles['ADMIN'] %}
     <a href="{{url_for('ej.cadastrar_ej')}}">
         <div class="ejCard">  
             <div id="addEj"><h1>+</h1></div>

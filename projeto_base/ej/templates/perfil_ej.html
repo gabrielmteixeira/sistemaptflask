@@ -8,7 +8,7 @@
           </div>
         {% endif %}
 <div class="card d-flex flex-row" style="width: 100%; display: flex; color: #112121; margin-bottom: 10px;">
-        <img src="{{url_for('static', filename='fotos_ej/' + entidade_ej.imagem)}}" style="max-height: 50vh; object-fit: cover; width: 128px; border-radius: 4px 0px 0px 4px;" alt="Card image cap">
+        <img src="{{url_for('static', filename='fotos_ej/' + entidade_ej.imagem)}}" style="max-height: 50vh; object-fit: cover; width: 128px; height: 128px; border-radius: 4px 0px 0px 4px;" alt="Card image cap">
         <div style="padding-top: 15px;padding-left: 15px;">
             <h1>{{entidade_ej.nome}}</h1>
             <h3>Empresa Júnior</h3>
@@ -35,7 +35,16 @@
 
 <h3>Membros</h3>
 <div class="d-flex row">
-
+{% if not usuario.ej and current_user.urole == usuario_urole_roles['USER'] %}
+<div class="col-sm-3">
+    <div class="card d-flex flex-row" id="joinEJ" style="display: flex; color: #112121; padding-right: 20px; margin-right: 1%; height: 128px; margin-bottom: 10px;">
+        
+            <div style="padding-top: 15px; padding-left: 15px;">
+            <h5>Entrar na EJ</h5>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% for membro in entidade_ej.usuarios %}
 <div class="col-sm-3">
     <div class="card d-flex flex-row" style="display: flex; color: #112121; padding-right: 20px; {% if membro != entidade_ej.usuarios[-1] %} margin-right: 1%; {%endif%} height: 128px; margin-bottom: 10px;">
@@ -48,12 +57,32 @@
 {% endfor %}
 </div>
 
+<div id="undoModal">
+    <div class="modalbox">
+        <h1>Entrar na empresa {{entidade_ej.nome}}?</h1>
+        <div id="modalBtn">
+            <form action="{{url_for('ej.perfil_ej', id = entidade_ej.id)}}" method="POST" style="display: inline;">
+                <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                <button type="submit" class="btn btn-primary">Sim</button>
+            </form>
+            <button class="btn btn-primary">Não</button>
+        </div>
+    </div>
+</div>
 
 
 {% endblock %}
 
 {% block scripts %}
 <script>
+    // MODAL DE ENTRADA
+    function joinEJ(e) {
+        $("#undoModal").css({visibility: 'visible'})
+    }
+
+    $("#joinEJ").on("click", joinEJ)
+    $("#modalBtn button").on("click", () => $("#undoModal").css({visibility: 'hidden'}))
+
     var horizonalLinePlugin = {
         afterDraw: function(chartInstance) {
             var yScale = chartInstance.scales["y-axis-0"];

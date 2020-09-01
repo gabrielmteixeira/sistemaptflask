@@ -15,16 +15,24 @@ def listar_ejs():
     lista = Ej.query.all()
     return render_template('listar_ejs.html', lista=lista, usuario=current_user)
 
-@ej.route('/perfil/<id>')
+@ej.route('/perfil/<id>', methods = ['GET', 'POST'])
 @login_required()
 def perfil_ej(id):
+    if request.method == 'POST':
+        usuario_id = current_user.id
+    
+        usuario = Usuario.query.get_or_404(usuario_id)
+        
+        usuario.ej_id = id
+        db.session.commit()
+
     entidade_ej = Ej.query.get_or_404(id)
 
     porcentagem_faturamento = (entidade_ej.faturamento_atual / entidade_ej.faturamento_meta) * 100
     porcentagem_projetos = (entidade_ej.projetos_atual / entidade_ej.projetos_meta) * 100
 
     return render_template('perfil_ej.html', entidade_ej = entidade_ej, perc_fat=porcentagem_faturamento, perc_proj=porcentagem_projetos, 
-                                                                        fat_grid_step=calcula_chart_grid(entidade_ej.faturamento_meta))
+                                                                        fat_grid_step=calcula_chart_grid(entidade_ej.faturamento_meta), usuario = current_user)
 
 @ej.route('/cadastrar_ej', methods = ['POST', 'GET'])
 @login_required()
@@ -61,8 +69,17 @@ def cadastrar_ej():
                                     imagem=filename)
 
             db.session.add(entidade_ej)
+
             db.session.commit()
             flash("Empresa cadastrada!")
+
+            if current_user.urole == usuario_urole_roles['USER']:
+                usuario_id = current_user.id
+
+                usuario = Usuario.query.get_or_404(usuario_id)
+                
+                usuario.ej_id = entidade_ej.id
+                db.session.commit()
 
             return redirect(url_for('principal.index'))
 

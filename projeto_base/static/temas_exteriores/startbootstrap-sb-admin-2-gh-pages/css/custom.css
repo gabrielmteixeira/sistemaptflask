@@ -351,6 +351,27 @@ a.btn-icon-lista{
     text-decoration: none;
 }
 
+#joinEJ {
+    background-color: #4e73df;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    transition: all 400ms;
+}
+
+#joinEJ h5 {
+    text-decoration: none;
+    font-size: 170%;
+    color: white;
+}
+
+#joinEJ:hover {
+    text-decoration: none;
+    transform: scale(0.98);
+    cursor: pointer;
+}
+
 @media (max-width: 500px) {
     .grid-tarefas {
         display: grid;
