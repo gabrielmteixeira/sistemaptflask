@@ -161,6 +161,7 @@ def lista_tarefas_users():
             db.session.add(tarefa_trainee)
         elif(not trainee.ej_id):
             flash("É preciso estar em uma EJ para entregar tarefas coletivas!")
+            return redirect(url_for('tarefa.lista_tarefas_users'))
         elif(not tarefa_entregue.ehSolo and trainee.ej_id):
             ej = Ej.query.filter_by(id=trainee.ej_id).first_or_404()
             
@@ -188,9 +189,19 @@ def visualizar_tarefa(_id):
 @tarefa.route('/desfazer_tarefa/<id>/<traineeId>')
 @login_required(role=[usuario_urole_roles['ADMIN']])
 def desfazer_tarefa(id, traineeId):
-    instancia = TarefaTrainee.query.filter_by(id_tarefa=id, id_trainee = traineeId).first_or_404()
+    
+    tarefa_a_desfazer = Tarefa.query.get_or_404(id)    
 
-    db.session.delete(instancia)
+    if tarefa_a_desfazer.ehSolo:
+        instancia = TarefaTrainee.query.filter_by(id_tarefa=id, id_trainee = traineeId).first_or_404()
+        db.session.delete(instancia)
+    else:
+        trainee = Usuario.query.get_or_404(id)
+        ej = Ej.query.filter_by(id=trainee.ej_id).first_or_404()
+        for membro in ej.usuarios:
+            instancia = TarefaTrainee.query.filter_by(id_tarefa=id, id_trainee = membro.id).first_or_404()
+            db.session.delete(instancia)
+
     db.session.commit()
 
     return redirect(url_for('tarefa.visualizar_tarefa', _id = id))
