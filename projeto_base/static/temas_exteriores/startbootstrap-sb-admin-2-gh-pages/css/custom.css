@@ -93,7 +93,7 @@ a.btn-icon-lista{
 
 #lista-tarefas .hoverable:hover {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.02);
-    transition: all 200ms;
+    transition: all 400ms;
     animation: hoverZoom 0.5s;
     transform: scale(0.97);
 }
@@ -324,11 +324,20 @@ a.btn-icon-lista{
 }
 
 .ejCard #addEj {
+    display: flex;
+    padding-top: 22px;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 20vw;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     background-color: #4e73df;
+}
+
+.ejCard #addEj h1 {
+    font-size: 98px;
+    font-weight: 200;
 }
 
 .ejCard h1 {

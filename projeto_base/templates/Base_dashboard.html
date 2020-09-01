@@ -99,7 +99,7 @@
       {% endif %}
       
       <!-- Nav Item Menu -->
-      {% if current_user.urole == usuario_urole_roles['ADMIN'] %}
+      {% if current_user.urole %}
       <li class="nav-item">
         <a class="nav-link " href="{{url_for('ej.listar_ejs')}}">
           <i class="fas fa-users"></i>
