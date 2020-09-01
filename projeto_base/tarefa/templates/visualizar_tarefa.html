@@ -63,6 +63,11 @@
     }
 
     $(".traineeCard").on("click", undo)
-    $("#modalBtn button").on("click", () => $("#undoModal").css({visibility: 'hidden'}))
+    $("#modalBtn button").on("click", () => {
+        $("#undoModal").css({visibility: 'hidden'})
+
+        original = $("#modalBtn a").attr("href")
+        $("#modalBtn a").attr("href", original - $(this).attr("id"))
+        })
 </script>
 {% endblock scripts %} 
