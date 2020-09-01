@@ -16,18 +16,20 @@
         </div>
         
 </div>
-<div class="d-flex" style="margin-bottom: 30px; height: 30em;">
+<div class="d-flex" style="margin-bottom: 30px; height: 33em;">
     <div class="col-sm-6" style="padding: 0px; padding-right: 10px;">
-        <div class="card d-flex flex-row" style="display: flex; color: #112121; padding: 10px; padding-top: 20px; justify-content: center;  height: 100%;">
+        <div class="card d-flex flex-row" style="color: #112121; padding: 10px; padding-top: 20px; justify-content: center;  height: 100%; display: flex;">
             <div>
-                <canvas id="projetos" style="height: 70%; width: 100%; margin-top: auto;"></canvas>
+                <h2 class="indicadores-ej">Projetos: {{entidade_ej.projetos_atual}}</h2>
+                <canvas id="projetos" style="height: 60%; width: 100%; margin-top: auto;"></canvas>
             </div>
         </div>
     </div>
     <div class="col-sm-6" style="padding: 0px; padding-left: 10px;">
         <div class="card d-flex flex-row" style="display: flex; color: #112121; padding: 10px; padding-top: 20px; justify-content: center; height: 100%;">
             <div>
-                <canvas id="faturamento"style="height: 70%; width: 100%; margin-top: auto;"></canvas>
+                <h2 class="indicadores-ej">Faturamento: R${{"%0.2f" % entidade_ej.faturamento_atual}}</h2>
+                <canvas id="faturamento"style="height: 60%; width: 100%; margin-top: auto;"></canvas>
             </div>
         </div>
     </div>
