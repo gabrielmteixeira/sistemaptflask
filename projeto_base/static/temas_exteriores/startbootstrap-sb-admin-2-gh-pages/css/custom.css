@@ -93,7 +93,7 @@ a.btn-icon-lista{
 
 #lista-tarefas .hoverable:hover {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.02);
-    transition: all 200ms;
+    transition: all 400ms;
     animation: hoverZoom 0.5s;
     transform: scale(0.97);
 }
@@ -170,7 +170,7 @@ a.btn-icon-lista{
 }
 
 #tarefaFullCard .traineeCard {
-    background-color: #4E73DF;
+    background-color: #4e73df;
     border-radius: 8px;
 
     cursor: pointer;
@@ -292,6 +292,89 @@ a.btn-icon-lista{
     margin-left: 6px;
 }
 
+.grid-ejs {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.grid-ejs a:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.ejCard {
+    width: 100%;
+    border-radius: 8px;
+    background-color: #4e73df;
+    transition: all 400ms;
+}
+
+.ejCard:hover {
+    transform: scale(0.98);
+}
+
+.ejCard img {
+    object-fit: cover;
+    object-position: center center;
+    width: 100%;
+    height: 20vw;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.ejCard #addEj {
+    display: flex;
+    padding-top: 22px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 20vw;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background-color: #4e73df;
+}
+
+.ejCard #addEj h1 {
+    font-size: 98px;
+    font-weight: 200;
+}
+
+.ejCard h1 {
+    color: white;
+    padding: 8px 0px;
+    text-align: center;
+    font-size: 170%;
+}
+
+.indicadores-ej {
+    margin-bottom: 1.5em;
+}
+
+.card-body a:hover {
+    text-decoration: none;
+}
+
+#joinEJ {
+    background-color: #4e73df;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    transition: all 400ms;
+}
+
+#joinEJ h5 {
+    text-decoration: none;
+    font-size: 170%;
+    color: white;
+}
+
+#joinEJ:hover {
+    text-decoration: none;
+    transform: scale(0.98);
+    cursor: pointer;
+}
 
 @media (max-width: 500px) {
     .grid-tarefas {

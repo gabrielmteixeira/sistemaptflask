@@ -99,7 +99,7 @@
       {% endif %}
       
       <!-- Nav Item Menu -->
-      {% if current_user.urole == usuario_urole_roles['ADMIN'] %}
+      {% if current_user.urole %}
       <li class="nav-item">
         <a class="nav-link " href="{{url_for('ej.listar_ejs')}}">
           <i class="fas fa-users"></i>
@@ -157,7 +157,7 @@
           </button>
 
           <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="display: none!important">
             <div class="input-group">
               <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
               <div class="input-group-append">
@@ -192,7 +192,7 @@
             </li>
 
             <!-- Nav Item - Alerts -->
-            <li class="nav-item dropdown no-arrow mx-1">
+            <li class="nav-item dropdown no-arrow mx-1" style="display: none;">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
                 <!-- Counter - Alerts -->
@@ -241,7 +241,7 @@
             </li>
 
             <!-- Nav Item - Messages -->
-            <li class="nav-item dropdown no-arrow mx-1">
+            <li class="nav-item dropdown no-arrow mx-1" style="display: none">
               <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
                 <!-- Counter - Messages -->
@@ -322,7 +322,7 @@
                   Minha EJ
                 </a>
                 {% endif %}
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{ url_for('tarefa.lista_tarefas_users')}}">
                   <i class="fas fa-check-square fa-sm fa-fw mr-2 text-gray-400"></i>
                   Minhas tarefas
                 </a>

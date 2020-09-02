@@ -10,61 +10,78 @@ from flask_login import LoginManager, current_user, login_user, logout_user
 ej = Blueprint('ej', __name__, template_folder='templates')
 
 @ej.route('/listar_ejs', methods = ['GET'])
-@login_required(role=[usuario_urole_roles['ADMIN']])
+@login_required()
 def listar_ejs():
     lista = Ej.query.all()
-    return render_template('listar_ejs.html', lista=lista)
+    return render_template('listar_ejs.html', lista=lista, usuario=current_user)
 
-@ej.route('/perfil/<id>')
+@ej.route('/perfil/<id>', methods = ['GET', 'POST'])
 @login_required()
 def perfil_ej(id):
+    if request.method == 'POST':
+        usuario_id = current_user.id
+    
+        usuario = Usuario.query.get_or_404(usuario_id)
+        
+        usuario.ej_id = id
+        db.session.commit()
+
     entidade_ej = Ej.query.get_or_404(id)
 
     porcentagem_faturamento = (entidade_ej.faturamento_atual / entidade_ej.faturamento_meta) * 100
     porcentagem_projetos = (entidade_ej.projetos_atual / entidade_ej.projetos_meta) * 100
 
     return render_template('perfil_ej.html', entidade_ej = entidade_ej, perc_fat=porcentagem_faturamento, perc_proj=porcentagem_projetos, 
-                                                                        fat_grid_step=calcula_chart_grid(entidade_ej.faturamento_meta))
+                                                                        fat_grid_step=calcula_chart_grid(entidade_ej.faturamento_meta), usuario = current_user)
 
 @ej.route('/cadastrar_ej', methods = ['POST', 'GET'])
-@login_required(role=[usuario_urole_roles['ADMIN']])
+@login_required()
 def cadastrar_ej():
     if (current_user.is_authenticated):
-        if current_user.urole == usuario_urole_roles['USER']:
-            flash("Você não tem permissão para realizar esta ação.")
-            return redirect(url_for("principal.index"))
-        else:
-            if request.method == 'POST':
-                form = request.form
+        # if current_user.urole == usuario_urole_roles['USER']:
+        #     flash("Você não tem permissão para realizar esta ação.")
+        #     return redirect(url_for("principal.index"))
+        # else:
+        if request.method == 'POST':
+            form = request.form
 
-                nome = form["nome"]
-                cnpj = form["cnpj"]
-                metaProj = form["metaProj"]
-                metaFat = form["metaFat"]
-                foto_ej = request.files["foto_ej"]
+            nome = form["nome"]
+            cnpj = form["cnpj"]
+            metaProj = form["metaProj"]
+            metaFat = form["metaFat"]
+            foto_ej = request.files["foto_ej"]
 
-                original_filename = foto_ej.filename
-                filename = str(original_filename).split(".")
-                filename[0] = str(time.time())
-                filename.insert(1, ".")
-                filename = "".join(filename)
-                print("++++++++++++++++" + filename)
-                filepath = os.path.join(current_app.root_path, 'static', 'fotos_ej', filename)
-                foto_ej.save(filepath)
+            original_filename = foto_ej.filename
+            filename = str(original_filename).split(".")
+            filename[0] = str(time.time())
+            filename.insert(1, ".")
+            filename = "".join(filename)
+            print("++++++++++++++++" + filename)
+            filepath = os.path.join(current_app.root_path, 'static', 'fotos_ej', filename)
+            foto_ej.save(filepath)
 
-                entidade_ej = Ej(       nome=nome,
-                                        cnpj = cnpj,
-                                        projetos_meta = metaProj,
-                                        projetos_atual = 0,
-                                        faturamento_atual = 0,
-                                        faturamento_meta = metaFat,
-                                        imagem=filename)
+            entidade_ej = Ej(       nome=nome,
+                                    cnpj = cnpj,
+                                    projetos_meta = metaProj,
+                                    projetos_atual = 0,
+                                    faturamento_atual = 0,
+                                    faturamento_meta = metaFat,
+                                    imagem=filename)
 
-                db.session.add(entidade_ej)
+            db.session.add(entidade_ej)
+
+            db.session.commit()
+            flash("Empresa cadastrada!")
+
+            if current_user.urole == usuario_urole_roles['USER']:
+                usuario_id = current_user.id
+
+                usuario = Usuario.query.get_or_404(usuario_id)
+                
+                usuario.ej_id = entidade_ej.id
                 db.session.commit()
-                flash("Empresa cadastrada!")
 
-                return redirect(url_for('principal.index'))
+            return redirect(url_for('principal.index'))
 
     return render_template('cadastro_ej.html')
 

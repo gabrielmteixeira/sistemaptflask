@@ -16,7 +16,11 @@
         <img class="card-img-top" src="{{url_for('static', filename='fotos_trainees/' + entidade_usuario.foto_trainee)}}" style="max-height: 50vh; object-fit: cover;" alt="Card image cap">
         <div class="card-body">
             <h3 class="card-title" style="text-align: right;">{{entidade_usuario.nome}}</h5>
-            <h5 class="card-text"  style="text-align: right;">Membro da empresa {{entidade_usuario.ej}}</p>
+            {% if entidade_usuario.ej %}
+            <h5 class="card-text"  style="text-align: right;">Membro da empresa {{entidade_usuario.ej.nome}}</p>
+            {% else %}
+            <a href="{{url_for('ej.listar_ejs')}}"><h5 class="card-text"  style="text-align: right;">Ainda não é membro de uma empresa</p></a>
+            {% endif %}
             <a href="{{url_for('usuario.editar_usuario')}}" class="btn btn-primary"  style="text-align: right;">Editar perfil</a>
         </div>
     </div>

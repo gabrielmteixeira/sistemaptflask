@@ -55,14 +55,19 @@
 
 {% block scripts %}
 <script>
+    original = $("#modalBtn a").attr("href")
     function undo(e) {
         $("#undoModal").css({visibility: 'visible'})
 
-        original = $("#modalBtn a").attr("href")
         $("#modalBtn a").attr("href", original + $(this).attr("id"))
     }
 
     $(".traineeCard").on("click", undo)
-    $("#modalBtn button").on("click", () => $("#undoModal").css({visibility: 'hidden'}))
+    $("#modalBtn button").on("click", () => {
+        $("#undoModal").css({visibility: 'hidden'})
+
+        original = $("#modalBtn a").attr("href")
+        $("#modalBtn a").attr("href", original)
+        })
 </script>
 {% endblock scripts %} 
