@@ -347,8 +347,12 @@ a.btn-icon-lista{
     font-size: 170%;
 }
 
-.indicadores-ej {
-    margin-bottom: 1.5em;
+.indicadores-ej-atual {
+    margin-top: 0.8em;
+}
+
+.indicadores-ej-meta {
+    margin-bottom: 0.8em;
 }
 
 .card-body a:hover {

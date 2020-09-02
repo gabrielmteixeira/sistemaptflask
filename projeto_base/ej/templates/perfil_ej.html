@@ -16,20 +16,24 @@
         </div>
         
 </div>
-<div class="d-flex" style="margin-bottom: 30px; height: 33em;">
+<div class="d-flex" style="margin-bottom: 30px; height: 34em;">
     <div class="col-sm-6" style="padding: 0px; padding-right: 10px;">
         <div class="card d-flex flex-row" style="color: #112121; padding: 10px; padding-top: 20px; justify-content: center;  height: 100%; display: flex;">
-            <div>
-                <h2 class="indicadores-ej">Projetos: {{entidade_ej.projetos_atual}}</h2>
-                <canvas id="projetos" style="height: 60%; width: 100%; margin-top: auto;"></canvas>
+            <div style="text-align: center;">
+                <h2>Projetos</h2>
+                <h4 class="indicadores-ej-atual"><strong>Atual:</strong> {{entidade_ej.projetos_atual}}</h4>
+                <h4 class="indicadores-ej-meta"><strong>Meta:</strong> {{entidade_ej.projetos_meta}}</h4>
+                <canvas id="projetos" style="height: 55%; width: 100%; margin-top: auto;"></canvas>
             </div>
         </div>
     </div>
     <div class="col-sm-6" style="padding: 0px; padding-left: 10px;">
         <div class="card d-flex flex-row" style="display: flex; color: #112121; padding: 10px; padding-top: 20px; justify-content: center; height: 100%;">
-            <div>
-                <h2 class="indicadores-ej">Faturamento: R${{"%0.2f" % entidade_ej.faturamento_atual}}</h2>
-                <canvas id="faturamento"style="height: 60%; width: 100%; margin-top: auto;"></canvas>
+            <div style="text-align: center;">
+                <h2>Faturamento</h2>
+                <h4 class="indicadores-ej-atual"><strong>Atual:</strong> R${{"%0.2f" % entidade_ej.faturamento_atual}}</h4>
+                <h4 class="indicadores-ej-meta"><strong>Meta:</strong> R${{"%0.2f" % entidade_ej.faturamento_meta}}</h4>
+                <canvas id="faturamento"style="height: 55%; width: 100%; margin-top: auto;"></canvas>
             </div>
         </div>
     </div>
