@@ -100,13 +100,13 @@
     {% endif %}
     <br>
     <h3> EJ em Destaque </h3>
+    {% for ej in ejs_destaque %}
     <div class="card" style="width: 18rem; margin-left: 0.8rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='fotos_trainees/' + '52c7e72a65e347dbde179c4ed0ac49d7.jpg')}}" alt="Card image cap">
+        <img class="card-img-top" src="{{url_for('static', filename='fotos_ej/' + ej.imagem)}}" alt="Card image cap">
         <div class="card-body">
-          <h5 class="card-title">Flasco Júnior</h5>
-          <p class="card-text">A Flasco Júnior é uma empresa que trabalha com soluções em software.</p>
-          <a href="" class="btn btn-primary">Ver Perfil</a>
+          <h5 class="card-title">{{ej.nome}}</h5>
+          <a href="{{url_for('ej.perfil_ej', id=ej.id)}}" class="btn btn-primary">Ver Perfil</a>
         </div>
     </div>
-
+    {% endfor %}
 {% endblock %}

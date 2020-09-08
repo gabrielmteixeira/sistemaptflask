@@ -25,3 +25,6 @@ class Ej(db.Model):
 
     def __repr__(self):
         return f'EJ: {self.nome}'
+
+    def tem_membros(self):
+        return len(self.usuarios) > 0
