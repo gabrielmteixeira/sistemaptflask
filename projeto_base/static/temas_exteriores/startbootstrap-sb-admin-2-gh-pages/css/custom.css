@@ -359,6 +359,16 @@ a.btn-icon-lista{
     text-decoration: none;
 }
 
+.btn-ej {
+    margin-left: 0.5rem;
+    transition: 400ms !important;
+}
+
+.excluir-ej:hover {
+    background-color: red !important;
+    border-color: red !important;
+}
+
 #joinEJ {
     background-color: #4e73df;
     display: flex;
