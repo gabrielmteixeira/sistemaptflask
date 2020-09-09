@@ -128,7 +128,18 @@ def editar_ej(id):
     return render_template('editar_ej.html', id=id, nome=ej.nome, cnpj=ej.cnpj , metaProj=ej.projetos_meta, metaFat=ej.faturamento_meta, 
                                                             atualProj=ej.projetos_atual, atualFat=ej.faturamento_atual)
 
-@ej.route('relacionar_ej/<_id>', methods=['GET', 'POST'])
+
+@ej.route('/deletar_ej/<_id>')
+@login_required(role=[usuario_urole_roles['ADMIN']])
+def deleta_ej(_id):
+    ej = Ej.query.get_or_404(_id)
+    db.session.delete(ej)
+    db.session.commit()
+
+    return redirect(url_for('ej.listar_ejs'))
+
+
+@ej.route('/relacionar_ej/<_id>', methods=['GET', 'POST'])
 @login_required(role=[usuario_urole_roles['ADMIN']])
 def relacionar_ej(_id):
 

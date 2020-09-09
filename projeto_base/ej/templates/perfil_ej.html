@@ -4,7 +4,11 @@
         {% if current_user.urole == usuario_urole_roles.ADMIN %}
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800"></h1>
-            <a href="{{url_for('ej.relacionar_ej', _id=entidade_ej.id)}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Relacionar Trainee</a>
+            <div>
+                <a href="{{url_for('ej.editar_ej', id=entidade_ej.id)}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm btn-ej"> Editar EJ </a>
+                <a href="{{url_for('ej.relacionar_ej', _id=entidade_ej.id)}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm btn-ej"> Relacionar Trainee</a>
+                <a href="{{url_for('ej.deleta_ej', _id=entidade_ej.id)}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm excluir-ej btn-ej" onclick="return confirm('Você deseja excluir esta EJ?')" style="margin-left: 1.5rem;"> Excluir EJ</a>
+            </div>
           </div>
         {% endif %}
     <div class="card d-flex flex-row" style="width: 100%; display: flex; color: #112121; margin-bottom: 10px; ">
