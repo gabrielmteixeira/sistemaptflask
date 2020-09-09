@@ -45,7 +45,7 @@
         <h1>Marcar tarefa como não feita?</h1>
         <div id="modalBtn">
             <a href="/tarefa/desfazer_tarefa/{{tarefa.id}}/"><button class="btn btn-primary">Sim</button></a>
-            <button class="btn btn-primary">Não</button>
+            <button id="cancelBtn" class="btn btn-primary">Não</button>
         </div>
     </div>
 </div>
@@ -63,11 +63,11 @@
     }
 
     $(".traineeCard").on("click", undo)
-    $("#modalBtn button").on("click", () => {
+    $("#modalBtn button#cancelBtn").on("click", () => {
         $("#undoModal").css({visibility: 'hidden'})
 
-        original = $("#modalBtn a").attr("href")
         $("#modalBtn a").attr("href", original)
+        console.log('Removed!')
         })
 </script>
 {% endblock scripts %} 
