@@ -19,7 +19,7 @@
 
     <h1 style="margin-bottom: 40px;"> Programa Trainee 2020.2 </h1>
     <!-- Cards de missões pendentes -->
-    <h3> Missões pendentes </h3>
+    <h3 style="margin-bottom: 22px;" > Missões pendentes </h3>
     <div class="taskList">
       <div class="grid-tarefas" id="lista-tarefas">
         {% for tarefa in tarefas %}
@@ -99,7 +99,7 @@
     {% endif %}
     {% endif %}
     <br>
-    <h3> EJ em Destaque </h3>
+    <h3 style="margin-bottom: 22px;"> EJ em Destaque </h3>
     {% for ej in ejs_destaque %}
     <div class="card" style="width: 18rem; margin-left: 0.8rem;">
         <img class="card-img-top" src="{{url_for('static', filename='fotos_ej/' + ej.imagem)}}" alt="Card image cap">

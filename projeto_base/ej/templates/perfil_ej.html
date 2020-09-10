@@ -4,36 +4,40 @@
         {% if current_user.urole == usuario_urole_roles.ADMIN %}
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800"></h1>
-            <a href="{{url_for('ej.relacionar_ej', _id=entidade_ej.id)}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Relacionar Trainee</a>
+            <div>
+                <a href="{{url_for('ej.editar_ej', id=entidade_ej.id)}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm btn-ej"> Editar EJ </a>
+                <a href="{{url_for('ej.relacionar_ej', _id=entidade_ej.id)}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm btn-ej"> Relacionar Trainee</a>
+                <a href="{{url_for('ej.deleta_ej', _id=entidade_ej.id)}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm excluir-ej btn-ej" onclick="return confirm('Você deseja excluir esta EJ?')" style="margin-left: 1.5rem;"> Excluir EJ</a>
+            </div>
           </div>
         {% endif %}
-<div class="card d-flex flex-row" style="width: 100%; display: flex; color: #112121; margin-bottom: 10px;">
-        <img src="{{url_for('static', filename='fotos_ej/' + entidade_ej.imagem)}}" style="max-height: 50vh; object-fit: cover; width: 128px; height: 128px; border-radius: 4px 0px 0px 4px;" alt="Card image cap">
-        <div style="padding-top: 15px;padding-left: 15px;">
-            <h1>{{entidade_ej.nome}}</h1>
-            <h3>Empresa Júnior</h3>
-           
-        </div>
-        
-</div>
+    <div class="card d-flex flex-row" style="width: 100%; display: flex; color: #112121; margin-bottom: 10px; ">
+            <img src="{{url_for('static', filename='fotos_ej/' + entidade_ej.imagem)}}" style="max-height: 50vh; object-fit: cover; width: 128px; height: 128px; border-radius: 4px 0px 0px 4px;" alt="Card image cap">
+            <div style="padding-top: 15px;padding-left: 15px;">
+                <h1>{{entidade_ej.nome}}</h1>
+                <h3>Empresa Júnior</h3>
+            
+            </div>
+            
+    </div>
 <div class="d-flex" style="margin-bottom: 30px; height: 34em;">
     <div class="col-sm-6" style="padding: 0px; padding-right: 10px;">
-        <div class="card d-flex flex-row" style="color: #112121; padding: 10px; padding-top: 20px; justify-content: center;  height: 100%; display: flex;">
+        <div class="card d-flex flex-row" style="color: #112121; padding: 10px; padding-top: 20px; justify-content: center;  height: 100%;  padding-top: 38px;">
             <div style="text-align: center;">
                 <h2>Projetos</h2>
                 <h4 class="indicadores-ej-atual"><strong>Atual:</strong> {{entidade_ej.projetos_atual}}</h4>
                 <h4 class="indicadores-ej-meta"><strong>Meta:</strong> {{entidade_ej.projetos_meta}}</h4>
-                <canvas id="projetos" style="height: 55%; width: 100%; margin-top: auto;"></canvas>
+                <canvas id="projetos" style="height: 65%; width: 100%; margin-top: auto;"></canvas>
             </div>
         </div>
     </div>
     <div class="col-sm-6" style="padding: 0px; padding-left: 10px;">
-        <div class="card d-flex flex-row" style="display: flex; color: #112121; padding: 10px; padding-top: 20px; justify-content: center; height: 100%;">
+        <div class="card d-flex flex-row" style="display: flex; color: #112121; padding: 10px; padding-top: 20px; justify-content: center; height: 100%; padding-top: 38px;">
             <div style="text-align: center;">
                 <h2>Faturamento</h2>
                 <h4 class="indicadores-ej-atual"><strong>Atual:</strong> R${{"%0.2f" % entidade_ej.faturamento_atual}}</h4>
                 <h4 class="indicadores-ej-meta"><strong>Meta:</strong> R${{"%0.2f" % entidade_ej.faturamento_meta}}</h4>
-                <canvas id="faturamento"style="height: 55%; width: 100%; margin-top: auto;"></canvas>
+                <canvas id="faturamento"style="height: 65%; width: 100%; margin-top: auto;"></canvas>
             </div>
         </div>
     </div>
@@ -43,7 +47,7 @@
 <div class="d-flex row">
 {% if not usuario.ej and current_user.urole == usuario_urole_roles['USER'] %}
 <div class="col-sm-3">
-    <div class="card d-flex flex-row" id="joinEJ" style="display: flex; color: #112121; padding-right: 20px; margin-right: 1%; height: 128px; margin-bottom: 10px;">
+    <div class="card d-flex flex-row" id="joinEJ" style="display: flex; color: #112121; padding-right: 20px; margin-right: 1%; height: 128px; margin-bottom: 10px; ">
         
             <div style="padding-top: 15px; padding-left: 15px;">
             <h5>Entrar na EJ</h5>
