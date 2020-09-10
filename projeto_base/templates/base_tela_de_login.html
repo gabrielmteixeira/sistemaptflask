@@ -47,32 +47,10 @@
                 <div class="p-5">
                   
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Bem vindo!</h1>
+                    <h1 class="h4 text-gray-900 mb-4">{% block mensagem %}{% endblock mensagem %}</h1>
                   </div>
-                  <form action="{{url_for('usuario.login')}}" method="POST" class="user">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    <div class="form-group">
-                      <input name="login" type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Nome/Email">
-                    </div>
-                    <div class="form-group">
-                      <input name="senha" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Senha">
-                    </div>
-                    
-                    <div class="form-group">
-                      <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">Lembre de mim</label>
-                      </div>
-                    </div>
-                    <button class="btn btn-primary btn-user btn-block">
-                      Login
-                    </button>
-                    <hr>
-                  </form>
-                  
-                  <div class="text-center">
-                    <a class="small" href="{{url_for('usuario.forgot_password')}}">Esqueceu a Senha?</a>
-                  </div>
+                  {% block form %}
+                  {% endblock form %}
                   <div class="text-center">
                     <a class="small" href="{{url_for('usuario.cadastrar_usuario')}}">Não possui uma conta? Cadastre-se</a>
                   </div>

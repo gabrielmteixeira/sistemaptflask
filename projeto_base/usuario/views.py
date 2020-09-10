@@ -1,13 +1,17 @@
 import os
 import time
-from flask import render_template, Blueprint, request, redirect, url_for, flash, current_app
+from flask import render_template, Blueprint, request, redirect, url_for, flash, current_app, abort
 from projeto_base.usuario.models import Usuario, usuario_urole_roles
-from projeto_base import db, login_required
+from projeto_base import db, login_required, mail, app
 from flask_login import LoginManager, current_user, login_user, logout_user
+from flask_mail import Message
+from itsdangerous import URLSafeTimedSerializer
+
 
 usuario = Blueprint('usuario', __name__, template_folder='templates')
 login_manager = LoginManager()
 login_manager.login_view = "principal.index"
+ts = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 
 @usuario.route('/perfil')
 @login_required()
@@ -308,4 +312,59 @@ def excluir_usuario():
     db.session.commit()
     return redirect(url_for('principal.index'))
 
+@usuario.route('/forgot_password', methods=['GET', 'POST'])
+def forgot_password():
+    if request.method == 'POST':
+        form = request.form
+        email = form['email']
+        confirmaEmail = form['confirmar']
 
+        checaEmail = Usuario.query.filter_by(email=email).first()
+        
+        if email == confirmaEmail:
+            if checaEmail:
+                
+                token = ts.dumps(email, salt='recover-key')
+
+                mensagem = Message("Recuperação de Senha",
+                                    sender='emailautomatico1234@gmail.com',
+                                    recipients=[email])
+
+                recover_url = url_for(
+                'usuario.recuperar_senha',
+                token=token,
+                _external=True)
+
+                mensagem.html = render_template('email_de_resetar.html', checaEmail=checaEmail, recover_url=recover_url)
+
+                mail.send(mensagem)
+                flash("Um email para recuperar sua senha foi enviado no seu E-mail.")
+                return redirect(url_for('usuario.forgot_password'))
+            else:
+                flash('Email incorreto!')
+                return redirect(url_for('usuario.forgot_password'))
+        else:
+            flash("O E-mail e sua confirmação estão diferentes!")
+            return redirect(url_for("usuario.forgot_password"))
+
+    return render_template('forgot_password.html')
+@usuario.route('/recuperar_senha/<token>', methods=['GET', 'POST'])
+def recuperar_senha(token):
+    try:
+        email = ts.loads(token, salt="recover-key", max_age=86400)
+    except:
+        abort(404)
+    usuario = Usuario.query.filter_by(email=email).first_or_404()
+    if request.method == 'POST':
+        form = request.form
+        senha = form['senha']
+        confirmar = form['confirmar']
+        
+        if confirmar == senha:
+            usuario.setSenha(senha)
+            db.session.commit()
+            flash("Senha alterada com sucesso!")
+            return redirect(url_for('usuario.login'))
+        elif confirmar != senha:
+            flash("Confirmação de senha e senha estão diferentes.")
+    return render_template('password_reset.html', token=token)

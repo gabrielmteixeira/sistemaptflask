@@ -4,11 +4,12 @@ from flask import Flask, render_template, current_app
 from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-#from flask_mail import Mail     --> Quando usar e-mail, precisa dessa biblioteca
+from flask_mail import Mail   
 
 login_manager = LoginManager()
 
 app = Flask(__name__)
+
 
 app.config['SECRET_KEY'] = 'mysecretkey'
 
@@ -38,14 +39,25 @@ def insere_usuario_urole_roles():
 ######################## EMAIL #############################
 ############################################################
 
-# EMAIL DEVE SER CONFIGURADO ANTES DE USAR (apague este comentário depois de configurar)
-''' 
-app.config['MAIL_SERVER']='smtp.gmail.com'
+
+
+app.config['DEBUG'] = True
+app.config['TESTING'] = False
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_SSL']=True
-app.config['MAIL_USERNAME'] = 'cudolarrypage@gmail.com'
-app.config['MAIL_PASSWORD'] = 'daniel2019'
-'''
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+#app.config['MAIL_DEBUG'] = True
+app.config['MAIL_USERNAME'] = 'emailautomatico1234@gmail.com'
+app.config['MAIL_PASSWORD'] = 'emailautomatico'
+app.config['MAIL_DEFAULT_SENDER'] = None
+app.config['MAIL_MAX_EMAILS'] = None
+#app.config['MAIL_SUPPRESS_SEND'] = False
+app.config['MAIL_ASCII_ATTACHMENTS'] = False
+
+
+mail = Mail(app)
+
 
 #############################################################
 ################## CONFIGURA LOGIN ##########################
