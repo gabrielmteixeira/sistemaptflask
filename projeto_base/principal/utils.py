@@ -3,7 +3,7 @@ from projeto_base.usuario.models import Usuario
 from projeto_base.ej.models import Ej
 
 def get_ejs_destaque():
-    tarefas = Tarefa.query.all()
+    tarefas = Tarefa.query.filter_by(ehSolo=0).all()
     ejs = Ej.query.all()
 
     ejs_em_destaque = []
@@ -12,7 +12,7 @@ def get_ejs_destaque():
         
         if(ej.tem_membros()):
             for membro in ej.usuarios:
-                if len(membro.get_tarefas()) == len(tarefas):
+                if len(membro.get_tarefas_coletivas()) == len(tarefas):
                     fizeram_todas_as_tarefas.append(True)
                 else:
                     fizeram_todas_as_tarefas.append(False)

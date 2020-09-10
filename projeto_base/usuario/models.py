@@ -52,6 +52,15 @@ class Usuario(db.Model, UserMixin):
         for assoc in self.tarefas:
             tarefas_list.append(assoc.tarefa)
         return tarefas_list
+    
+    def get_tarefas_coletivas(self):
+        tarefas_coletivas = []
+        
+        for assoc in self.tarefas:
+            if not assoc.tarefa.ehSolo:
+                tarefas_coletivas.append(assoc.tarefa)
+        
+        return tarefas_coletivas
 
     def __repr__(self):
         return f"Login:{self.login}, Senha:{self.senha}"
