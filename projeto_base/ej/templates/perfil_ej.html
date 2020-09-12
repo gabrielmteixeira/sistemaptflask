@@ -1,5 +1,7 @@
 {% extends "Base_dashboard.html" %}
 
+{% block titulo %}Perfil da EJ{% endblock titulo %}
+
 {% block conteudo %}
         {% if current_user.urole == usuario_urole_roles.ADMIN %}
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
