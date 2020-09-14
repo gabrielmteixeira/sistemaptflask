@@ -28,9 +28,10 @@ def perfil_ej(id):
         
         tarefas = Tarefa.query.filter_by(ehSolo=0).all()
         for tarefa in tarefas:
-            tarefa_trainee = TarefaTrainee(tarefa, usuario)
-            confere_prazo_tarefa(tarefa_trainee)
-            db.session.add(tarefa_trainee)
+            if entidade_ej.usuarios and tarefa in entidade_ej.usuarios[0].get_tarefas():
+                tarefa_trainee = TarefaTrainee(tarefa, usuario)
+                confere_prazo_tarefa(tarefa_trainee)
+                db.session.add(tarefa_trainee)
 
         usuario.ej_id = id
         db.session.commit()
@@ -154,6 +155,14 @@ def relacionar_ej(_id):
         usuario = Usuario.query.get_or_404(usuario_id)
         
         ej_id = request.form['ej_id']
+
+        tarefas = Tarefa.query.filter_by(ehSolo=0).all()
+        for tarefa in tarefas:
+            if entidade_ej.usuarios and tarefa in entidade_ej.usuarios[0].get_tarefas():
+                tarefa_trainee = TarefaTrainee(tarefa, usuario)
+                confere_prazo_tarefa(tarefa_trainee)
+                db.session.add(tarefa_trainee)
+    
         usuario.ej_id = ej_id
         db.session.commit()
 
