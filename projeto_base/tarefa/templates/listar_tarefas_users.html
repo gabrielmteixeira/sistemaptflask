@@ -5,11 +5,14 @@
 {% block conteudo %}
 {% with messages = get_flashed_messages() %}
 {% if messages %}
-    <ul class=flashes>
         {% for message in messages %}
-            <li><b>{{ message }}</b></li>
+            <b>
+              <div class="alert alert-primary" role="alert">
+                <button data-dismiss="alert" type="button" class="close" aria-label="Close">x</button>
+                {{message}}
+              </div>
+            </b>
         {% endfor %}
-    </ul>
 {% endif %}
 {% endwith %}
 <h2 class="h2Tarefa">Lista de Tarefas</h2>
