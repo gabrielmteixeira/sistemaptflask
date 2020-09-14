@@ -4,6 +4,8 @@ from flask import render_template, Blueprint, request, redirect, url_for, flash,
 from projeto_base.ej.models import Ej
 from projeto_base.ej.utils import calcula_chart_grid
 from projeto_base.usuario.models import Usuario, usuario_urole_roles
+from projeto_base.tarefa.models import Tarefa, TarefaTrainee
+from projeto_base.tarefa.utils import confere_prazo_tarefa
 from projeto_base import db, login_required
 from flask_login import LoginManager, current_user, login_user, logout_user
 
@@ -18,15 +20,20 @@ def listar_ejs():
 @ej.route('/perfil/<id>', methods = ['GET', 'POST'])
 @login_required()
 def perfil_ej(id):
-    if request.method == 'POST':
-        usuario_id = current_user.id
+    entidade_ej = Ej.query.get_or_404(id)
     
+    if request.method == 'POST':  
+        usuario_id = current_user.id
         usuario = Usuario.query.get_or_404(usuario_id)
         
+        tarefas = Tarefa.query.filter_by(ehSolo=0).all()
+        for tarefa in tarefas:
+            tarefa_trainee = TarefaTrainee(tarefa, usuario)
+            confere_prazo_tarefa(tarefa_trainee)
+            db.session.add(tarefa_trainee)
+
         usuario.ej_id = id
         db.session.commit()
-
-    entidade_ej = Ej.query.get_or_404(id)
 
     porcentagem_faturamento = (entidade_ej.faturamento_atual / entidade_ej.faturamento_meta) * 100
     porcentagem_projetos = (entidade_ej.projetos_atual / entidade_ej.projetos_meta) * 100
@@ -38,10 +45,6 @@ def perfil_ej(id):
 @login_required()
 def cadastrar_ej():
     if (current_user.is_authenticated):
-        # if current_user.urole == usuario_urole_roles['USER']:
-        #     flash("Você não tem permissão para realizar esta ação.")
-        #     return redirect(url_for("principal.index"))
-        # else:
         if request.method == 'POST':
             form = request.form
 
