@@ -22,6 +22,9 @@ def admin_excluir_usuario_lista():
         if entidade_usuario_atual == entidade_usuario:
             flash("Você não tem permissão para executar esta ação.")
             return redirect(url_for('principal.index'))
+        
+        for assoc in entidade_usuario.tarefas:
+            db.session.delete(assoc) 
 
         db.session.delete(entidade_usuario)
         db.session.commit()
