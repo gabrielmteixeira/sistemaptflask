@@ -173,6 +173,9 @@ def cadastrar_usuario():
                 elif (emailRepetido):
                     flash("Este email já está em uso.")
                     return redirect(url_for('usuario.cadastrar_usuario'))
+                elif loginRepetido:
+                    flash("Este username já está em uso.")
+                    return redirect(url_for('usuario.cadastrar_usuario'))
                 elif not(emailRepetido or loginRepetido):
 
                     entidade_usuario = Usuario(nome=nome,
@@ -217,6 +220,9 @@ def cadastrar_usuario():
                 return redirect(url_for('usuario.cadastrar_usuario'))
             elif (emailRepetido):
                 flash("Este email já está em uso.")
+                return redirect(url_for('usuario.cadastrar_usuario'))
+            elif loginRepetido:
+                flash("Este username já está em uso.")
                 return redirect(url_for('usuario.cadastrar_usuario'))
             elif not(emailRepetido or loginRepetido):
 
