@@ -29,7 +29,7 @@
                 <h2>Projetos</h2>
                 <h4 class="indicadores-ej-atual"><strong>Atual:</strong> {{entidade_ej.projetos_atual}}</h4>
                 <h4 class="indicadores-ej-meta"><strong>Meta:</strong> {{entidade_ej.projetos_meta}}</h4>
-                <canvas id="projetos" style="height: 65%; width: 100%; margin-top: auto;"></canvas>
+                <canvas id = "projetos" class="my-4 chartjs-render-monitor" width="300" height="310" style="display: block; height: 310px; width: 300px;"></canvas>   
             </div>
         </div>
     </div>
@@ -39,7 +39,7 @@
                 <h2>Faturamento</h2>
                 <h4 class="indicadores-ej-atual"><strong>Atual:</strong> R${{"%0.2f" % entidade_ej.faturamento_atual}}</h4>
                 <h4 class="indicadores-ej-meta"><strong>Meta:</strong> R${{"%0.2f" % entidade_ej.faturamento_meta}}</h4>
-                <canvas id="faturamento"style="height: 65%; width: 100%; margin-top: auto;"></canvas>
+                <canvas id="faturamento"class="my-4 chartjs-render-monitor" width="300" height="310" style="display: block; height: 310px; width: 300px;"></canvas>
             </div>
         </div>
     </div>
