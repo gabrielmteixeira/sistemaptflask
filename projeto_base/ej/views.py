@@ -51,8 +51,6 @@ def cadastrar_ej():
 
             nome = form["nome"]
             cnpj = form["cnpj"]
-            metaProj = form["metaProj"]
-            metaFat = form["metaFat"]
             foto_ej = request.files["foto_ej"]
 
             original_filename = foto_ej.filename
@@ -66,10 +64,10 @@ def cadastrar_ej():
 
             entidade_ej = Ej(       nome=nome,
                                     cnpj = cnpj,
-                                    projetos_meta = metaProj,
+                                    projetos_meta = 2,
                                     projetos_atual = 0,
                                     faturamento_atual = 0,
-                                    faturamento_meta = metaFat,
+                                    faturamento_meta = 6800,
                                     imagem=filename)
 
             db.session.add(entidade_ej)

@@ -14,8 +14,3 @@ def index():
     ejs_destaque = get_ejs_destaque()
 
     return render_template('tela_principal.html', tarefas=tarefas, ejs_destaque=ejs_destaque)
-
-@principal.route('/dashboard')
-def dashboard():
-
-    return render_template('dashboard.html')
