@@ -145,56 +145,7 @@ def cadastrar_usuario():
         if current_user.urole == usuario_urole_roles['USER']:
             flash("Você não tem permissão para realizar esta ação.")
             return redirect(url_for("principal.index"))
-        else:
-            if request.method == 'POST':
-                form = request.form
-
-                nome = form["nome"]
-                login = form["login"]
-                senha = form["senha"]
-                email = form["email"]
-                confirmacao = form["confirmacao"]
-                foto_trainee = request.files["foto_trainee"]
-
-                original_filename = foto_trainee.filename
-                filename = str(original_filename).split(".")
-                filename[0] = str(time.time())
-                filename.insert(1, ".")
-                filename = "".join(filename)
-                filepath = os.path.join(current_app.root_path, 'static', 'fotos_trainees', filename)
-                foto_trainee.save(filepath)
-
-                emailRepetido = Usuario.query.filter_by(email= email).first()
-                loginRepetido = Usuario.query.filter_by(login= login).first()
-
-                if (confirmacao != senha ):
-                    flash("Confirmação de senha e senha estão diferentes.")
-                    return redirect(url_for('usuario.cadastrar_usuario'))
-                elif (emailRepetido):
-                    flash("Este email já está em uso.")
-                    return redirect(url_for('usuario.cadastrar_usuario'))
-                elif loginRepetido:
-                    flash("Este username já está em uso.")
-                    return redirect(url_for('usuario.cadastrar_usuario'))
-                elif not(emailRepetido or loginRepetido):
-
-                    entidade_usuario = Usuario(nome=nome,
-                                               login=login,
-                                               senha=senha,
-                                               email=email,
-                                               foto_trainee=filename)
-
-                    db.session.add(entidade_usuario)
-                    db.session.commit(entidade_usuario)
-                    
-                    flash("Usuário cadastrado!")
-                    loginUsuario = Usuario.query.filter_by(email=email).first()
-                    login_user(loginUsuario)
-                    flash("Usuário logado com sucesso!")
-
-                return redirect(url_for('principal.index'))
-    else:
-        if request.method == 'POST':
+    elif request.method == 'POST':
             form = request.form
 
             nome = form["nome"]
@@ -203,14 +154,6 @@ def cadastrar_usuario():
             email = form["email"]
             confirmacao = form["confirmacao"]
             foto_trainee = request.files["foto_trainee"]
-
-            original_filename = foto_trainee.filename
-            filename = str(original_filename).split(".")
-            filename[0] = str(time.time())
-            filename.insert(1, ".")
-            filename = "".join(filename)
-            filepath = os.path.join(current_app.root_path, 'static', 'fotos_trainees', filename)
-            foto_trainee.save(filepath)
 
             emailRepetido = Usuario.query.filter_by(email= email).first()
             loginRepetido = Usuario.query.filter_by(login= login).first()
@@ -225,6 +168,14 @@ def cadastrar_usuario():
                 flash("Este username já está em uso.")
                 return redirect(url_for('usuario.cadastrar_usuario'))
             elif not(emailRepetido or loginRepetido):
+
+                original_filename = foto_trainee.filename
+                filename = str(original_filename).split(".")
+                filename[0] = str(time.time())
+                filename.insert(1, ".")
+                filename = "".join(filename)
+                filepath = os.path.join(current_app.root_path, 'static', 'fotos_trainees', filename)
+                foto_trainee.save(filepath)
 
                 entidade_usuario = Usuario(nome=nome,
                                            login=login,
@@ -243,9 +194,7 @@ def cadastrar_usuario():
             return redirect(url_for('principal.index'))
 
     return render_template('cadastro.html')
-"""@usuario.route('login_automático', methods=['GET', 'POST'])
-def login_automático():
-    login_user()"""
+    
 @usuario.route('/login', methods = ['POST','GET'])
 def login():
     if request.method == 'POST':
