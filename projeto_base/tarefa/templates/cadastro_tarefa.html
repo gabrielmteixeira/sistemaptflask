@@ -32,9 +32,12 @@
         <input class="custom-file-input" type="file" id="icone" name="icone" placeholder="Foto da Tarefa" required>
         <label class="custom-file-label" for="validatedCustomFile">Escolher arquivo...</label>
     </div>
-    <div>
+    <div style="margin-top: 8px; margin-bottom: 8px;">
         <span>É individual</span>
-        <input class="form-control" type="text" id="ehSolo" name="ehSolo" placeholder="sim/não" required>
+        <select class="form-control" name="ehSolo" id="ehSolo" required>
+            <option value="sim">Sim</option>
+            <option value="não">Não</option>
+        </select>
     </div>
     <button class="btn btn-primary" type="submit">Cadastrar</button>
 </form>

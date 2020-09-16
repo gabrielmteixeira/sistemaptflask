@@ -31,12 +31,24 @@
     
     <div>
         <span>Ativar ou desativar usuário:</span>
-        <input class="form-control" type="text"  id="ativo" name="ativo" value="" placeholder="ativo/desativado" required>
+        <select class="form-control" name="ativo" id="ativo" required>
+            {% if entidade_usuario.active %}
+            <option value="ativo">Ativo (Atual)</option>
+            <option value="desativado">Desativar</option>
+            {% else %}
+            <option value="desativado">Desativado (Atual)</option>
+            <option value="ativo">Ativar</option>
+            {% endif %}
+        </select>
     </div>
 
     <div>
         <span>Função:</span>
-        <input class="form-control" value="{{entidade_usuario.urole}}" type="text" id="funcao" name="funcao" placeholder="admin/user" required>
+        <select class="form-control" name="funcao" id="funcao" required>
+            <option value="{{entidade_usuario.urole}}">{{entidade_usuario.urole}} (Atual)</option>
+            <option value="user">Usuário</option>
+            <option value="admin">Administrador</option>
+        </select>
     </div>
 
     <br>
