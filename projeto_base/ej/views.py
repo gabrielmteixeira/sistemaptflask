@@ -158,7 +158,7 @@ def relacionar_ej(_id):
 
         tarefas = Tarefa.query.filter_by(ehSolo=0).all()
         for tarefa in tarefas:
-            if entidade_ej.usuarios and tarefa in entidade_ej.usuarios[0].get_tarefas():
+            if ej.usuarios and tarefa in ej.usuarios[0].get_tarefas():
                 tarefa_trainee = TarefaTrainee(tarefa, usuario)
                 confere_prazo_tarefa(tarefa_trainee)
                 db.session.add(tarefa_trainee)
