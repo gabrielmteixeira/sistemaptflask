@@ -196,7 +196,7 @@ def desfazer_tarefa(id, traineeId):
         instancia = TarefaTrainee.query.filter_by(id_tarefa=id, id_trainee = traineeId).first_or_404()
         db.session.delete(instancia)
     else:
-        trainee = Usuario.query.get_or_404(id)
+        trainee = Usuario.query.get_or_404(traineeId)
         ej = Ej.query.filter_by(id=trainee.ej_id).first_or_404()
         for membro in ej.usuarios:
             instancia = TarefaTrainee.query.filter_by(id_tarefa=id, id_trainee = membro.id).first_or_404()
