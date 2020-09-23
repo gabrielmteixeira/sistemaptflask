@@ -1,1 +1,1 @@
-web: flask db upgrade; gunicorn novosistemapt:app
+web: flask db upgrade; gunicorn sistemaptijunior:app
