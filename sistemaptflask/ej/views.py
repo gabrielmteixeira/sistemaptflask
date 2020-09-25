@@ -1,12 +1,12 @@
 import os
 import time
 from flask import render_template, Blueprint, request, redirect, url_for, flash, current_app
-from projeto_base.ej.models import Ej
-from projeto_base.ej.utils import calcula_chart_grid
-from projeto_base.usuario.models import Usuario, usuario_urole_roles
-from projeto_base.tarefa.models import Tarefa, TarefaTrainee
-from projeto_base.tarefa.utils import confere_prazo_tarefa
-from projeto_base import db, login_required
+from sistemaptflask.ej.models import Ej
+from sistemaptflask.ej.utils import calcula_chart_grid
+from sistemaptflask.usuario.models import Usuario, usuario_urole_roles
+from sistemaptflask.tarefa.models import Tarefa, TarefaTrainee
+from sistemaptflask.tarefa.utils import confere_prazo_tarefa
+from sistemaptflask import db, login_required
 from flask_login import LoginManager, current_user, login_user, logout_user
 
 ej = Blueprint('ej', __name__, template_folder='templates')

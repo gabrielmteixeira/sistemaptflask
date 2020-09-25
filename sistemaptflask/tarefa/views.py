@@ -2,12 +2,12 @@ import os
 import re
 import time
 from flask import render_template, Blueprint, request, redirect, url_for, flash, current_app
-from projeto_base.tarefa.models import Tarefa, TarefaTrainee
-from projeto_base.usuario.models import Usuario, usuario_urole_roles
-from projeto_base.ej.models import Ej
-from projeto_base import db, login_required
+from sistemaptflask.tarefa.models import Tarefa, TarefaTrainee
+from sistemaptflask.usuario.models import Usuario, usuario_urole_roles
+from sistemaptflask.ej.models import Ej
+from sistemaptflask import db, login_required
 from flask_login import LoginManager, current_user, login_user, logout_user
-from projeto_base.tarefa.utils import data_format_in, data_format_out, define_solo_in, define_solo_out, confere_prazo_tarefa
+from sistemaptflask.tarefa.utils import data_format_in, data_format_out, define_solo_in, define_solo_out, confere_prazo_tarefa
 import copy
 
 

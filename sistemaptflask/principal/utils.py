@@ -1,6 +1,6 @@
-from projeto_base.tarefa.models import Tarefa, TarefaTrainee
-from projeto_base.usuario.models import Usuario
-from projeto_base.ej.models import Ej
+from sistemaptflask.tarefa.models import Tarefa, TarefaTrainee
+from sistemaptflask.usuario.models import Usuario
+from sistemaptflask.ej.models import Ej
 
 def get_ejs_destaque():
     tarefas = Tarefa.query.filter_by(ehSolo=0).all()

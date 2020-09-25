@@ -1,4 +1,4 @@
-from projeto_base import app
+from sistemaptflask import app
 from flask_wtf.csrf import CSRFProtect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate

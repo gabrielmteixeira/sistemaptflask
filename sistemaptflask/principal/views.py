@@ -1,8 +1,8 @@
 from flask import render_template, Blueprint
-from projeto_base.usuario.models import Usuario
-from projeto_base.tarefa.models import Tarefa
-from projeto_base.principal.utils import get_ejs_destaque
-from projeto_base import db
+from sistemaptflask.usuario.models import Usuario
+from sistemaptflask.tarefa.models import Tarefa
+from sistemaptflask.principal.utils import get_ejs_destaque
+from sistemaptflask import db
 from flask_login import current_user
 
 principal = Blueprint('principal', __name__, template_folder='templates')

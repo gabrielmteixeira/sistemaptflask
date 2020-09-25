@@ -1,5 +1,5 @@
-from projeto_base import db
-import projeto_base.usuario.models
+from sistemaptflask import db
+import sistemaptflask.usuario.models
 
 class TarefaTrainee(db.Model):
     __tablename__ = 'tarefaTrainee'

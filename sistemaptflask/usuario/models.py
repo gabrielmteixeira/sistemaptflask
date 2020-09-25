@@ -1,12 +1,12 @@
-from projeto_base import db, login_manager
+from sistemaptflask import db, login_manager
 from flask_bcrypt import Bcrypt
 from sqlalchemy.sql import expression
 from flask_login import UserMixin
 from flask import session
 from enum import Enum
 
-import projeto_base.ej.models
-import projeto_base.tarefa.models
+import sistemaptflask.ej.models
+import sistemaptflask.tarefa.models
 
 usuario_urole_roles = {
                 'USER': 'user',

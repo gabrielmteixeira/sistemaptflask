@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, request, redirect, url_for, flash
-from projeto_base.usuario.models import Usuario, usuario_urole_roles
-from projeto_base import db, login_required
+from sistemaptflask.usuario.models import Usuario, usuario_urole_roles
+from sistemaptflask import db, login_required
 from flask_login import LoginManager, current_user, login_user, logout_user
 
 admin = Blueprint('admin', __name__, template_folder='templates')

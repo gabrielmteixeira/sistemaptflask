@@ -1,8 +1,8 @@
 import os
 import time
 from flask import render_template, Blueprint, request, redirect, url_for, flash, current_app, abort
-from projeto_base.usuario.models import Usuario, usuario_urole_roles
-from projeto_base import db, login_required, mail, app
+from sistemaptflask.usuario.models import Usuario, usuario_urole_roles
+from sistemaptflask import db, login_required, mail, app
 from flask_login import LoginManager, current_user, login_user, logout_user
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer

@@ -30,7 +30,7 @@ Migrate(app,db, compare_type = True)
 #############################################################
 ########### VARIÁVEIS/FUNÇÕES DO TEMPLATE ###################
 #############################################################
-from projeto_base.usuario.models import usuario_urole_roles
+from sistemaptflask.usuario.models import usuario_urole_roles
 @app.context_processor
 def insere_usuario_urole_roles():
     return dict(usuario_urole_roles=usuario_urole_roles)
@@ -87,18 +87,18 @@ def login_required(role=["ANY"]):
 ####################### MODELS ##############################
 #############################################################
 
-from projeto_base.usuario.models import Usuario
-from projeto_base.ej.models import Ej
+from sistemaptflask.usuario.models import Usuario
+from sistemaptflask.ej.models import Ej
 
 #############################################################
 ####################### BLUEPRINTS ##########################
 #############################################################
 
-from projeto_base.principal.views import principal
-from projeto_base.usuario.views import usuario
-from projeto_base.usuario.admin_views import admin
-from projeto_base.ej.views import ej
-from projeto_base.tarefa.views import tarefa
+from sistemaptflask.principal.views import principal
+from sistemaptflask.usuario.views import usuario
+from sistemaptflask.usuario.admin_views import admin
+from sistemaptflask.ej.views import ej
+from sistemaptflask.tarefa.views import tarefa
 
 app.register_blueprint(principal)
 app.register_blueprint(usuario, url_prefix='/usuario')
