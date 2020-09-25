@@ -17,7 +17,7 @@ app.config['SECRET_KEY'] = 'mysecretkey'
 ################## BANCO DE DADOS ##########################
 ############################################################
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] =  'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] =  'mysql+pymysql://sistemaptflask:DeNoVo123@@sistemaptflask.mysql.dbaas.com.br/sistemaptflask'
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
                                             "pool_recycle": 10
                                           }
