@@ -5,9 +5,9 @@ class Ej(db.Model):
 
     __tablename__ = 'ej'
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(100), unique=True, nullable=False)
-    imagem = db.Column(db.String)
-    cnpj = db.Column(db.String, unique=True)
+    nome = db.Column(db.String(255), unique=True, nullable=False)
+    imagem = db.Column(db.String(255))
+    cnpj = db.Column(db.String(100), unique=True)
     projetos_meta = db.Column(db.Integer)
     faturamento_meta = db.Column(db.Integer)
     projetos_atual = db.Column(db.Integer)

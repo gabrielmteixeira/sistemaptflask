@@ -20,10 +20,10 @@ class Tarefa(db.Model):
 
     __tablename__ = 'tarefa'
     id = db.Column(db.Integer, primary_key=True)
-    titulo = db.Column(db.String, unique=True, nullable=False)
-    descricao = db.Column(db.String, nullable=False)
-    icone = db.Column(db.String)
-    prazo = db.Column(db.String)
+    titulo = db.Column(db.String(255), unique=True, nullable=False)
+    descricao = db.Column(db.Text(), nullable=False)
+    icone = db.Column(db.String(255))
+    prazo = db.Column(db.String(100))
     ehSolo = db.Column(db.Boolean)
     trainees = db.relationship("TarefaTrainee", back_populates="tarefa")
 
