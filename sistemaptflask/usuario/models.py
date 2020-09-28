@@ -23,7 +23,7 @@ class Usuario(db.Model, UserMixin):
 
     __tablename__ = 'usuario'
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.Integer, unique=False, nullable=False)
+    nome = db.Column(db.String(255), unique=False, nullable=False)
     login = db.Column(db.String(255), unique=True)
     senha = db.Column(db.String(255),nullable = False)
     urole = db.Column(db.String(50), server_default="user", nullable=False)
