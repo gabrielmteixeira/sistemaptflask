@@ -66,9 +66,9 @@ def editar_usuario():
             entidade_usuario.login = form["login"]
             entidade_usuario.email = form["email"]
             entidade_usuario.nome = form["nome"]
+            '''
             print(request.files["foto_trainee"])
             foto_trainee = request.files["foto_trainee"]
-            
 
             if foto_trainee:
                 filename = foto_trainee.filename
@@ -79,13 +79,14 @@ def editar_usuario():
                 filepath = os.path.join(current_app.root_path, 'static', 'fotos_trainees', filename)
                 foto_trainee.save(filepath)
                 entidade_usuario.foto_trainee = foto_trainee.filename
-
+            '''
             db.session.commit()
         elif entidade_usuario_permissao == usuario_urole_roles['ADMIN']:
 
             entidade_usuario.login = form["login"]
             entidade_usuario.email = form["email"]
             entidade_usuario.nome = form["nome"]
+            '''
             print(request.files["foto_trainee"])
             foto_trainee = request.files["foto_trainee"]
 
@@ -98,7 +99,7 @@ def editar_usuario():
                 filepath = os.path.join(current_app.root_path, 'static', 'fotos_trainees', filename)
                 foto_trainee.save(filepath)
                 entidade_usuario.foto_trainee = foto_trainee.filename
-
+            '''
             status = form["ativo"]
 
             if status == "ativo":
@@ -139,6 +140,8 @@ def editar_senha_usuario():
         return redirect(url_for('principal.index'))
 
     return render_template('editar_senha_usuario.html')
+
+'''
 @usuario.route('/cadastrar_usuario', methods = ['POST', 'GET'])
 def cadastrar_usuario():
     if (current_user.is_authenticated):
@@ -194,6 +197,7 @@ def cadastrar_usuario():
             return redirect(url_for('principal.index'))
 
     return render_template('cadastro.html')
+'''
     
 @usuario.route('/login', methods = ['POST','GET'])
 def login():
