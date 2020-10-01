@@ -107,7 +107,7 @@ def editar_ej(id):
         ej.projetos_atual = form['atualProj']             
         ej.faturamento_atual = form['atualFat']
 
-        foto = request.files['foto_ej']
+        """foto = request.files['foto_ej']
         if foto.content_type != 'application/octet-stream':
             original_filename = foto.filename
             filename = str(original_filename).split(".")
@@ -121,7 +121,7 @@ def editar_ej(id):
             filepath_antigo = os.path.join(current_app.root_path, 'static', 'fotos_ej', )
             os.remove(filepath_antigo)        
             
-            ej.imagem = filename
+            ej.imagem = filename"""
 
         db.session.commit()
 
