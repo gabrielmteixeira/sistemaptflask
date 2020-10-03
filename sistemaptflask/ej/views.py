@@ -41,7 +41,7 @@ def perfil_ej(id):
 
     return render_template('perfil_ej.html', entidade_ej = entidade_ej, perc_fat=porcentagem_faturamento, perc_proj=porcentagem_projetos, 
                                                                         fat_grid_step=calcula_chart_grid(entidade_ej.faturamento_meta), usuario = current_user)
-
+'''
 @ej.route('/cadastrar_ej', methods = ['POST', 'GET'])
 @login_required()
 def cadastrar_ej():
@@ -86,7 +86,7 @@ def cadastrar_ej():
             return redirect(url_for('principal.index'))
 
     return render_template('cadastro_ej.html')
-
+'''
 
 
 @ej.route('/editar_ej/<id>', methods = ['GET', 'POST'])
@@ -129,6 +129,7 @@ def editar_ej(id):
 
     return render_template('editar_ej.html', id=id, nome=ej.nome, cnpj=ej.cnpj , metaProj=ej.projetos_meta, metaFat=ej.faturamento_meta, 
                                                             atualProj=ej.projetos_atual, atualFat=ej.faturamento_atual)
+
 
 
 @ej.route('/deletar_ej/<_id>')
