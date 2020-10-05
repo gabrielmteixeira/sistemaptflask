@@ -21,7 +21,7 @@ def cadastra_tarefa():
 
         titulo = form['titulo']
         descricao = form['descricao']
-        icone = request.files['icone']
+        icone = form['icone']
         prazo = form['data']
         solo = form['ehSolo']
 
@@ -31,17 +31,7 @@ def cadastra_tarefa():
         #tratando ehSolo
         ehSolo = define_solo_in(solo)
 
-        original_filename = icone.filename
-        filename = str(original_filename).split(".")
-        filename[0] = str(time.time())
-        filename.insert(1, ".")
-        filename = "".join(filename)
-
-        print("++++++++++++++++" + filename)
-        filepath = os.path.join(current_app.root_path, 'static', 'fotos_tarefa', filename)
-        icone.save(filepath)
-
-        tarefa = Tarefa(titulo, descricao, filename, prazo, ehSolo)
+        tarefa = Tarefa(titulo, descricao, icone, prazo, ehSolo)
 
         db.session.add(tarefa)
         db.session.commit() 
@@ -57,9 +47,6 @@ def cadastra_tarefa():
 @login_required(role=[usuario_urole_roles['ADMIN']])
 def lista_tarefas():
     tarefas = Tarefa.query.all()
-    if not tarefas:
-        flash("Não há tarefas cadastradas no sistema.")
-        return redirect(url_for('principal.index'))
     
     return render_template('listar_tarefas.html', tarefas=tarefas)
 
@@ -68,12 +55,6 @@ def lista_tarefas():
 def deleta_tarefa(id):
     tarefa = Tarefa.query.filter_by(id=id).first_or_404()
     related = TarefaTrainee.query.filter_by(id_tarefa=id).all()
-    
-    filepath = os.path.join(current_app.root_path, 'static', 'fotos_tarefa', tarefa.icone)
-    try:
-        os.remove(filepath)
-    except:
-        pass
 
     db.session.delete(tarefa)
     for i in related:
@@ -107,25 +88,7 @@ def edita_tarefa():
     descricao = form['descricao']
     prazo = form['data']
     solo = form['ehSolo']
-
-    icone = request.files['icone']
-    if icone.content_type != 'application/octet-stream':
-        original_filename = icone.filename
-        filename = str(original_filename).split(".")
-        filename[0] = str(time.time())
-        filename.insert(1, ".")
-        filename = "".join(filename)
-        print("++++++++++++++++" + filename)
-        filepath_novo = os.path.join(current_app.root_path, 'static', 'fotos_tarefa', filename)
-        icone.save(filepath_novo)
-        
-        filepath_antigo = os.path.join(current_app.root_path, 'static', 'fotos_tarefa', tarefa.icone)
-        try:
-            os.remove(filepath_antigo)
-        except:
-            print("File not found!")
-        
-        tarefa.icone = filename
+    icone = form['icone']
 
     #tratando data 
     prazo = data_format_in(prazo)
@@ -133,6 +96,7 @@ def edita_tarefa():
     #tratando ehSolo
     ehSolo = define_solo_in(solo)
     
+    tarefa.icone = icone
     tarefa.titulo = titulo
     tarefa.descricao = descricao
     tarefa.prazo = prazo
