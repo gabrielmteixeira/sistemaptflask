@@ -141,7 +141,6 @@ def editar_senha_usuario():
 
     return render_template('editar_senha_usuario.html')
 
-'''
 @usuario.route('/cadastrar_usuario', methods = ['POST', 'GET'])
 def cadastrar_usuario():
     if (current_user.is_authenticated):
@@ -197,7 +196,6 @@ def cadastrar_usuario():
             return redirect(url_for('principal.index'))
 
     return render_template('cadastro.html')
-'''
     
 @usuario.route('/login', methods = ['POST','GET'])
 def login():
