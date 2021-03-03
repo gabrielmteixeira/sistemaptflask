@@ -41,7 +41,7 @@ def perfil_ej(id):
 
     return render_template('perfil_ej.html', entidade_ej = entidade_ej, perc_fat=porcentagem_faturamento, perc_proj=porcentagem_projetos, 
                                                                         fat_grid_step=calcula_chart_grid(entidade_ej.faturamento_meta), usuario = current_user)
-'''
+
 @ej.route('/cadastrar_ej', methods = ['POST', 'GET'])
 @login_required()
 def cadastrar_ej():
@@ -86,7 +86,6 @@ def cadastrar_ej():
             return redirect(url_for('principal.index'))
 
     return render_template('cadastro_ej.html')
-'''
 
 
 @ej.route('/editar_ej/<id>', methods = ['GET', 'POST'])
@@ -107,7 +106,7 @@ def editar_ej(id):
         ej.projetos_atual = form['atualProj']             
         ej.faturamento_atual = form['atualFat']
 
-        """foto = request.files['foto_ej']
+        foto = request.files['foto_ej']
         if foto.content_type != 'application/octet-stream':
             original_filename = foto.filename
             filename = str(original_filename).split(".")
@@ -121,7 +120,7 @@ def editar_ej(id):
             filepath_antigo = os.path.join(current_app.root_path, 'static', 'fotos_ej', )
             os.remove(filepath_antigo)        
             
-            ej.imagem = filename"""
+            ej.imagem = filename
 
         db.session.commit()
 

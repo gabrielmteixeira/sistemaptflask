@@ -111,9 +111,15 @@
       </li>
       {% endif %}
 
-  <!--
-    Conteúdo apagado para hospedar o sistema
-  -->
+      <!-- Nav Item - Menu -->
+      {% if not current_user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link " href="{{url_for('usuario.cadastrar_usuario')}}">
+          <i class="fas fa-file-signature"></i>
+          <span>Cadastro</span>
+        </a>
+      </li>
+      {% endif %}
 
       {% if not current_user.is_authenticated %}
       <li class="nav-item">
