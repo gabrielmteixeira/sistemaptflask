@@ -2,6 +2,8 @@ import os
 import time
 from flask import render_template, Blueprint, request, redirect, url_for, flash, current_app, abort
 from sistemaptflask.usuario.models import Usuario, usuario_urole_roles
+from sistemaptflask.tarefa.models import Tarefa, TarefaTrainee
+from sistemaptflask.usuario.utils import tarefasFeitas
 from sistemaptflask import db, login_required, mail, app
 from flask_login import LoginManager, current_user, login_user, logout_user
 from flask_mail import Message
@@ -23,6 +25,15 @@ def perfil():
     entidade_usuario = Usuario.query.filter_by(id = current_user.get_id()).first()
 
     return renderizaTemplate(entidade_usuario)
+
+@usuario.route('visualizar_usuario/<_id>')
+@login_required(role=[usuario_urole_roles['ADMIN']])
+def visualizar_usuario(_id):
+    trainee = Usuario.query.get_or_404(_id)
+    tarefaTrainee = TarefaTrainee.query.filter(TarefaTrainee.id_trainee == _id).all()
+    tarefas = Tarefa.query.all()
+    tarefasEntregues = tarefasFeitas(tarefas, tarefaTrainee)
+    return render_template("", tarefasEntregues=tarefasEntregues, trainee=trainee)
 
 @usuario.route('/editar_usuario/', methods=['POST', 'GET']) 
 @login_required()
