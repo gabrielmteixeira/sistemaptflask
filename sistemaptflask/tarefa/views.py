@@ -145,10 +145,29 @@ def lista_tarefas_users():
 def visualizar_tarefa(_id):
     tarefa = Tarefa.query.get_or_404(_id)
     tarefa_trainee = TarefaTrainee.query.filter_by(id_tarefa=_id)
-    usuario = Usuario.query.all()
-    
+    usuarios = Usuario.query.all()
 
-    return render_template('visualizar_tarefa.html', usuario = usuario, tarefa_trainee = tarefa_trainee, tarefa=tarefa)
+    # Retorna True se todos os trainees fizeram a tarefa
+    def todosFizeram():
+        trainees = Usuario.query.filter(Usuario.urole != 'admin').all()
+        todosQueFizeram = tarefa.get_trainees()
+        return todosQueFizeram == trainees
+
+    # Retorna uma lista de quem não fez as tarefas
+    def traineesQueNaoFizeram():
+        trainees = Usuario.query.filter(Usuario.urole != 'admin').all()
+        todosQueFizeram = tarefa.get_trainees()
+        listaTraineesQueNaoFizeram = trainees
+        for trainee in trainees[:]:
+            if trainee in todosQueFizeram:
+                listaTraineesQueNaoFizeram.remove(trainee)
+        return listaTraineesQueNaoFizeram
+
+    return render_template('visualizar_tarefa.html', usuarios = usuarios, 
+                                                    tarefa_trainee = tarefa_trainee, 
+                                                    tarefa=tarefa, 
+                                                    traineesQueNaoFizeram=traineesQueNaoFizeram(),
+                                                    todosFizeram=todosFizeram())
 
 @tarefa.route('/desfazer_tarefa/<id>/<traineeId>')
 @login_required(role=[usuario_urole_roles['ADMIN']])

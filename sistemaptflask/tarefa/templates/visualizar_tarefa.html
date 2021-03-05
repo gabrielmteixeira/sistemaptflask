@@ -37,8 +37,19 @@
             {% endfor %}
             {% endfor %}
         </div>
-
-
+        {% if not todosFizeram %}
+            <h5 class="mt-4">Quem ainda não fez:</h5>
+        {% endif %}
+        <div class="traineeGrid">
+            {% for trainee in traineesQueNaoFizeram %}
+                        <div class="Card" id="{{trainee.id}}">
+                            <img class="traineePic" src="{{url_for('static', filename='fotos_trainees/' + trainee.foto_trainee)}}" alt="Card image cap">
+                            <span>
+                                <h5 class="card-title">{{trainee.nome}}</h5>
+                            </span>
+                        </div>
+            {% endfor %}
+        </div>
 </div>
 
 <div id="undoModal">
