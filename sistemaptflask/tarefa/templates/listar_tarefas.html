@@ -25,7 +25,7 @@
 	<thead>
 		<th scope="col">Título</th>
 		<th scope="col">Prazo</th>
-    <th scope="col">É individual</th>
+    <th scope="col">Tipo</th>
     <th scope="col"></th>
     <th scope="col"></th>
     <th scope="col"></th>
@@ -35,9 +35,9 @@
 			<td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target= "#tarefa_{{tarefa.id}}">{{tarefa.titulo}}</button></td>
 			<td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">{{tarefa.prazo}}</button></td>
       {% if tarefa.ehSolo == 0 %}
-        <td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">Não</button></td>
+        <td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">Coletiva</button></td>
       {% else %}
-        <td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">Sim</button></td>
+        <td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">Individual</button></td>
       {% endif %}
       <td><a href="{{url_for('tarefa.visualizar_tarefa', _id=tarefa.id)}}">Ver Detalhes</a></td>
 			<td><a href="{{url_for('tarefa.pagina_edicao_tarefa', id=tarefa.id)}}"><button class="btn"><i id="cor" class="far fa-edit"></i></button></a></td>

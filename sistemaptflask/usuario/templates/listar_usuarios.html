@@ -27,6 +27,7 @@
 <table class="table">
 	<thead>
 		<th scope="col">Nome</th>
+    <th scope="col">Login</th>
 		<th scope="col">Email</th>
     <th scope="col">Função</th>
     <th scope="col"></th>
@@ -35,9 +36,14 @@
 	</thead>
 	{% for usuario in lista %}
 		<tr>
-			<td><a href="{{url_for('usuario.visualizar_usuario', _id = usuario.id)}}">{{usuario.login}}</a></td>
+			<td><a href="{{url_for('usuario.visualizar_usuario', _id = usuario.id)}}">{{usuario.nome}}</a></td>
+      <td>{{usuario.login}}</td>
 			<td>{{usuario.email}}</td>
-			<td>{{usuario.urole}}</td>
+      {% if usuario.urole == 'user' %}
+			<td>Trainee</td>
+      {% elif usuario.urole == 'admin' %}
+      <td>Administrador</td>
+      {% endif %}
 			<td><a href="{{url_for('admin.admin_editar_usuario', id_user = usuario.id)}}"><button class="btn"><i id="cor" class="far fa-edit"></i></button></a></td>
 			<td>
           {% if usuario.active == True %}
