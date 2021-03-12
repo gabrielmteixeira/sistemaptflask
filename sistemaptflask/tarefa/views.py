@@ -188,3 +188,28 @@ def desfazer_tarefa(id, traineeId):
     db.session.commit()
 
     return redirect(url_for('tarefa.visualizar_tarefa', _id = id))
+
+@tarefa.route('/tarefa_nao_atrasada/<id>/<traineeId>')
+@login_required(role=[usuario_urole_roles['ADMIN']])
+def tarefa_nao_atrasada(id, traineeId):
+    tarefa = Tarefa.query.get_or_404(id)
+
+    if tarefa.ehSolo:
+        instancia = TarefaTrainee.query.filter_by(id_tarefa=id, id_trainee = traineeId).first_or_404()
+        if(not instancia.atrasada):
+            flash('A tarefa não está atrasada!')
+        else:
+            instancia.atrasada = 0
+            db.session.commit()
+    else:
+        trainee = Usuario.query.get_or_404(traineeId)
+        ej = Ej.query.filter_by(id=trainee.ej_id).first_or_404()
+        for membro in ej.usuarios:
+            instancia = TarefaTrainee.query.filter_by(id_tarefa=id, id_trainee = membro.id).first_or_404()
+            if(not instancia.atrasada):
+                flash('A tarefa não está atrasada!')
+            else:
+                instancia.atrasada = 0
+                db.session.commit()
+    
+    return redirect(url_for('tarefa.visualizar_tarefa', _id = id))
