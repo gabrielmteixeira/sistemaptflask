@@ -26,14 +26,14 @@ def perfil():
 
     return renderizaTemplate(entidade_usuario)
 
-@usuario.route('visualizar_usuario/<_id>')
+@usuario.route('/visualizar_usuario/<_id>')
 @login_required(role=[usuario_urole_roles['ADMIN']])
 def visualizar_usuario(_id):
     trainee = Usuario.query.get_or_404(_id)
     tarefaTrainee = TarefaTrainee.query.filter(TarefaTrainee.id_trainee == _id).all()
     tarefas = Tarefa.query.all()
     tarefasEntregues = tarefasFeitas(tarefas, tarefaTrainee)
-    return render_template("", tarefasEntregues=tarefasEntregues, trainee=trainee)
+    return render_template('visualizar_usuario.html', tarefas=tarefas, tarefasEntregues=tarefasEntregues, trainee=trainee)
 
 @usuario.route('/editar_usuario/', methods=['POST', 'GET']) 
 @login_required()

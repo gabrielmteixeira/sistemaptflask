@@ -1,0 +1,48 @@
+{% extends "base_dashboard.html" %}
+
+{% block titulo %}Usuário{% endblock titulo %}
+
+{% block conteudo %}
+<div class="card mb-3">
+    <div class="row no-gutters">
+        <div class="col-md-2 d-flex flex-row" style="max-height: 200px;">
+            <img class="card-img" style="object-fit: cover;" src="{{url_for('static', filename='fotos_trainees/' + trainee.foto_trainee)}}">
+        </div>
+        <div class="col-md-10 align-self-center">
+            <div class="card-body">
+                <h3 class="card-title" style="color: #112121;">{{ trainee.nome }}</h3>
+                <p class="card-text mt-n3"><small class="text-muted">{{ trainee.login }}</small></p>
+                <p class="card-text" style="color: #112121;">{{ trainee.email }}</p>
+                <p class="card-text" style="color: #112121;">{{ trainee.ej.nome }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <table class="table"  id="listUsers">
+        <thead>
+            <th scope="col">Título</th>
+            <th scope="col">Status</th>
+            <th scope="col">É individual</th>
+            <th></th>
+        </thead>
+        {% for tarefa in tarefas %}
+            <tr>
+                <td>{{ tarefa.titulo }}</td>
+                <td>
+                    {% if tarefa.atrasada == True %}
+                        <p class="card-title btn btn-danger p-1">Atrasado</p>
+                    {% elif tarefa in tarefasEntregues %}
+                        <p class="card-title btn btn-success p-1">Em dia</p>
+                    {% else %}
+                        <p class="card-title btn btn-warning p-1">Pendente</p>
+                    {% endif %}
+                </td>
+                <td><a href="{{url_for('tarefa.visualizar_tarefa', _id=tarefa.id)}}">Ver Tarefa</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

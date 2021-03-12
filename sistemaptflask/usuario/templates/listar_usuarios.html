@@ -35,10 +35,10 @@
 	</thead>
 	{% for usuario in lista %}
 		<tr>
-			<td>{{usuario.login}}</td>
+			<td><a href="{{url_for('usuario.visualizar_usuario', _id = usuario.id)}}">{{usuario.login}}</a></td>
 			<td>{{usuario.email}}</td>
 			<td>{{usuario.urole}}</td>
-			<td><a  href="{{url_for('admin.admin_editar_usuario', id_user = usuario.id)}}"><button class="btn"><i id="cor" class="far fa-edit"></i></button></a></td>
+			<td><a href="{{url_for('admin.admin_editar_usuario', id_user = usuario.id)}}"><button class="btn"><i id="cor" class="far fa-edit"></i></button></a></td>
 			<td>
           {% if usuario.active == True %}
 
