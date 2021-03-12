@@ -145,10 +145,29 @@ def lista_tarefas_users():
 def visualizar_tarefa(_id):
     tarefa = Tarefa.query.get_or_404(_id)
     tarefa_trainee = TarefaTrainee.query.filter_by(id_tarefa=_id)
-    usuario = Usuario.query.all()
-    
+    usuarios = Usuario.query.all()
 
-    return render_template('visualizar_tarefa.html', usuario = usuario, tarefa_trainee = tarefa_trainee, tarefa=tarefa)
+    # Retorna True se todos os trainees fizeram a tarefa
+    def todosFizeram():
+        trainees = Usuario.query.filter(Usuario.urole != 'admin').all()
+        todosQueFizeram = tarefa.get_trainees()
+        return todosQueFizeram == trainees
+
+    # Retorna uma lista de quem não fez as tarefas
+    def traineesQueNaoFizeram():
+        trainees = Usuario.query.filter(Usuario.urole != 'admin').all()
+        todosQueFizeram = tarefa.get_trainees()
+        listaTraineesQueNaoFizeram = trainees
+        for trainee in trainees[:]:
+            if trainee in todosQueFizeram:
+                listaTraineesQueNaoFizeram.remove(trainee)
+        return listaTraineesQueNaoFizeram
+
+    return render_template('visualizar_tarefa.html', usuarios = usuarios, 
+                                                    tarefa_trainee = tarefa_trainee, 
+                                                    tarefa=tarefa, 
+                                                    traineesQueNaoFizeram=traineesQueNaoFizeram(),
+                                                    todosFizeram=todosFizeram())
 
 @tarefa.route('/desfazer_tarefa/<id>/<traineeId>')
 @login_required(role=[usuario_urole_roles['ADMIN']])
@@ -168,4 +187,29 @@ def desfazer_tarefa(id, traineeId):
 
     db.session.commit()
 
+    return redirect(url_for('tarefa.visualizar_tarefa', _id = id))
+
+@tarefa.route('/tarefa_nao_atrasada/<id>/<traineeId>')
+@login_required(role=[usuario_urole_roles['ADMIN']])
+def tarefa_nao_atrasada(id, traineeId):
+    tarefa = Tarefa.query.get_or_404(id)
+
+    if tarefa.ehSolo:
+        instancia = TarefaTrainee.query.filter_by(id_tarefa=id, id_trainee = traineeId).first_or_404()
+        if(not instancia.atrasada):
+            flash('A tarefa não está atrasada!')
+        else:
+            instancia.atrasada = 0
+            db.session.commit()
+    else:
+        trainee = Usuario.query.get_or_404(traineeId)
+        ej = Ej.query.filter_by(id=trainee.ej_id).first_or_404()
+        for membro in ej.usuarios:
+            instancia = TarefaTrainee.query.filter_by(id_tarefa=id, id_trainee = membro.id).first_or_404()
+            if(not instancia.atrasada):
+                flash('A tarefa não está atrasada!')
+            else:
+                instancia.atrasada = 0
+                db.session.commit()
+    
     return redirect(url_for('tarefa.visualizar_tarefa', _id = id))

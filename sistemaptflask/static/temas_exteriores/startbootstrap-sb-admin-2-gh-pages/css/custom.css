@@ -177,8 +177,20 @@ a.btn-icon-lista{
 
     transition: all 400ms;
 }
+#tarefaFullCard .Card {
+    background-color: #4e73df;
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    transition: all 400ms;
+}
 
 #tarefaFullCard .traineeCard:hover {
+    transition: all 400ms;
+    transform: scale(0.97);
+}
+#tarefaFullCard .Card:hover {
     transition: all 400ms;
     transform: scale(0.97);
 }
@@ -187,8 +199,15 @@ a.btn-icon-lista{
     transition: all 600ms;
     filter: grayscale(80%);
 }
+#tarefaFullCard .Card:hover img {
+    transition: all 600ms;
+    filter: grayscale(80%);
+}
 
 #tarefaFullCard .traineeCard img {
+    transition: all 400ms;
+}
+#tarefaFullCard .Card img {
     transition: all 400ms;
 }
 
@@ -199,8 +218,22 @@ a.btn-icon-lista{
 
     padding-top: 8px;
 }
+#tarefaFullCard .Card span {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+
+    padding-top: 8px;
+}
+
 
 #tarefaFullCard .traineeCard span h5 {
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+}
+#tarefaFullCard .Card span h5 {
     margin-bottom: 4px;
     font-size: 14px;
     color: white;
@@ -213,8 +246,18 @@ a.btn-icon-lista{
     color: white;
     text-align: center;
 }
+#tarefaFullCard .Card span:first-of-type h5  {
+    margin-bottom: 0px;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+}
 
 #tarefaFullCard .traineeCard img {
+    border-radius: 8px 8px 0 0;
+    height: 148px;
+}
+#tarefaFullCard .Card img {
     border-radius: 8px 8px 0 0;
     height: 148px;
 }
@@ -400,6 +443,12 @@ a.btn-icon-lista{
 
 @media (max-width: 1280px) {
     #tarefaFullCard .traineeCard img {
+        border-radius: 8px 8px 0 0;
+        height: 96px;
+    }
+}
+@media (max-width: 1280px) {
+    #tarefaFullCard .Card img {
         border-radius: 8px 8px 0 0;
         height: 96px;
     }
