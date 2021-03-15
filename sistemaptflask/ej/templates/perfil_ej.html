@@ -3,13 +3,31 @@
 {% block titulo %}Perfil da EJ{% endblock titulo %}
 
 {% block conteudo %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <ul class=flashes>
+        {% for message in messages %}
+            <li><b>{{ message }}</b></li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endwith %}
+
         {% if current_user.urole == usuario_urole_roles.ADMIN %}
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800"></h1>
             <div>
                 <a href="{{url_for('ej.editar_ej', id=entidade_ej.id)}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm btn-ej"> Editar EJ </a>
                 <a href="{{url_for('ej.relacionar_ej', _id=entidade_ej.id)}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm btn-ej"> Relacionar Trainee</a>
+                <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm excluir-ej btn-ej" data-toggle="modal" data-target="#removerTrainee">Remover Trainee</button>
                 <a href="{{url_for('ej.deleta_ej', _id=entidade_ej.id)}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm excluir-ej btn-ej" onclick="return confirm('Você deseja excluir esta EJ?')" style="margin-left: 1.5rem;"> Excluir EJ</a>
+            </div>
+          </div>
+          {% elif current_user.urole == 'user' and current_user in entidade_ej.getMembros() %}
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800"></h1>
+            <div>
+                <a href="{{url_for('ej.remover_trainee', id_ej=entidade_ej.id, id_trainee=current_user.id)}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm excluir-ej btn-ej">Sair da EJ</a>
             </div>
           </div>
         {% endif %}
@@ -68,6 +86,23 @@
 </div>
 {% endfor %}
 </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <div id="undoModal">
     <div class="modalbox">
@@ -81,6 +116,35 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="removerTrainee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="removerTrainee">Quem você deseja remover?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div style="text-align: center;" class="modal-body"><table class="table table-striped">
+            <thead>
+                <th scope="col">Nome</th>
+                <th scope="col"></th>
+            </thead>
+            <tbody>
+            {% for membro in entidade_ej.usuarios %}
+            <tr>
+                <td>{{membro.nome}}</td>
+                <td><a href="{{url_for('ej.remover_trainee', id_ej=entidade_ej.id, id_trainee=membro.id)}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm excluir-ej btn-ej"> Remover Trainee</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table></div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 {% endblock %}

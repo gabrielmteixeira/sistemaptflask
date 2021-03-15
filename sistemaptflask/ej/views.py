@@ -8,6 +8,7 @@ from sistemaptflask.tarefa.models import Tarefa, TarefaTrainee
 from sistemaptflask.tarefa.utils import confere_prazo_tarefa
 from sistemaptflask import db, login_required
 from flask_login import LoginManager, current_user, login_user, logout_user
+from sqlalchemy.sql import or_, and_
 
 ej = Blueprint('ej', __name__, template_folder='templates')
 
@@ -168,3 +169,26 @@ def relacionar_ej(_id):
 
 
     return render_template('relacionar_ej.html', ej=ej, usuario=usuarios)
+
+@ej.route('remover_trainee/<id_ej>/<id_trainee>')
+@login_required()
+def remover_trainee(id_ej, id_trainee):
+    if current_user.urole != 'admin' and int(current_user.id) != int(id_trainee):
+        flash('Você não possui permissão de remover outra pessoa de sua EJ.')
+        return redirect(url_for('ej.perfil_ej', id=id_ej))
+        
+    trainee = Usuario.query.get_or_404(id_trainee)
+    tarefas = trainee.get_tarefas_coletivas()
+
+    tarefasColetivasEntregues = list()
+    for tarefa in tarefas:
+        tarefasColetivasEntregues.append(TarefaTrainee.query.join(Tarefa).filter(and_(TarefaTrainee.id_trainee == id_trainee, Tarefa.id == tarefa.id)).first())
+    
+    for tarefa in tarefasColetivasEntregues:
+        db.session.delete(tarefa)
+   
+    trainee.ej_id = None
+    
+    db.session.commit()
+
+    return redirect(url_for('ej.perfil_ej', id=id_ej))

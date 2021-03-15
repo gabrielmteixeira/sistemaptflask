@@ -28,3 +28,9 @@ class Ej(db.Model):
 
     def tem_membros(self):
         return len(self.usuarios) > 0
+
+    def getMembros(self):
+        membros = list()
+        for membro in self.usuarios:
+            membros.append(membro)
+        return membros
