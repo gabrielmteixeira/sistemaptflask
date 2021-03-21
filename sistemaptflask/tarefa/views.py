@@ -113,6 +113,8 @@ def lista_tarefas_users():
     if not tarefas:
         flash("Não há tarefas cadastradas no sistema.")
         return redirect(url_for('principal.index'))
+    for tarefa in tarefas:
+        tarefa.is_prazo_perto = tarefa.isPrazoApertado()
     
     if request.method == 'POST':
         id_tarefa = request.form['id_tarefa']

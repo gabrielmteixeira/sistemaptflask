@@ -25,7 +25,11 @@
     {% if tarefa not in current_user.get_tarefas() %}
       <div class="smaller-padding">
         <button type="button" class="modal-btn" style="width: 100%" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">
-            <div class="card hoverable" style="height: 100%; margin: 4%">  
+          {% if tarefa.is_prazo_perto %}
+            <div class="card hoverable" style="height: 100%; margin: 4%; border-color: rgba(243, 33, 33, 1); background-color: rgb(255, 240, 240);">
+          {% else %}
+            <div class="card hoverable" style="height: 100%; margin: 4%">
+          {% endif %} 
                 <div class="card-body">
                     <div class="card-titulo">
                         <p class="card-text">{{tarefa.titulo}}</p>

@@ -1,5 +1,7 @@
 from sistemaptflask import db
 import sistemaptflask.usuario.models
+from datetime import date, datetime
+from sqlalchemy.sql import expression
 
 class TarefaTrainee(db.Model):
     __tablename__ = 'tarefaTrainee'
@@ -25,6 +27,7 @@ class Tarefa(db.Model):
     icone = db.Column(db.String(255))
     prazo = db.Column(db.String(100))
     ehSolo = db.Column(db.Boolean)
+    is_prazo_perto = db.Column(db.Boolean, server_default= expression.false())
     trainees = db.relationship("TarefaTrainee", back_populates="tarefa")
 
     def __init__(self, titulo, descricao, icone, prazo, ehSolo):
@@ -42,5 +45,13 @@ class Tarefa(db.Model):
         for assoc in self.trainees:
             trainees_list.append(assoc.trainee)
         return trainees_list
-
+    
+    #Verifica se o prazo da tarefa está proximo ou já passou, caso seja, retorna true
+    def isPrazoApertado(self):
+        dataDeAgora = date.today()
+        dataPrazo = datetime.strptime(self.prazo, '%d/%m/%Y').date()
+        if (dataPrazo - dataDeAgora).days <= 1:
+            return True
+        else:
+            return False
 

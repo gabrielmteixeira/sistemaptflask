@@ -10,6 +10,8 @@ principal = Blueprint('principal', __name__, template_folder='templates')
 @principal.route('/')
 def index():
     tarefas = Tarefa.query.all()
+    for tarefa in tarefas:
+        tarefa.is_prazo_perto = tarefa.isPrazoApertado()
     
     ejs_destaque = get_ejs_destaque()
 
