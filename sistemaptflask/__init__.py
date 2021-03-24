@@ -11,13 +11,13 @@ login_manager = LoginManager()
 app = Flask(__name__)
 
 
-app.config['SECRET_KEY'] = 'mysecretkey'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
 ############################################################
 ################## BANCO DE DADOS ##########################
 ############################################################
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] =  'mysql+pymysql://sistemaptflask:DeNoVo123@@sistemaptflask.mysql.dbaas.com.br/sistemaptflask'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
                                             "pool_recycle": 10
                                           }
@@ -40,21 +40,11 @@ def insere_usuario_urole_roles():
 ############################################################
 
 
-
-app.config['DEBUG'] = True
-app.config['TESTING'] = False
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-#app.config['MAIL_DEBUG'] = True
-app.config['MAIL_USERNAME'] = 'emailautomatico1234@gmail.com'
-app.config['MAIL_PASSWORD'] = 'RHgatos@123'
-app.config['MAIL_DEFAULT_SENDER'] = None
-app.config['MAIL_MAX_EMAILS'] = None
-#app.config['MAIL_SUPPRESS_SEND'] = False
-app.config['MAIL_ASCII_ATTACHMENTS'] = False
-
+app.config['MAIL_SERVER']= os.environ.get('MAIL_SERVER')
+app.config['MAIL_PORT'] = os.environ.get('MAIL_PORT')
+app.config['MAIL_USE_TLS']= os.environ.get('MAIL_USE_TLS')
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 
 mail = Mail(app)
 

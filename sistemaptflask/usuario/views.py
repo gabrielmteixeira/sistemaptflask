@@ -6,13 +6,13 @@ from sistemaptflask.tarefa.models import Tarefa, TarefaTrainee
 from sistemaptflask import db, login_required, mail, app
 from flask_login import LoginManager, current_user, login_user, logout_user
 from flask_mail import Message
-from itsdangerous import URLSafeTimedSerializer
+from secrets import token_urlsafe
+from datetime import datetime, timedelta
 
 
 usuario = Blueprint('usuario', __name__, template_folder='templates')
 login_manager = LoginManager()
 login_manager.login_view = "principal.index"
-ts = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 
 @usuario.route('/perfil')
 @login_required()
@@ -281,26 +281,31 @@ def forgot_password():
         email = form['email']
         confirmaEmail = form['confirmar']
 
-        checaEmail = Usuario.query.filter_by(email=email).first()
+        usuario = Usuario.query.filter_by(email=email).first()
         
         if email == confirmaEmail:
-            if checaEmail:
+            if usuario:
                 
-                token = ts.dumps(email, salt='recover-key')
+                token = token_urlsafe(128)
+
+                usuario.reset_token = token
+                usuario.token_expiration = datetime.utcnow() + timedelta(hours=1)
 
                 mensagem = Message("Recuperação de Senha",
-                                    sender='emailautomatico1234@gmail.com',
+                                    sender=('iJunior', 'emailautomatico1234@gmail.com'),
                                     recipients=[email])
-
                 recover_url = url_for(
-                'usuario.recuperar_senha',
-                token=token,
-                _external=True)
+                    'usuario.recuperar_senha',
+                    token=token,
+                    _external=True)
 
-                mensagem.html = render_template('email_de_resetar.html', checaEmail=checaEmail, recover_url=recover_url)
+                mensagem.html = render_template('email_de_resetar.html', usuario=usuario, recover_url = recover_url)
 
                 mail.send(mensagem)
-                flash("Um email para recuperar sua senha foi enviado no seu E-mail.")
+
+                db.session.commit()
+
+                flash("Um e-mail para recuperar sua senha foi enviado no seu E-mail. Caso não encontre seu email, procure-o na caixa de spam")
                 return redirect(url_for('usuario.forgot_password'))
             else:
                 flash('Email incorreto!')
@@ -310,23 +315,39 @@ def forgot_password():
             return redirect(url_for("usuario.forgot_password"))
 
     return render_template('forgot_password.html')
+@usuario.route('/recuperar_senha', methods=['GET', 'POST'])
 @usuario.route('/recuperar_senha/<token>', methods=['GET', 'POST'])
-def recuperar_senha(token):
-    try:
-        email = ts.loads(token, salt="recover-key", max_age=86400)
-    except:
-        abort(404)
-    usuario = Usuario.query.filter_by(email=email).first_or_404()
+def recuperar_senha(token = None):
     if request.method == 'POST':
         form = request.form
+
+        token = form['token']
+
+        usuario = Usuario.query.filter(Usuario.reset_token == token).first()
+
+        if not usuario:
+            flash('Token informado expirou ou é inválido', 'error')
+            return redirect(url_for('usuario.login'))
+
+        if usuario.token_expiration <= datetime.utcnow():
+            usuario.reset_token = None
+            usuario.token_expiration = None
+            db.session.commit()
+
+            flash('Token informado expirou ou é inválido', 'error')
+            return redirect(url_for('principal.login'))
+
         senha = form['senha']
         confirmar = form['confirmar']
         
         if confirmar == senha:
             usuario.setSenha(senha)
+            usuario.reset_token = None
+            usuario.token_expiration = None
             db.session.commit()
             flash("Senha alterada com sucesso!")
             return redirect(url_for('usuario.login'))
         elif confirmar != senha:
             flash("Confirmação de senha e senha estão diferentes.")
+            return redirect(url_for('usuario.recuperar_senha', token=token))
     return render_template('password_reset.html', token=token)

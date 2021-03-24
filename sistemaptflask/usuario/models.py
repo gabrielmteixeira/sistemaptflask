@@ -30,6 +30,8 @@ class Usuario(db.Model, UserMixin):
     email = db.Column(db.String(80), unique=True, nullable=False)
     active = db.Column(db.Boolean, server_default= expression.true())
     foto_trainee = db.Column(db.String(120))
+    reset_token = db.Column(db.String(255, collation = 'latin1_general_ci'), nullable = True)
+    token_expiration = db.Column(db.DateTime, nullable = True)
     ej_id = db.Column(db.Integer, db.ForeignKey('ej.id'))
     ej = db.relationship('Ej')
     tarefas = db.relationship("TarefaTrainee", back_populates="trainee")
