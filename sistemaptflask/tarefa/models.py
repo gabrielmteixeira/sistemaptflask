@@ -28,6 +28,7 @@ class Tarefa(db.Model):
     prazo = db.Column(db.String(100))
     ehSolo = db.Column(db.Boolean)
     is_prazo_perto = db.Column(db.Boolean, server_default= expression.false())
+    semana = db.Column(db.Integer, nullable=False)
     trainees = db.relationship("TarefaTrainee", back_populates="tarefa")
 
     def __init__(self, titulo, descricao, icone, prazo, ehSolo):
