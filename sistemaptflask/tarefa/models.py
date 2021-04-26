@@ -31,12 +31,13 @@ class Tarefa(db.Model):
     semana = db.Column(db.Integer, nullable=False)
     trainees = db.relationship("TarefaTrainee", back_populates="tarefa")
 
-    def __init__(self, titulo, descricao, icone, prazo, ehSolo):
-        self.titulo = titulo
-        self.descricao = descricao 
-        self.icone = icone 
-        self.prazo = prazo
-        self.ehSolo = ehSolo
+    def __init__(self, titulo, descricao, icone, prazo, ehSolo, semana):
+        self.titulo     = titulo
+        self.descricao  = descricao 
+        self.icone      = icone 
+        self.prazo      = prazo
+        self.ehSolo     = ehSolo
+        self.semana     = int(semana)
 
     def __repr__(self):
         return f'Tarefa: {self.titulo}' 

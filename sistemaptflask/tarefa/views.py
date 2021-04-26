@@ -19,11 +19,12 @@ def cadastra_tarefa():
     if request.method == 'POST':
         form = request.form
 
-        titulo = form['titulo']
-        descricao = form['descricao']
-        icone = form['icone']
-        prazo = form['data']
-        solo = form['ehSolo']
+        titulo      = form['titulo']
+        descricao   = form['descricao']
+        icone       = form['icone']
+        prazo       = form['data']
+        solo        = form['ehSolo']
+        semana      = form['semana']
 
         #tratando data 
         prazo = data_format_in(prazo)
@@ -31,7 +32,7 @@ def cadastra_tarefa():
         #tratando ehSolo
         ehSolo = define_solo_in(solo)
 
-        tarefa = Tarefa(titulo, descricao, icone, prazo, ehSolo)
+        tarefa = Tarefa(titulo, descricao, icone, prazo, ehSolo, semana)
 
         db.session.add(tarefa)
         db.session.commit() 
@@ -84,11 +85,12 @@ def edita_tarefa():
     _id = form['id']
     tarefa = Tarefa.query.filter_by(id=_id).first_or_404()
 
-    titulo = form['titulo']
-    descricao = form['descricao']
-    prazo = form['data']
-    solo = form['ehSolo']
-    icone = form['icone']
+    titulo          = form['titulo']
+    descricao       = form['descricao']
+    prazo           = form['data']
+    solo            = form['ehSolo']
+    icone           = form['icone']
+    semana          = int(form['semana'])
 
     #tratando data 
     prazo = data_format_in(prazo)
@@ -101,6 +103,7 @@ def edita_tarefa():
     tarefa.descricao = descricao
     tarefa.prazo = prazo
     tarefa.ehSolo = ehSolo
+    tarefa.semana = semana
 
     db.session.commit()
 
