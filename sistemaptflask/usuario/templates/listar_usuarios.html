@@ -23,58 +23,41 @@
 
   
 <div id="listUsers" class="card">
-  <div class="table-responsive">
-<table class="table">
-	<thead>
-		<th scope="col">Nome</th>
-    <th scope="col">Login</th>
-		<th scope="col">Email</th>
-    <th scope="col">Função</th>
-    <th scope="col"></th>
-    <th scope="col"></th>
-    <th scope="col"></th>
-	</thead>
-	{% for usuario in lista %}
-		<tr>
-			<td><a href="{{url_for('usuario.visualizar_usuario', _id = usuario.id)}}">{{usuario.nome}}</a></td>
-      <td>{{usuario.login}}</td>
-			<td>{{usuario.email}}</td>
-      {% if usuario.urole == 'user' %}
-			<td>Trainee</td>
-      {% elif usuario.urole == 'admin' %}
-      <td>Administrador</td>
-      {% endif %}
-			<td><a href="{{url_for('admin.admin_editar_usuario', id_user = usuario.id)}}"><button class="btn"><i id="cor" class="far fa-edit"></i></button></a></td>
-			<td>
-          {% if usuario.active == True %}
-
-        <form action="{{url_for('admin.admin_desativar_usuario')}}" method="POST">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <div>
-              <input type="hidden" id="id" name="id" value="{{usuario.id}}">
-          </div>
-          <a class="btn-icon-lista" onclick="return confirm('Você deseja desativar este usuário?');"><button class="btn"><i id="cor" class="fas fa-user-slash"></i></button></a>
-        </form>
-        {% else %}
-        <form action="{{url_for('admin.admin_ativar_usuario')}}" method="POST">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <div>
-              <input type="hidden" id="id" name="id" value="{{usuario.id}}">
-          </div>
-          <a class="btn-icon-lista" onclick="return confirm('Você deseja ativar este usuário?');"><button class="btn"><i id="cor" class="fas fa-user"></i></button></a>
-        </form>
-        {% endif %}
-			<td><form action="{{url_for('admin.admin_excluir_usuario_lista')}}" method="POST">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <div>
-              <input type="hidden" id="id" name="id" value="{{usuario.id}}">
-          </div>
-          <a class="btn-icon-lista" onclick="return confirm('Você deseja excluir este usuário?');"><button class="btn"><i id="cor" class="far fa-trash-alt"></i></button></a>
-        </form>
-				</td>
-</tr>
-	{% endfor %}
-</table>
+  <div class="card-body">
+      <div class="card-title">
+        <div class="d-flex flex-row">
+            <div class="d-flex justify-content-start">
+                <input type="hidden" name="csrf_token" id="token" value="{{ csrf_token() }}">
+                <div class="d-flex ml-auto" style="background-color: none;">
+                    <div class="ml-auto p-2 ">
+                        <input class="form-control" placeholder="Buscar..." type="search" id="usuarios">
+                    </div>    
+                </div>
+            </div>
+        </div>
+      </div>
+    <div id="renderiza_tarefas">
+      {% include 'buscar_usuarios.html' %}
+  </div>
+  </div>
 </div>
-</div>
+<script>
+  $( "#usuarios" ).on({
+      keyup: (event) =>{
+        $.ajax({
+            method: "GET",
+            url: "{{url_for('usuario.buscar_usuarios')}}",
+            headers: {
+            'X-CSRF-Token': token
+            },
+            data: {usuarios: $('#usuarios').val()}
+            ,
+            success: (result) => {
+            document.getElementById('renderiza_tarefas').innerHTML = ''
+            $('#renderiza_tarefas').append(result)
+            }
+        })
+      }
+    })
+</script>
 {% endblock %}

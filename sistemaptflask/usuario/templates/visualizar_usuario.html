@@ -5,7 +5,7 @@
 {% block conteudo %}
 <div class="card mb-3">
     <div class="row no-gutters">
-        <div class="col-md-2 d-flex flex-row" style="max-height: 200px;">
+        <div class="col-md-2 d-flex flex-row" style="max-height: 214px;">
             <img class="card-img" style="object-fit: cover;" src="{{url_for('static', filename='fotos_trainees/' + trainee.foto_trainee)}}">
         </div>
         <div class="col-md-10 align-self-center">
@@ -14,6 +14,7 @@
                 <p class="card-text mt-n3"><small class="text-muted">{{ trainee.login }}</small></p>
                 <p class="card-text" style="color: #112121;">{{ trainee.email }}</p>
                 <p class="card-text" style="color: #112121;">{{ trainee.ej.nome }}</p>
+                <p class="card-text">Tarefas atrasadas: {{trainee.getQuantidadeTarefasAtrasadas()}}</p>
             </div>
         </div>
     </div>

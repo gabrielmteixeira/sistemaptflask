@@ -54,6 +54,12 @@ class Usuario(db.Model, UserMixin):
         for assoc in self.tarefas:
             tarefas_list.append(assoc.tarefa)
         return tarefas_list
+    def getQuantidadeTarefasAtrasadas(self):
+        quantidade = 0
+        for assoc in self.tarefas:
+            if assoc.atrasada == True:
+                quantidade += 1
+        return quantidade
     
     def get_tarefas_coletivas(self):
         tarefas_coletivas = []

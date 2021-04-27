@@ -284,6 +284,16 @@ def listar_usuarios():
         return redirect(url_for('principal.index'))
 
     return render_template('listar_usuarios.html', lista = lista)
+@usuario.route('/buscar_usuarios', methods = ['POST','GET'])
+@login_required(role=[usuario_urole_roles['ADMIN']])
+def buscar_usuarios():
+    usuarios = request.args.get('usuarios', None, type=str)
+    if not usuarios:
+        lista = Usuario.query.all()
+    else:
+        lista = Usuario.query.filter(Usuario.nome.contains(usuarios)).all()
+
+    return render_template('buscar_usuarios.html', lista = lista)
 
 @usuario.route('/excluir_usuario/')
 @login_required()
