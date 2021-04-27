@@ -49,27 +49,30 @@ def cadastra_tarefa():
 @login_required(role=[usuario_urole_roles['ADMIN']])
 def lista_tarefas():
     tarefas = Tarefa.query.all() 
-    
     semana = None
-    tipo   = None
-
-    if request.method == 'POST':
-        semana = request.form["semana"]
-        tipo   = request.form["tipo"]
-        if semana and not tipo: 
-            tarefas = Tarefa.query.filter(Tarefa.semana == int(semana)).all()
-        if tipo and not semana:
-            if tipo == "Individual":
-                tarefas = Tarefa.query.filter(Tarefa.ehSolo == True).all()
-            elif tipo == "Coletiva":
-                tarefas = Tarefa.query.filter(Tarefa.ehSolo == False).all()
-        if tipo and semana:
-            if tipo == "Individual":
-                tarefas = Tarefa.query.filter(and_(Tarefa.ehSolo == True, Tarefa.semana == int(semana))).all()
-            elif tipo == "Coletiva":
-                tarefas = Tarefa.query.filter(and_(Tarefa.ehSolo == False, Tarefa.semana == int(semana))).all()
-
+    tipo = None
     return render_template('listar_tarefas.html', tarefas=tarefas, semana=semana, tipo=tipo)
+
+@tarefa.route('/busca_tarefas_admin', methods=['GET', 'POST'])
+@login_required(role=[usuario_urole_roles['ADMIN']])
+def busca_tarefas_admin():
+    semana = request.args.get('semana', None, type=str)
+    tipo = request.args.get('tipo', None, type=str)
+    if not semana and not tipo:
+        tarefas = Tarefa.query.all()
+    if semana and not tipo: 
+        tarefas = Tarefa.query.filter(Tarefa.semana == int(semana)).all()
+    if tipo and not semana:
+        if tipo == "Individual":
+            tarefas = Tarefa.query.filter(Tarefa.ehSolo == True).all()
+        elif tipo == "Coletiva":
+            tarefas = Tarefa.query.filter(Tarefa.ehSolo == False).all()
+    if tipo and semana:
+        if tipo == "Individual":
+            tarefas = Tarefa.query.filter(and_(Tarefa.ehSolo == True, Tarefa.semana == int(semana))).all()
+        elif tipo == "Coletiva":
+            tarefas = Tarefa.query.filter(and_(Tarefa.ehSolo == False, Tarefa.semana == int(semana))).all()
+    return render_template('busca_tarefas.html', tarefas=tarefas, semana=semana, tipo=tipo)
 
 @tarefa.route('/deletar_tarefa/<id>')
 @login_required(role=[usuario_urole_roles['ADMIN']])

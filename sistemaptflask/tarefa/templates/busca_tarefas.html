@@ -1,0 +1,64 @@
+
+    <table class="table"  id="listUsers">
+      <thead>
+          <th scope="col">Título</th>
+          <th scope="col">Prazo</th>
+      <th scope="col">Tipo</th>
+      <th scope="col">Semana</th>
+      <th scope="col"></th>
+      
+      </thead>
+    <tbody>
+      {% for tarefa in tarefas %}
+          <tr>
+              <td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target= "#tarefa_{{tarefa.id}}">{{tarefa.titulo}}</button></td>
+              <td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">{{tarefa.prazo}}</button></td>
+        {% if tarefa.ehSolo == 0 %}
+          <td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">Coletiva</button></td>
+        {% else %}
+          <td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">Individual</button></td>
+        {% endif %}
+        <td>{{tarefa.semana}}° Semana</td>
+        <td style="padding-right: 0%;width: 15%;"><a href="{{url_for('tarefa.visualizar_tarefa', _id=tarefa.id)}}"><button class="btn"><i class="fas fa-bars"></i></button></a>
+              <a href="{{url_for('tarefa.pagina_edicao_tarefa', id=tarefa.id)}}"><button class="btn"><i id="cor" class="far fa-edit"></i></button></a>
+              <a href="{{url_for('tarefa.deleta_tarefa', id=tarefa.id)}}" class="btn-icon-lista" onclick="return confirm('Você deseja excluir esta tarefa?');"><button class="btn"><i id="cor" class="far fa-trash-alt"></i></button></a></td>
+      </tr>
+    </tbody>
+      
+      <!-- Modal -->
+      
+      <div class="modal fade" id="tarefa_{{tarefa.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header" style="padding: 1% 1rem;">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-cover" style="padding: 0;">
+              <img src="{{tarefa.icone}}" alt="Card cover">
+            </div>
+            <div class="modal-eh-solo">
+              {% if tarefa.ehSolo == 0 %}
+                <p style="margin: 0;">Coletiva</p>
+              {% else %}
+                <p style="margin: 0;">Individual</p>              
+              {% endif %}
+            </div>
+            <div class="modal-header" style="align-items: center;">
+              <h4 class="modal-title" id="exampleModalLongTitle">{{tarefa.titulo}}</h4>
+              <h6 style="margin: 0;">Prazo: {{tarefa.prazo}}</h6>
+            </div>
+            <div class="modal-body">
+              <p style="font-size: large;">{{tarefa.descricao}}</p>
+            </div>
+            <div class="modal-footer">
+              <a href="{{url_for('tarefa.deleta_tarefa', id=tarefa.id)}}" class="btn-icon-lista" onclick="return confirm('Você deseja excluir esta tarefa?');"><button type="button" class="btn btn-secondary">Excluir</button></a>
+              <a href="{{url_for('tarefa.pagina_edicao_tarefa', id=tarefa.id)}}"><button type="button" class="btn btn-primary" style="margin-left: 2%;">Editar</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+  </table>
+ 

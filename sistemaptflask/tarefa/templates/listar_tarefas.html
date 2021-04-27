@@ -12,137 +12,108 @@
     </ul>
 {% endif %}
 {% endwith %}
-<h2>Lista de Tarefas</h2>
+<h2 id="teste">Lista de Tarefas</h2>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800"></h1>
   <a href="{{url_for('tarefa.cadastra_tarefa')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Cadastrar Tarefa</a>
 </div>
 <div class="card">
-  <table class="table"  id="listUsers">
-	<thead>
-		<th scope="col">Título</th>
-		<th scope="col">Prazo</th>
-    <th scope="col">Tipo</th>
-    <th scope="col">Semana</th>
-    <th scope="col" style="width: 25%;">
-      <form method="POST" action="{{url_for('tarefa.lista_tarefas')}}">
-        <div class="row">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <div style="position: relative;float:left;" class="col-sm-4">
-            <select
-            style="border-radius: 10rem;"
-            name="semana"
-            id="semana"
-            class="custom-select"
-            placeholder="Asasasasa"
-            >
-            {% if not semana %}
-            <option selected></option>
-            {% else %}
-            <option value=""></option>
-            <option value="{{semana}}" selected>{{semana}}° Semana</option>
-            {% endif %}
-            {% if semana != "1" %}<option value="1">1° Semana</option>{% endif %}
-            {% if semana != "2" %}<option value="2">2° Semana</option>{% endif %}
-            {% if semana != "3" %}<option value="3">3° Semana</option>{% endif %}
-            {% if semana != "4" %}<option value="4">4° Semana</option>{% endif %}
-            {% if semana != "5" %}<option value="5">5° Semana</option>{% endif %}
-            {% if semana != "6" %}<option value="6">6° Semana</option>{% endif %}
-            {% if semana != "7" %}<option value="7">7° Semana</option>{% endif %}
-            {% if semana != "8" %}<option value="8">8° Semana</option>{% endif %}
-            {% if semana != "9" %}<option value="9">9° Semana</option>{% endif %}
-            {% if semana != "10" %}<option value="10">10° Semana</option>{% endif %}
-            {% if semana != "11" %}<option value="11">11° Semana</option>{% endif %}
-            {% if semana != "12" %}<option value="12">12° Semana</option>{% endif %}
-            {% if semana != "13" %}<option value="13">13° Semana</option>{% endif %}
-            {% if semana != "14" %}<option value="14">14° Semana</option>{% endif %}
-            {% if semana != "15" %}<option value="15">15° Semana</option>{% endif %}
-            {% if semana != "16" %}<option value="16">16° Semana</option>{% endif %}
-            {% if semana != "17" %}<option value="17">17° Semana</option>{% endif %}
-            {% if semana != "18" %}<option value="18">18° Semana</option>{% endif %}
-            {% if semana != "19" %}<option value="19">19° Semana</option>{% endif %}
-            {% if semana != "20" %}<option value="20">20° Semana</option>{% endif %}
-            </select>
-        
-          </div>
-          <div style="position: relative;float:left;" class="col-sm-4">
-            <select
-            style="border-radius: 10rem;"
-            name="tipo"
-            id="tipo"
-            class="custom-select"
-            >
-              {% if not tipo %}
-                <option selected></option>
-              {% else %}
-                <option value=""></option>
-                <option value="{{tipo}}" selected>{{tipo}}</option>
-              {% endif %}
-              {% if tipo != "Individual" %}<option value="Individual">Individual</option>{% endif %}
-              {% if tipo != "Coletiva" %}<option value="Coletiva">Coletiva</option>{% endif %}
-              </select>
-          </div>
-          <div style="margin-left: 1%;" class="row">
-            <button class="btn btn-info" type="submit">Filtrar</button>
-          </div>
-        </div>
-      </form>
-    </th>
-    
-	</thead>
-  <tbody>
-	{% for tarefa in tarefas %}
-		<tr>
-			<td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target= "#tarefa_{{tarefa.id}}">{{tarefa.titulo}}</button></td>
-			<td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">{{tarefa.prazo}}</button></td>
-      {% if tarefa.ehSolo == 0 %}
-        <td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">Coletiva</button></td>
-      {% else %}
-        <td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target="#tarefa_{{tarefa.id}}">Individual</button></td>
-      {% endif %}
-      <td>{{tarefa.semana}}° Semana</td>
-      <td style="padding-right: 0%;width: 15%;"><a href="{{url_for('tarefa.visualizar_tarefa', _id=tarefa.id)}}"><button class="btn"><i class="fas fa-bars"></i></button></a>
-			<a href="{{url_for('tarefa.pagina_edicao_tarefa', id=tarefa.id)}}"><button class="btn"><i id="cor" class="far fa-edit"></i></button></a>
-			<a href="{{url_for('tarefa.deleta_tarefa', id=tarefa.id)}}" class="btn-icon-lista" onclick="return confirm('Você deseja excluir esta tarefa?');"><button class="btn"><i id="cor" class="far fa-trash-alt"></i></button></a></td>
-    </tr>
-  </tbody>
-    
-    <!-- Modal -->
-    
-    <div class="modal fade" id="tarefa_{{tarefa.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header" style="padding: 1% 1rem;">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-cover" style="padding: 0;">
-            <img src="{{tarefa.icone}}" alt="Card cover">
-          </div>
-          <div class="modal-eh-solo">
-            {% if tarefa.ehSolo == 0 %}
-              <p style="margin: 0;">Coletiva</p>
-            {% else %}
-              <p style="margin: 0;">Individual</p>              
-            {% endif %}
-          </div>
-          <div class="modal-header" style="align-items: center;">
-            <h4 class="modal-title" id="exampleModalLongTitle">{{tarefa.titulo}}</h4>
-            <h6 style="margin: 0;">Prazo: {{tarefa.prazo}}</h6>
-          </div>
-          <div class="modal-body">
-            <p style="font-size: large;">{{tarefa.descricao}}</p>
-          </div>
-          <div class="modal-footer">
-            <a href="{{url_for('tarefa.deleta_tarefa', id=tarefa.id)}}" class="btn-icon-lista" onclick="return confirm('Você deseja excluir esta tarefa?');"><button type="button" class="btn btn-secondary">Excluir</button></a>
-            <a href="{{url_for('tarefa.pagina_edicao_tarefa', id=tarefa.id)}}"><button type="button" class="btn btn-primary" style="margin-left: 2%;">Editar</button></a>
-          </div>
+  <div class="card-body">
+    <div class="card-title">
+      <div class="d-flex flex-row">
+        <div class="d-flex justify-content-start">
+          <input type="hidden" name="csrf_token" id="token" value="{{ csrf_token() }}">
+            <div class="d-flex ml-auto" style="background-color: none;">
+              <div class="ml-auto p-2 ">
+                <select style="border-radius: 5rem;" class="form-control" id="semana" name="semana">
+                  {% if not semana %}
+                      <option selected></option>
+                      {% else %}
+                      <option value=""></option>
+                      <option value="{{semana}}" selected>{{semana}}° Semana</option>
+                      {% endif %}
+                      {% if semana != "1" %}<option value="1">1° Semana</option>{% endif %}
+                      {% if semana != "2" %}<option value="2">2° Semana</option>{% endif %}
+                      {% if semana != "3" %}<option value="3">3° Semana</option>{% endif %}
+                      {% if semana != "4" %}<option value="4">4° Semana</option>{% endif %}
+                      {% if semana != "5" %}<option value="5">5° Semana</option>{% endif %}
+                      {% if semana != "6" %}<option value="6">6° Semana</option>{% endif %}
+                      {% if semana != "7" %}<option value="7">7° Semana</option>{% endif %}
+                      {% if semana != "8" %}<option value="8">8° Semana</option>{% endif %}
+                      {% if semana != "9" %}<option value="9">9° Semana</option>{% endif %}
+                      {% if semana != "10" %}<option value="10">10° Semana</option>{% endif %}
+                      {% if semana != "11" %}<option value="11">11° Semana</option>{% endif %}
+                      {% if semana != "12" %}<option value="12">12° Semana</option>{% endif %}
+                      {% if semana != "13" %}<option value="13">13° Semana</option>{% endif %}
+                      {% if semana != "14" %}<option value="14">14° Semana</option>{% endif %}
+                      {% if semana != "15" %}<option value="15">15° Semana</option>{% endif %}
+                      {% if semana != "16" %}<option value="16">16° Semana</option>{% endif %}
+                      {% if semana != "17" %}<option value="17">17° Semana</option>{% endif %}
+                      {% if semana != "18" %}<option value="18">18° Semana</option>{% endif %}
+                      {% if semana != "19" %}<option value="19">19° Semana</option>{% endif %}
+                      {% if semana != "20" %}<option value="20">20° Semana</option>{% endif %}
+                </select>
+              </div>    
+            </div>
+            <div class="d-flex ml-auto" style="background-color: none;">
+              <div class="ml-auto p-2 ">
+                <select style="border-radius: 5rem;" name="tipo" id="tipo" class="form-control">
+                  {% if not tipo %}
+                    <option selected></option>
+                  {% else %}
+                    <option value=""></option>
+                    <option value="{{tipo}}" selected>{{tipo}}</option>
+                  {% endif %}
+                  {% if tipo != "Individual" %}<option value="Individual">Individual</option>{% endif %}
+                  {% if tipo != "Coletiva" %}<option value="Coletiva">Coletiva</option>{% endif %}
+                  </select>
+              </div>
+            </div>
         </div>
       </div>
     </div>
-    
-	{% endfor %}
-</table>
+<div id="renderiza_tarefas">
+  {% include 'busca_tarefas.html' %}
 </div>
+</div>
+</div>
+<script>
+  let token = document.getElementById('token').value
+
+  $( "#semana" ).change(function() {
+
+    $.ajax({
+        method: "GET",
+        url: "{{url_for('tarefa.busca_tarefas_admin')}}",
+        headers: {
+          'X-CSRF-Token': token
+        },
+        data: {semana: $('#semana').val(),
+              tipo: $('#tipo').val()}
+          ,
+        success: (result) => {
+          document.getElementById('renderiza_tarefas').innerHTML = ''
+          $('#renderiza_tarefas').append(result)
+        }
+      })
+})
+$( "#tipo" ).change(function() {
+
+$.ajax({
+    method: "GET",
+    url: "{{url_for('tarefa.busca_tarefas_admin')}}",
+    headers: {
+      'X-CSRF-Token': token
+    },
+    data: {semana: $('#semana').val(),
+          tipo: $('#tipo').val()}
+      ,
+    success: (result) => {
+      document.getElementById('renderiza_tarefas').innerHTML = ''
+      $('#renderiza_tarefas').append(result)
+    }
+  })
+})
+
+</script>
 {% endblock %}
