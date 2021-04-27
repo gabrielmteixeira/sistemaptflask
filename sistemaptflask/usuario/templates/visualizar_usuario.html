@@ -18,36 +18,51 @@
         </div>
     </div>
 </div>
-{% if tarefasEntregues %}
-    <div class="card">
-        <table class="table"  id="listUsers">
-            <thead>
-                <th scope="col">Título</th>
-                <th scope="col">Status</th>
-                <th scope="col">Detalhes</th>
-                <th></th>
-            </thead>
-            {% for tarefa in tarefasEntregues %}
-                <tr>
-                    <td>{{ tarefa.titulo }}</td>
-                    <td>
-                        {% if tarefa.atrasada == True %}
-                            <p class="card-title btn btn-danger p-1">Atrasado</p>
-                        {% elif tarefa in tarefasEntregues %}
-                            <p class="card-title btn btn-success p-1">Em dia</p>
-                        {% else %}
-                            <p class="card-title btn btn-warning p-1">Pendente</p>
-                        {% endif %}
-                    </td>
-                    <td><a href="{{url_for('tarefa.visualizar_tarefa', _id=tarefa.id)}}">Ver Tarefa</a></td>
-                </tr>
-            {% endfor %}
-        </table>
-    </div>
-{% else %}
+<div class="card">
+    <div class="card-body">
+        {% if tarefasEntregues %}
+            <div class="card-title">
+                <div class="d-flex flex-row">
+                    <div class="d-flex justify-content-start">
+                        <input type="hidden" name="csrf_token" id="token" value="{{ csrf_token() }}">
+                        <div class="d-flex ml-auto" style="background-color: none;">
+                            <div class="ml-auto p-2 ">
+                                <select style="border-radius: 5rem;" class="form-control" id="tarefa" name="tarefa">
+                                    {% if not tarefa %}
+                                        <option selected></option>
+                                    {% else %}
+                                        <option value=""></option>
+                                        <option value="{{tarefa}}" selected>{{tarefa}}</option>
+                                    {% endif %}
+                                    {% if tarefa != "Atrasada" %}<option value="Atrasada">Atrasada</option>{% endif %}
+                                    {% if tarefa != "Em dia" %}<option value="Em dia">Em dia</option>{% endif %}
+                                </select>
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div id="renderiza_tarefas">
+            {% include 'buscar_tarefas_usuario.html' %}
+        </div>
     <div>
-        <h5 style="text-align: center;">Nenhuma tarefa foi concluída por esse Trainee</h5>
-    </div>
-{% endif %}
-
+</div>
+<script>
+    $( "#tarefa" ).change(function() {
+        $.ajax({
+            method: "GET",
+            url: "{{url_for('usuario.buscar_tarefas_usuario', _id = trainee.id)}}",
+            headers: {
+            'X-CSRF-Token': token
+            },
+            data: {tarefa: $('#tarefa').val()}
+            ,
+            success: (result) => {
+            document.getElementById('renderiza_tarefas').innerHTML = ''
+            $('#renderiza_tarefas').append(result)
+            }
+        })
+    })
+</script>
 {% endblock %}

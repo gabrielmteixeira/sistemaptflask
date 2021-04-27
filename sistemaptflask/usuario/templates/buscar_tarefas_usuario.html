@@ -1,0 +1,31 @@
+{% if tarefasEntregues %}
+   
+        <table class="table"  id="listUsers">
+            <thead>
+                <th scope="col">Título</th>
+                <th scope="col">Status</th>
+                <th scope="col">Detalhes</th>
+                <th></th>
+            </thead>
+            {% for tarefa in tarefasEntregues %}
+                <tr>
+                    <td>{{ tarefa.titulo }}</td>
+                    <td>
+                        {% if tarefa.atrasada == True %}
+                            <p class="card-title btn btn-danger p-1">Atrasado</p>
+                        {% elif tarefa in tarefasEntregues %}
+                            <p class="card-title btn btn-success p-1">Em dia</p>
+                        {% else %}
+                            <p class="card-title btn btn-warning p-1">Pendente</p>
+                        {% endif %}
+                    </td>
+                    <td><a href="{{url_for('tarefa.visualizar_tarefa', _id=tarefa.id)}}">Ver Tarefa</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    
+{% else %}
+    <div class="mt-2">
+        <h5 style="text-align: center;">Nenhuma tarefa foi concluída por esse Trainee</h5>
+    </div>
+{% endif %}
