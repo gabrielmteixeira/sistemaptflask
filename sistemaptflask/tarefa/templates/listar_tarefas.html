@@ -17,7 +17,100 @@
   <h1 class="h3 mb-0 text-gray-800"></h1>
   <a href="{{url_for('tarefa.cadastra_tarefa')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Cadastrar Tarefa</a>
 </div>
-
+<div class="row d-flex justify-content-center">
+  <div class="col-10 col-sm-8 col-lg-6 my-3" style="padding-bottom: 0.25rem!important;">
+      <div class="row mb-4">
+          <div class="col d-flex justify-content-center ">
+              <span class="subtitulo" style="font-size: 1.5rem;">Filtro:</span>
+          </div>
+      </div>
+      <form method="POST" action="{{url_for('tarefa.lista_tarefas')}}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="form-group">
+          <div class="row">
+              <div class="col-lg-2 ">
+                  <span
+                  class="subtitulo"
+                  id="basic-addon1">
+                  Semana:
+                  </span>
+              </div>
+              <div class="col-lg-9">
+                  <select
+                  style="border-radius: 10rem;"
+                  name="semana"
+                  id="semana"
+                  class="custom-select"
+                  >
+                  {% if not semana %}
+                  <option selected></option>
+                  {% else %}
+                  <option value=""></option>
+                  <option value="{{semana}}" selected>{{semana}}° Semana</option>
+                  {% endif %}
+                  {% if semana != "1" %}<option value="1">1° Semana</option>{% endif %}
+                  {% if semana != "2" %}<option value="2">2° Semana</option>{% endif %}
+                  {% if semana != "3" %}<option value="3">3° Semana</option>{% endif %}
+                  {% if semana != "4" %}<option value="4">4° Semana</option>{% endif %}
+                  {% if semana != "5" %}<option value="5">5° Semana</option>{% endif %}
+                  {% if semana != "6" %}<option value="6">6° Semana</option>{% endif %}
+                  {% if semana != "7" %}<option value="7">7° Semana</option>{% endif %}
+                  {% if semana != "8" %}<option value="8">8° Semana</option>{% endif %}
+                  {% if semana != "9" %}<option value="9">9° Semana</option>{% endif %}
+                  {% if semana != "10" %}<option value="10">10° Semana</option>{% endif %}
+                  {% if semana != "11" %}<option value="11">11° Semana</option>{% endif %}
+                  {% if semana != "12" %}<option value="12">12° Semana</option>{% endif %}
+                  {% if semana != "13" %}<option value="13">13° Semana</option>{% endif %}
+                  {% if semana != "14" %}<option value="14">14° Semana</option>{% endif %}
+                  {% if semana != "15" %}<option value="15">15° Semana</option>{% endif %}
+                  {% if semana != "16" %}<option value="16">16° Semana</option>{% endif %}
+                  {% if semana != "17" %}<option value="17">17° Semana</option>{% endif %}
+                  {% if semana != "18" %}<option value="18">18° Semana</option>{% endif %}
+                  {% if semana != "19" %}<option value="19">19° Semana</option>{% endif %}
+                  {% if semana != "20" %}<option value="20">20° Semana</option>{% endif %}
+                  </select>
+                  
+              </div>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-2 ">
+          <span
+          class="subtitulo"
+          id="basic-addon1">
+            Tipo:
+          </span>
+          </div>
+          <div class="col-lg-9">
+            <select
+            style="border-radius: 10rem;"
+            name="tipo"
+            id="tipo"
+            class="custom-select"
+            >
+              {% if not tipo %}
+                <option selected></option>
+              {% else %}
+                <option value=""></option>
+                <option value="{{tipo}}" selected>{{tipo}}</option>
+              {% endif %}
+              {% if tipo != "Individual" %}<option value="Individual">Individual</option>{% endif %}
+              {% if tipo != "Coletiva" %}<option value="Coletiva">Coletiva</option>{% endif %}
+              </select>
+            </div>
+          </div>
+          <br>
+          <div class="form-group">
+            <div class="row justify-content-center">
+                <div >
+                  <button class="btn btn-info" type="submit">Filtrar</button>
+                </div>
+            </div>
+        </div>
+        </div>
+    </form>
+  </div>
+</div>
   
 
 <div class="card">
@@ -30,6 +123,7 @@
     <th scope="col"></th>
     <th scope="col"></th>
 	</thead>
+  <tbody>
 	{% for tarefa in tarefas %}
 		<tr>
 			<td><button type="button" class="modal-btn btn btn-primary" data-toggle="modal" data-target= "#tarefa_{{tarefa.id}}">{{tarefa.titulo}}</button></td>
@@ -44,6 +138,7 @@
 			<a href="{{url_for('tarefa.pagina_edicao_tarefa', id=tarefa.id)}}"><button class="btn"><i id="cor" class="far fa-edit"></i></button></a>
 			<a href="{{url_for('tarefa.deleta_tarefa', id=tarefa.id)}}" class="btn-icon-lista" onclick="return confirm('Você deseja excluir esta tarefa?');"><button class="btn"><i id="cor" class="far fa-trash-alt"></i></button></a></td>
     </tr>
+  </tbody>
     
     <!-- Modal -->
     

@@ -9,6 +9,7 @@ from sistemaptflask import db, login_required
 from flask_login import LoginManager, current_user, login_user, logout_user
 from sistemaptflask.tarefa.utils import data_format_in, data_format_out, define_solo_in, define_solo_out, confere_prazo_tarefa
 import copy
+from sqlalchemy.sql import and_
 
 
 tarefa = Blueprint('tarefa', __name__, template_folder='templates')
@@ -44,12 +45,31 @@ def cadastra_tarefa():
     return render_template('cadastro_tarefa.html')
 
 
-@tarefa.route('/listar_tarefas_admin')
+@tarefa.route('/listar_tarefas_admin', methods=['GET', 'POST'])
 @login_required(role=[usuario_urole_roles['ADMIN']])
 def lista_tarefas():
-    tarefas = Tarefa.query.all()
+    tarefas = Tarefa.query.all() 
     
-    return render_template('listar_tarefas.html', tarefas=tarefas)
+    semana = None
+    tipo   = None
+
+    if request.method == 'POST':
+        semana = request.form["semana"]
+        tipo   = request.form["tipo"]
+        if semana and not tipo: 
+            tarefas = Tarefa.query.filter(Tarefa.semana == int(semana)).all()
+        if tipo and not semana:
+            if tipo == "Individual":
+                tarefas = Tarefa.query.filter(Tarefa.ehSolo == True).all()
+            elif tipo == "Coletiva":
+                tarefas = Tarefa.query.filter(Tarefa.ehSolo == False).all()
+        if tipo and semana:
+            if tipo == "Individual":
+                tarefas = Tarefa.query.filter(and_(Tarefa.ehSolo == True, Tarefa.semana == int(semana))).all()
+            elif tipo == "Coletiva":
+                tarefas = Tarefa.query.filter(and_(Tarefa.ehSolo == False, Tarefa.semana == int(semana))).all()
+
+    return render_template('listar_tarefas.html', tarefas=tarefas, semana=semana, tipo=tipo)
 
 @tarefa.route('/deletar_tarefa/<id>')
 @login_required(role=[usuario_urole_roles['ADMIN']])
