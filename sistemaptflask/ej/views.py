@@ -36,12 +36,8 @@ def perfil_ej(id):
 
         usuario.ej_id = id
         db.session.commit()
-
-    porcentagem_faturamento = (entidade_ej.faturamento_atual / entidade_ej.faturamento_meta) * 100
-    porcentagem_projetos = (entidade_ej.projetos_atual / entidade_ej.projetos_meta) * 100
-
-    return render_template('perfil_ej.html', entidade_ej = entidade_ej, perc_fat=porcentagem_faturamento, perc_proj=porcentagem_projetos, 
-                                                                        fat_grid_step=calcula_chart_grid(entidade_ej.faturamento_meta), usuario = current_user)
+    
+    return render_template('perfil_ej.html', entidade_ej = entidade_ej, usuario = current_user)
 
 @ej.route('/cadastrar_ej', methods = ['POST', 'GET'])
 @login_required()
@@ -51,7 +47,6 @@ def cadastrar_ej():
             form = request.form
 
             nome = form["nome"]
-            cnpj = form["cnpj"]
             foto_ej = request.files["foto_ej"]
 
             original_filename = foto_ej.filename
@@ -63,13 +58,7 @@ def cadastrar_ej():
             filepath = os.path.join(current_app.root_path, 'static', 'fotos_ej', filename)
             foto_ej.save(filepath)
 
-            entidade_ej = Ej(       nome=nome,
-                                    cnpj = cnpj,
-                                    projetos_meta = 2,
-                                    projetos_atual = 0,
-                                    faturamento_atual = 0,
-                                    faturamento_meta = 6800,
-                                    imagem=filename)
+            entidade_ej = Ej(nome=nome, imagem=filename)
 
             db.session.add(entidade_ej)
 
@@ -101,11 +90,6 @@ def editar_ej(id):
         ej = Ej.query.filter_by(id=_id).first_or_404()
 
         ej.nome = form['nome']
-        ej.cnpj = form['cnpj']             
-        ej.projetos_meta = form['metaProj']             
-        ej.faturamento_meta = form['metaFat']             
-        ej.projetos_atual = form['atualProj']             
-        ej.faturamento_atual = form['atualFat']
 
         foto = request.files['foto_ej']
         if foto.content_type != 'application/octet-stream':
@@ -170,7 +154,7 @@ def relacionar_ej(_id):
 
     return render_template('relacionar_ej.html', ej=ej, usuario=usuarios)
 
-@ej.route('remover_trainee/<id_ej>/<id_trainee>')
+@ej.route('/remover_trainee/<id_ej>/<id_trainee>')
 @login_required()
 def remover_trainee(id_ej, id_trainee):
     if current_user.urole != 'admin' and int(current_user.id) != int(id_trainee):
