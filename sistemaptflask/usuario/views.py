@@ -36,6 +36,7 @@ def visualizar_usuario(_id):
                         .filter(TarefaTrainee.id_trainee == _id)
                         ).all()
     tarefasEntregues += tarefasNaoEntregues(trainee)
+    tarefasEntregues.sort(key=lambda tarefa: tarefa.id)
     return render_template('visualizar_usuario.html', tarefasEntregues=tarefasEntregues, 
                                                       trainee=trainee, 
                                                       quantidadeTarefasPendentes=getQuantidadeTarefasPendentes(trainee))

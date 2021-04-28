@@ -32,11 +32,11 @@
         <input class="form-control" value="{{tarefa.icone}}" type="text" id="icone" name="icone" placeholder="Foto da Tarefa" required>
     </div>
     <div style="margin-top: 8px; margin-bottom: 8px;">
-        <span>É individual</span>
+        <span>Tipo</span>
         <select class="form-control" name="ehSolo" id="ehSolo" required>
-            <option value="{{solo}}">{{solo}} (Atual)</option>
-            <option value="sim">Sim</option>
-            <option value="não">Não</option>
+            <option value="{{solo[0]}}">{{solo[1]}} (Atual)</option>
+            <option value="sim">Individual</option>
+            <option value="não">Coletiva</option>
         </select>
     </div>
     <div style="margin-top: 8px; margin-bottom: 8px;">

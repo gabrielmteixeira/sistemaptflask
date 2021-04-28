@@ -22,11 +22,11 @@ def define_solo_in(solo):
     return ehSolo
 
 def define_solo_out(ehSolo):
-    solo = ''
+    solo = list()
     if(ehSolo == 0):
-        solo = 'não'
+        solo = ['nao', 'Coletivo']
     else: 
-        solo = 'sim'
+        solo = ['sim', 'Individual']
 
     return solo
 

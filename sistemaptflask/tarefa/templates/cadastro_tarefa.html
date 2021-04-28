@@ -32,15 +32,17 @@
         <input class="form-control" type="text" id="icone" name="icone" placeholder="Foto da Tarefa" required>
     </div>
     <div style="margin-top: 8px; margin-bottom: 8px;">
-        <span>É individual</span>
+        <span>Tipo</span>
         <select class="form-control" name="ehSolo" id="ehSolo" required>
-            <option value="sim">Sim</option>
-            <option value="não">Não</option>
+            <option value="" disabled selected>Selecione uma opção</option>
+            <option value="sim">Individual</option>
+            <option value="não">Coletiva</option>
         </select>
     </div>
     <div style="margin-top: 8px; margin-bottom: 8px;">
         <span>Semana </span>
         <select class="form-control" name="semana" id="semana" required>
+            <option value="" disabled selected>Selecione a Semana</option>
             <option value="1">1° Semana</option>
             <option value="2">2° Semana</option>
             <option value="3">3° Semana</option>
