@@ -9,6 +9,7 @@ from flask_mail import Message
 from secrets import token_urlsafe
 from datetime import datetime, timedelta
 from sqlalchemy.sql import and_
+from sistemaptflask.usuario.utils import tarefasNaoEntregues, getQuantidadeTarefasPendentes
 
 usuario = Blueprint('usuario', __name__, template_folder='templates')
 login_manager = LoginManager()
@@ -29,11 +30,15 @@ def perfil():
 @login_required(role=[usuario_urole_roles['ADMIN']])
 def visualizar_usuario(_id):
     trainee = Usuario.query.get_or_404(_id)
+    
     tarefasEntregues = (Tarefa.query.join(TarefaTrainee, TarefaTrainee.id_tarefa == Tarefa.id)
                         .add_columns((Tarefa.titulo), (TarefaTrainee.atrasada), (Tarefa.id))
                         .filter(TarefaTrainee.id_trainee == _id)
                         ).all()
-    return render_template('visualizar_usuario.html', tarefasEntregues=tarefasEntregues, trainee=trainee)
+    tarefasEntregues += tarefasNaoEntregues(trainee)
+    return render_template('visualizar_usuario.html', tarefasEntregues=tarefasEntregues, 
+                                                      trainee=trainee, 
+                                                      quantidadeTarefasPendentes=getQuantidadeTarefasPendentes(trainee))
 @usuario.route('/buscar_tarefas_usuario/<_id>')
 @login_required(role=[usuario_urole_roles['ADMIN']])
 def buscar_tarefas_usuario(_id):
@@ -55,6 +60,8 @@ def buscar_tarefas_usuario(_id):
                         .add_columns((Tarefa.titulo), (TarefaTrainee.atrasada), (Tarefa.id))
                         .filter(and_(TarefaTrainee.id_trainee == _id, TarefaTrainee.atrasada == True))
                         ).all()
+        elif tarefa == "Pendente":
+            tarefasEntregues = tarefasNaoEntregues(trainee)
 
     return render_template('buscar_tarefas_usuario.html', tarefasEntregues=tarefasEntregues, trainee=trainee)
 

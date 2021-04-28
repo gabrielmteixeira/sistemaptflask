@@ -14,7 +14,7 @@
                 <p class="card-text mt-n3"><small class="text-muted">{{ trainee.login }}</small></p>
                 <p class="card-text" style="color: #112121;">{{ trainee.email }}</p>
                 <p class="card-text" style="color: #112121;">{{ trainee.ej.nome }}</p>
-                <p class="card-text">Tarefas atrasadas: {{trainee.getQuantidadeTarefasAtrasadas()}}</p>
+                <p class="card-text">{{trainee.getQuantidadeTarefasAtrasadas()}} Tarefa(s) atrasadas e {{quantidadeTarefasPendentes}} Tarefa(s) pendentes.</p>
             </div>
         </div>
     </div>
@@ -37,6 +37,7 @@
                                     {% endif %}
                                     {% if tarefa != "Atrasada" %}<option value="Atrasada">Atrasada</option>{% endif %}
                                     {% if tarefa != "Em dia" %}<option value="Em dia">Em dia</option>{% endif %}
+                                    {% if tarefa != "Pendente" %}<option value="Pendente">Pendente</option>{% endif %}
                                 </select>
                             </div>    
                         </div>
