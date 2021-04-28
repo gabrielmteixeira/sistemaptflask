@@ -64,6 +64,7 @@ def buscar_tarefas_usuario(_id):
                         ).all()
         elif tarefa == "Pendente":
             tarefasEntregues = tarefasNaoEntregues(trainee)
+    tarefasEntregues.sort(key=lambda tarefa: tarefa.id)
 
     return render_template('buscar_tarefas_usuario.html', tarefasEntregues=tarefasEntregues, trainee=trainee)
 
