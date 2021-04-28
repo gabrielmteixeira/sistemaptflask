@@ -49,6 +49,7 @@ def buscar_tarefas_usuario(_id):
                         .add_columns((Tarefa.titulo), (TarefaTrainee.atrasada), (Tarefa.id))
                         .filter(TarefaTrainee.id_trainee == _id)
                         ).all()
+        tarefasEntregues += tarefasNaoEntregues(trainee)
     else:
         if tarefa == "Em dia":
             tarefasEntregues = (Tarefa.query.join(TarefaTrainee, TarefaTrainee.id_tarefa == Tarefa.id)
