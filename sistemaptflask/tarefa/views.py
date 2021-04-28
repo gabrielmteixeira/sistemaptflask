@@ -98,7 +98,11 @@ def pagina_edicao_tarefa(id):
     #tratando ehSolo
     solo = define_solo_out(tarefa.ehSolo)
 
-    return render_template('edicao_tarefa.html', titulo=tarefa.titulo, descricao=tarefa.descricao, prazo=prazo, solo=solo, id=tarefa.id)
+    return render_template('edicao_tarefa.html', titulo=tarefa.titulo, 
+                                                descricao=tarefa.descricao, 
+                                                prazo=prazo, solo=solo, 
+                                                id=tarefa.id, 
+                                                tarefa=tarefa)
 
 @tarefa.route('/editar_tarefa', methods=['POST'])
 @login_required(role=[usuario_urole_roles['ADMIN']])

@@ -43,7 +43,7 @@
 
                     
                   </div>
-                  <img src="{{url_for('static', filename='fotos_tarefa/' + tarefa.icone)}}" style="width: 100%" alt="Card cover">
+                  <img id="imagem_tarefa" src="{{tarefa.icone}}" style="width: 100%" alt="Card cover">
                   <div class="card-body">
                       {% if tarefa.ehSolo == 1 %}
                         <p class="card-text">Tarefa individual</p>
@@ -71,7 +71,7 @@
               </button>
             </div>
             <div class="modal-cover" style="padding: 0;">
-              <img src="{{url_for('static', filename='fotos_tarefa/' + tarefa.icone)}}" alt="Card cover">
+              <img src="{{tarefa.icone}}" alt="Foto da Tarefa">
             </div>
             <div class="modal-eh-solo">
               {% if tarefa.ehSolo == 0 %}

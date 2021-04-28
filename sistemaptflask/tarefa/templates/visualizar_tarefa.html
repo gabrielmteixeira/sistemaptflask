@@ -6,7 +6,7 @@
 
 <div id="tarefaFullCard">
         <h2>{{tarefa.titulo}}</h2>
-        <img src="{{url_for('static', filename='fotos_tarefa/' + tarefa.icone)}}" alt="Foto da Tarefa">
+        <img src="{{tarefa.icone}}" alt="Foto da Tarefa">
         <span class="desc">{{tarefa.descricao}}</span>
         
         {% if tarefa.trainees %}
