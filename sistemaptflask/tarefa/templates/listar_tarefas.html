@@ -26,10 +26,10 @@
             <div class="d-flex ml-auto" style="background-color: none;">
               <div class="ml-auto p-2 ">
                 <select style="border-radius: 5rem;" class="form-control" id="semana" name="semana">
-                  {% if not semana %}
-                      <option selected></option>
+                      {% if not semana %}
+                      <option selected>Todas</option>
                       {% else %}
-                      <option value=""></option>
+                      <option value="">Todas</option>
                       <option value="{{semana}}" selected>{{semana}}° Semana</option>
                       {% endif %}
                       {% if semana != "1" %}<option value="1">1° Semana</option>{% endif %}
@@ -59,9 +59,9 @@
               <div class="ml-auto p-2 ">
                 <select style="border-radius: 5rem;" name="tipo" id="tipo" class="form-control">
                   {% if not tipo %}
-                    <option selected></option>
+                    <option selected>Ambas</option>
                   {% else %}
-                    <option value=""></option>
+                    <option value="">Ambas</option>
                     <option value="{{tipo}}" selected>{{tipo}}</option>
                   {% endif %}
                   {% if tipo != "Individual" %}<option value="Individual">Individual</option>{% endif %}

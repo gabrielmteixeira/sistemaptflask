@@ -45,7 +45,7 @@ def visualizar_usuario(_id):
 def buscar_tarefas_usuario(_id):
     tarefa = request.args.get('tarefa', None, type=str)
     trainee = Usuario.query.get_or_404(_id)
-    if not tarefa:
+    if tarefa == "Todos":
         tarefasEntregues = (Tarefa.query.join(TarefaTrainee, TarefaTrainee.id_tarefa == Tarefa.id)
                         .add_columns((Tarefa.titulo), (TarefaTrainee.atrasada), (Tarefa.id))
                         .filter(TarefaTrainee.id_trainee == _id)
