@@ -20,17 +20,16 @@
             {% for tarefas in tarefa_trainee %}
             {% if user.id == tarefas.id_trainee and tarefas.id_tarefa == tarefa.id %}
             <div class="traineeCard" id="{{user.id}}">
-                <img class="traineePic" src="{{url_for('static', filename='fotos_trainees/' + user.foto_trainee)}}" alt="Card image cap">
+                <img class="traineePic" id="{{user.id}}" src="{{url_for('static', filename='fotos_trainees/' + user.foto_trainee)}}" alt="Card image cap">
                 <span>
                     <h5 class="card-title">{{user.nome}}</h5>
                 </span>
-                <span>
-                {% if tarefas.atrasada == True %}
-                <h5 style="padding: 2px;" class="card-title btn btn-danger">Atrasado</h5>
-                {% else %}
-                <h5 style="padding: 2px;" class="card-title btn btn-success">Em dia</h5>
-                {% endif %}
-                
+                <span class="traineeTarefa" id="{{user.id}}">
+                    {% if tarefas.atrasada == True %}
+                    <h5 style="padding: 2px;" class="card-title btn btn-danger">Atrasado</h5>
+                    {% else %}
+                    <h5 style="padding: 2px;" class="card-title btn btn-success">Em dia</h5>
+                    {% endif %}
                 </span>
             </div>
             {% endif %}
@@ -62,6 +61,15 @@
     </div>
 </div>
 
+<div id="emDiaModal">
+    <div class="modalbox">
+        <h1>Marcar tarefa como em dia?</h1>
+        <div id="btnModal">
+            <a href="/tarefa/tarefa_nao_atrasada/{{tarefa.id}}/"><button class="btn btn-primary">Sim</button></a>
+            <button id="btnCancelar" class="btn btn-primary">Não</button>
+        </div>
+    </div>
+</div>
 
 {% endblock conteudo %}
 
@@ -74,11 +82,26 @@
         $("#modalBtn a").attr("href", original + $(this).attr("id"))
     }
 
-    $(".traineeCard").on("click", undo)
+    $(".traineePic").on("click", undo)
     $("#modalBtn button#cancelBtn").on("click", () => {
         $("#undoModal").css({visibility: 'hidden'})
 
         $("#modalBtn a").attr("href", original)
+        console.log('Removed!')
+        })
+
+    origin = $("#btnModal a").attr("href")
+    function emDia(e) {
+        $("#emDiaModal").css({visibility: 'visible'})
+
+        $("#btnModal a").attr("href", origin + $(this).attr("id"))
+    }
+
+    $(".traineeTarefa").on("click", emDia)
+    $("#btnModal button#btnCancelar").on("click", () => {
+        $("#emDiaModal").css({visibility: 'hidden'})
+
+        $("#btnModal a").attr("href", origin)
         console.log('Removed!')
         })
 </script>
