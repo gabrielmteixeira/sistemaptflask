@@ -58,16 +58,16 @@ def lista_tarefas():
 def busca_tarefas_admin():
     semana = request.args.get('semana', None, type=str)
     tipo = request.args.get('tipo', None, type=str)
-    if not semana and not tipo:
+    if semana == "Todas" and tipo == "Ambas":
         tarefas = Tarefa.query.all()
-    if semana and not tipo: 
+    if semana != "Todas" and tipo == "Ambas": 
         tarefas = Tarefa.query.filter(Tarefa.semana == int(semana)).all()
-    if tipo and not semana:
+    if tipo != "Ambas" and semana == "Todas":
         if tipo == "Individual":
             tarefas = Tarefa.query.filter(Tarefa.ehSolo == True).all()
         elif tipo == "Coletiva":
             tarefas = Tarefa.query.filter(Tarefa.ehSolo == False).all()
-    if tipo and semana:
+    if tipo != "Ambas" and semana != "Todas":
         if tipo == "Individual":
             tarefas = Tarefa.query.filter(and_(Tarefa.ehSolo == True, Tarefa.semana == int(semana))).all()
         elif tipo == "Coletiva":

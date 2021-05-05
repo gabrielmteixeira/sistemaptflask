@@ -30,9 +30,9 @@
                             <div class="ml-auto p-2 ">
                                 <select style="border-radius: 5rem;" class="form-control" id="tarefa" name="tarefa">
                                     {% if not tarefa %}
-                                        <option selected></option>
+                                        <option selected>Todos</option>
                                     {% else %}
-                                        <option value=""></option>
+                                        <option value="">Todos</option>
                                         <option value="{{tarefa}}" selected>{{tarefa}}</option>
                                     {% endif %}
                                     {% if tarefa != "Atrasada" %}<option value="Atrasada">Atrasada</option>{% endif %}
