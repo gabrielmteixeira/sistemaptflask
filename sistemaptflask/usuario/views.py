@@ -113,8 +113,8 @@ def editar_usuario():
             foto_trainee = request.files["foto_trainee"]
 
             if foto_trainee:
-                filename = foto_trainee.filename
-                original_filename = str(original_filename).split(".")
+                original_filename = foto_trainee.filename
+                filename = str(original_filename).split(".")
                 filename[0] = str(time.time())
                 filename.insert(1, ".")
                 filename = "".join(filename)
