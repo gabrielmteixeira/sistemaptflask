@@ -47,18 +47,18 @@ def cadastrar_ej():
             form = request.form
 
             nome = form["nome"]
-            foto_ej = request.files["foto_ej"]
+            foto_ej = request.form["foto_ej"]
 
-            original_filename = foto_ej.filename
-            filename = str(original_filename).split(".")
-            filename[0] = str(time.time())
-            filename.insert(1, ".")
-            filename = "".join(filename)
-            print("++++++++++++++++" + filename)
-            filepath = os.path.join(current_app.root_path, 'static', 'fotos_ej', filename)
-            foto_ej.save(filepath)
+            #original_filename = foto_ej.filename
+            #filename = str(original_filename).split(".")
+            #filename[0] = str(time.time())
+            #filename.insert(1, ".")
+            #filename = "".join(filename)
+            #print("++++++++++++++++" + filename)
+            #filepath = os.path.join(current_app.root_path, 'static', 'fotos_ej', filename)
+            #foto_ej.save(filepath)
 
-            entidade_ej = Ej(nome=nome, imagem=filename)
+            entidade_ej = Ej(nome=nome, imagem=foto_ej)
 
             db.session.add(entidade_ej)
 
@@ -91,28 +91,27 @@ def editar_ej(id):
 
         ej.nome = form['nome']
 
-        foto = request.files['foto_ej']
-        if foto.content_type != 'application/octet-stream':
-            original_filename = foto.filename
-            filename = str(original_filename).split(".")
-            filename[0] = str(time.time())
-            filename.insert(1, ".")
-            filename = "".join(filename)
-            print("++++++++++++++++" + filename)
-            filepath_novo = os.path.join(current_app.root_path, 'static', 'fotos_ej', filename)
-            foto.save(filepath_novo)
+        foto = form['foto_ej']
+        #if foto.content_type != 'application/octet-stream':
+        #    original_filename = foto.filename
+        #    filename = str(original_filename).split(".")
+        #    filename[0] = str(time.time())
+        #    filename.insert(1, ".")
+        #    filename = "".join(filename)
+        #    print("++++++++++++++++" + filename)
+        #    filepath_novo = os.path.join(current_app.root_path, 'static', 'fotos_ej', filename)
+        #    foto.save(filepath_novo)
             
-            filepath_antigo = os.path.join(current_app.root_path, 'static', 'fotos_ej', )
-            os.remove(filepath_antigo)        
+        #    filepath_antigo = os.path.join(current_app.root_path, 'static', 'fotos_ej', )
+        #    os.remove(filepath_antigo)        
             
-            ej.imagem = filename
+        ej.imagem = foto
 
         db.session.commit()
 
         return redirect(url_for('ej.perfil_ej', id=id))
 
-    return render_template('editar_ej.html', id=id, nome=ej.nome, cnpj=ej.cnpj , metaProj=ej.projetos_meta, metaFat=ej.faturamento_meta, 
-                                                            atualProj=ej.projetos_atual, atualFat=ej.faturamento_atual)
+    return render_template('editar_ej.html', id=id, nome=ej.nome, foto=ej.imagem)
 
 
 

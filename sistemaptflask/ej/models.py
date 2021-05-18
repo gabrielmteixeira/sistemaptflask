@@ -6,7 +6,7 @@ class Ej(db.Model):
     __tablename__ = 'ej'
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(255), unique=True, nullable=False)
-    imagem = db.Column(db.String(255))
+    imagem = db.Column(db.String(350))
     usuarios = db.relationship('Usuario', lazy=True)
 
     def __init__(self, nome, imagem):

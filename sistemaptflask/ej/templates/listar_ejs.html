@@ -26,7 +26,7 @@
     {% for ej in lista %}
     <a href="{{url_for('ej.perfil_ej', id = ej.id)}}">
     <div class="ejCard">  
-        <img src="{{url_for('static', filename='fotos_ej/' + ej.imagem)}}" alt="Card cover">
+        <img src="{{ej.imagem}}" alt="Card cover">
         <h1>{{ej.nome}}</h1>
     </div>
     </a>

@@ -32,7 +32,7 @@
           </div>
         {% endif %}
     <div class="card d-flex flex-row" style="width: 100%; display: flex; color: #112121; margin-bottom: 10px; ">
-            <img src="{{url_for('static', filename='fotos_ej/' + entidade_ej.imagem)}}" style="max-height: 50vh; object-fit: cover; width: 128px; height: 128px; border-radius: 4px 0px 0px 4px;" alt="Card image cap">
+            <img src="{{entidade_ej.imagem}}" style="max-height: 50vh; object-fit: cover; width: 128px; height: 128px; border-radius: 4px 0px 0px 4px;" alt="Card image cap">
             <div style="padding-top: 15px;padding-left: 15px;">
                 <h1>{{entidade_ej.nome}}</h1>
                 <h3>Empresa Júnior</h3>
