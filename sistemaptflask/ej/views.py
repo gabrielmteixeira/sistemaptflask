@@ -73,7 +73,7 @@ def cadastrar_ej():
                 usuario.ej_id = entidade_ej.id
                 db.session.commit()
 
-            return redirect(url_for('principal.index'))
+            return redirect(url_for('ej.listar_ejs'))
 
     return render_template('cadastro_ej.html')
 
