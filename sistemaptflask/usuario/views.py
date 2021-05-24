@@ -317,80 +317,80 @@ def excluir_usuario():
     db.session.commit()
     return redirect(url_for('principal.index'))
 
-@usuario.route('/forgot_password', methods=['GET', 'POST'])
-def forgot_password():
-    if request.method == 'POST':
-        form = request.form
-        email = form['email']
-        confirmaEmail = form['confirmar']
+# @usuario.route('/forgot_password', methods=['GET', 'POST'])
+# def forgot_password():
+#     if request.method == 'POST':
+#         form = request.form
+#         email = form['email']
+#         confirmaEmail = form['confirmar']
 
-        usuario = Usuario.query.filter_by(email=email).first()
+#         usuario = Usuario.query.filter_by(email=email).first()
         
-        if email == confirmaEmail:
-            if usuario:
+#         if email == confirmaEmail:
+#             if usuario:
                 
-                token = token_urlsafe(128)
+#                 token = token_urlsafe(128)
 
-                usuario.reset_token = token
-                usuario.token_expiration = datetime.utcnow() + timedelta(hours=1)
+#                 usuario.reset_token = token
+#                 usuario.token_expiration = datetime.utcnow() + timedelta(hours=1)
 
-                mensagem = Message("Recuperação de Senha",
-                                    sender=('iJunior', 'emailautomatico1234@gmail.com'),
-                                    recipients=[email])
-                recover_url = url_for(
-                    'usuario.recuperar_senha',
-                    token=token,
-                    _external=True)
+#                 mensagem = Message("Recuperação de Senha",
+#                                     sender=('iJunior', 'emailautomatico1234@gmail.com'),
+#                                     recipients=[email])
+#                 recover_url = url_for(
+#                     'usuario.recuperar_senha',
+#                     token=token,
+#                     _external=True)
 
-                mensagem.html = render_template('email_de_resetar.html', usuario=usuario, recover_url = recover_url)
+#                 mensagem.html = render_template('email_de_resetar.html', usuario=usuario, recover_url = recover_url)
 
-                mail.send(mensagem)
+#                 mail.send(mensagem)
 
-                db.session.commit()
+#                 db.session.commit()
 
-                flash("Um e-mail para recuperar sua senha foi enviado no seu E-mail. Caso não encontre seu email, procure-o na caixa de spam")
-                return redirect(url_for('usuario.forgot_password'))
-            else:
-                flash('Email incorreto!')
-                return redirect(url_for('usuario.forgot_password'))
-        else:
-            flash("O E-mail e sua confirmação estão diferentes!")
-            return redirect(url_for("usuario.forgot_password"))
+#                 flash("Um e-mail para recuperar sua senha foi enviado no seu E-mail. Caso não encontre seu email, procure-o na caixa de spam")
+#                 return redirect(url_for('usuario.forgot_password'))
+#             else:
+#                 flash('Email incorreto!')
+#                 return redirect(url_for('usuario.forgot_password'))
+#         else:
+#             flash("O E-mail e sua confirmação estão diferentes!")
+#             return redirect(url_for("usuario.forgot_password"))
 
-    return render_template('forgot_password.html')
-@usuario.route('/recuperar_senha', methods=['GET', 'POST'])
-@usuario.route('/recuperar_senha/<token>', methods=['GET', 'POST'])
-def recuperar_senha(token = None):
-    if request.method == 'POST':
-        form = request.form
+#     return render_template('forgot_password.html')
+# @usuario.route('/recuperar_senha', methods=['GET', 'POST'])
+# @usuario.route('/recuperar_senha/<token>', methods=['GET', 'POST'])
+# def recuperar_senha(token = None):
+#     if request.method == 'POST':
+#         form = request.form
 
-        token = form['token']
+#         token = form['token']
 
-        usuario = Usuario.query.filter(Usuario.reset_token == token).first()
+#         usuario = Usuario.query.filter(Usuario.reset_token == token).first()
 
-        if not usuario:
-            flash('Token informado expirou ou é inválido', 'error')
-            return redirect(url_for('usuario.login'))
+#         if not usuario:
+#             flash('Token informado expirou ou é inválido', 'error')
+#             return redirect(url_for('usuario.login'))
 
-        if usuario.token_expiration <= datetime.utcnow():
-            usuario.reset_token = None
-            usuario.token_expiration = None
-            db.session.commit()
+#         if usuario.token_expiration <= datetime.utcnow():
+#             usuario.reset_token = None
+#             usuario.token_expiration = None
+#             db.session.commit()
 
-            flash('Token informado expirou ou é inválido', 'error')
-            return redirect(url_for('principal.login'))
+#             flash('Token informado expirou ou é inválido', 'error')
+#             return redirect(url_for('principal.login'))
 
-        senha = form['senha']
-        confirmar = form['confirmar']
+#         senha = form['senha']
+#         confirmar = form['confirmar']
         
-        if confirmar == senha:
-            usuario.setSenha(senha)
-            usuario.reset_token = None
-            usuario.token_expiration = None
-            db.session.commit()
-            flash("Senha alterada com sucesso!")
-            return redirect(url_for('usuario.login'))
-        elif confirmar != senha:
-            flash("Confirmação de senha e senha estão diferentes.")
-            return redirect(url_for('usuario.recuperar_senha', token=token))
-    return render_template('password_reset.html', token=token)
+#         if confirmar == senha:
+#             usuario.setSenha(senha)
+#             usuario.reset_token = None
+#             usuario.token_expiration = None
+#             db.session.commit()
+#             flash("Senha alterada com sucesso!")
+#             return redirect(url_for('usuario.login'))
+#         elif confirmar != senha:
+#             flash("Confirmação de senha e senha estão diferentes.")
+#             return redirect(url_for('usuario.recuperar_senha', token=token))
+#     return render_template('password_reset.html', token=token)
