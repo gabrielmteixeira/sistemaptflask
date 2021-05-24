@@ -179,61 +179,61 @@ def editar_senha_usuario():
 
     return render_template('editar_senha_usuario.html')
 
-@usuario.route('/cadastrar_usuario', methods = ['POST', 'GET'])
-def cadastrar_usuario():
-    if (current_user.is_authenticated):
-        if current_user.urole == usuario_urole_roles['USER']:
-            flash("Você não tem permissão para realizar esta ação.")
-            return redirect(url_for("principal.index"))
-    elif request.method == 'POST':
-            form = request.form
+# @usuario.route('/cadastrar_usuario', methods = ['POST', 'GET'])
+# def cadastrar_usuario():
+#     if (current_user.is_authenticated):
+#         if current_user.urole == usuario_urole_roles['USER']:
+#             flash("Você não tem permissão para realizar esta ação.")
+#             return redirect(url_for("principal.index"))
+#     elif request.method == 'POST':
+#             form = request.form
 
-            nome = form["nome"]
-            login = form["login"]
-            senha = form["senha"]
-            email = form["email"]
-            confirmacao = form["confirmacao"]
-            foto_trainee = request.files["foto_trainee"]
+#             nome = form["nome"]
+#             login = form["login"]
+#             senha = form["senha"]
+#             email = form["email"]
+#             confirmacao = form["confirmacao"]
+#             foto_trainee = request.files["foto_trainee"]
 
-            emailRepetido = Usuario.query.filter_by(email= email).first()
-            loginRepetido = Usuario.query.filter_by(login= login).first()
+#             emailRepetido = Usuario.query.filter_by(email= email).first()
+#             loginRepetido = Usuario.query.filter_by(login= login).first()
 
-            if (confirmacao != senha ):
-                flash("Confirmação de senha e senha estão diferentes.")
-                return redirect(url_for('usuario.cadastrar_usuario'))
-            elif (emailRepetido):
-                flash("Este email já está em uso.")
-                return redirect(url_for('usuario.cadastrar_usuario'))
-            elif loginRepetido:
-                flash("Este username já está em uso.")
-                return redirect(url_for('usuario.cadastrar_usuario'))
-            elif not(emailRepetido or loginRepetido):
+#             if (confirmacao != senha ):
+#                 flash("Confirmação de senha e senha estão diferentes.")
+#                 return redirect(url_for('usuario.cadastrar_usuario'))
+#             elif (emailRepetido):
+#                 flash("Este email já está em uso.")
+#                 return redirect(url_for('usuario.cadastrar_usuario'))
+#             elif loginRepetido:
+#                 flash("Este username já está em uso.")
+#                 return redirect(url_for('usuario.cadastrar_usuario'))
+#             elif not(emailRepetido or loginRepetido):
 
-                original_filename = foto_trainee.filename
-                filename = str(original_filename).split(".")
-                filename[0] = str(time.time())
-                filename.insert(1, ".")
-                filename = "".join(filename)
-                filepath = os.path.join(current_app.root_path, 'static', 'fotos_trainees', filename)
-                foto_trainee.save(filepath)
+#                 original_filename = foto_trainee.filename
+#                 filename = str(original_filename).split(".")
+#                 filename[0] = str(time.time())
+#                 filename.insert(1, ".")
+#                 filename = "".join(filename)
+#                 filepath = os.path.join(current_app.root_path, 'static', 'fotos_trainees', filename)
+#                 foto_trainee.save(filepath)
 
-                entidade_usuario = Usuario(nome=nome,
-                                           login=login,
-                                           senha=senha,
-                                           email=email,
-                                           foto_trainee=filename)
+#                 entidade_usuario = Usuario(nome=nome,
+#                                            login=login,
+#                                            senha=senha,
+#                                            email=email,
+#                                            foto_trainee=filename)
 
-                db.session.add(entidade_usuario)
-                db.session.commit()
+#                 db.session.add(entidade_usuario)
+#                 db.session.commit()
                 
-                flash("Usuário cadastrado!")
+#                 flash("Usuário cadastrado!")
 
-                loginUsuario = Usuario.query.filter_by(email=email).first()
-                login_user(loginUsuario)
-                flash("Usuário logado com sucesso!")
-            return redirect(url_for('principal.index'))
+#                 loginUsuario = Usuario.query.filter_by(email=email).first()
+#                 login_user(loginUsuario)
+#                 flash("Usuário logado com sucesso!")
+#             return redirect(url_for('principal.index'))
 
-    return render_template('cadastro.html')
+#     return render_template('cadastro.html')
     
 @usuario.route('/login', methods = ['POST','GET'])
 def login():
